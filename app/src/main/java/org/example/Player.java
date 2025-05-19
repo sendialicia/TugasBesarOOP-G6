@@ -1,3 +1,5 @@
+package org.example;
+
 class Player {
     private String name;
     private String gender;
