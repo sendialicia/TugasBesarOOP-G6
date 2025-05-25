@@ -14,4 +14,9 @@ public class Point {
     // Setter
     public void setX(Integer x) {}
     public void setY(Integer y) {}
+
+    public void setLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }
