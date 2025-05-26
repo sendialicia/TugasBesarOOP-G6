@@ -99,16 +99,17 @@ public class TileManager {
         }
     }
 
-    private boolean checkAreaAvailability(int col, int row, int width, int height){
-        if (col < 0 || row < 0 || col + width > gp.maxCol || row + height > gp.maxRow) return false;
-
-        for (int i = 0; i < height; i++){
-            for (int j = 0; j < width; j++){
-                if (mapTileNum[col + j][row + i] != LAND) return false;
+    private boolean checkAreaAvailability(int startCol, int startRow, int width, int height) {
+        for (int row = startRow; row < startRow + height; row++) {
+            for (int col = startCol; col < startCol + width; col++) {
+                if (col < 0 || row < 0 || col >= gp.maxCol || row >= gp.maxRow) return false;
+                if (col == 0 && row == 0) return false;
+                if (mapTileNum[col][row] != LAND) return false;
             }
         }
         return true;
     }
+
 
     private void fillArea(int col, int row, int width, int height, int index){
         int current = 0;
@@ -128,7 +129,7 @@ public class TileManager {
 
         boolean housePlaced = false;
         while (!housePlaced){
-            int houseCol = random.nextInt(gp.maxCol - HOUSE_W + 1);
+            int houseCol = random.nextInt(gp.maxCol - HOUSE_W - 4);
             int houseRow = random.nextInt(gp.maxRow - HOUSE_H + 1);
 
             if (checkAreaAvailability(houseCol, houseRow, HOUSE_W, HOUSE_H)){
@@ -146,21 +147,6 @@ public class TileManager {
         int binRight = this.houseTopLeftCol + HOUSE_W + gap;
         for (int i = this.houseTopLeftRow; i <= this.houseTopLeftRow + HOUSE_H - SHIPPING_BIN_H; i++) {
             binCoordinates.add(new Point(binRight, i));
-        }
-
-        int binLeft = this.houseTopLeftCol - SHIPPING_BIN_W - gap;
-        for (int i = this.houseTopLeftRow; i <= this.houseTopLeftRow + HOUSE_H - SHIPPING_BIN_H; i++) {
-            binCoordinates.add(new Point(binLeft, i));
-        }
-
-        int binAbove = this.houseTopLeftRow - SHIPPING_BIN_H - gap;
-        for (int j = this.houseTopLeftCol; j <= this.houseTopLeftCol + HOUSE_W - SHIPPING_BIN_W; j++) {
-            binCoordinates.add(new Point(j, binAbove));
-        }
-
-        int binBelow = this.houseTopLeftRow + HOUSE_H + gap;
-        for (int j = this.houseTopLeftCol; j <= this.houseTopLeftCol + HOUSE_W - SHIPPING_BIN_W; j++) {
-            binCoordinates.add(new Point(j, binBelow));
         }
 
         Collections.shuffle(binCoordinates);

@@ -13,6 +13,7 @@ import org.example.main.KeyHandler;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
+    // org.example.player.Player playerData;
 
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
@@ -29,9 +30,9 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues(){
-        x = 100;
-        y = 100;
-        speed = 4;
+        x = 0;
+        y = 0;
+        speed = 3;
         direction = "down";
     }
 
@@ -52,6 +53,11 @@ public class Player extends Entity {
     }
 
     public void update() {
+        int minX = 0;
+        int minY = 0;
+        int maxX = 24 * 32 - gp.tileSize;
+        int maxY = 24 * 32 - gp.tileSize;
+
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
             if (keyH.upPressed) direction = "up";
             if (keyH.downPressed) direction = "down";
@@ -62,10 +68,10 @@ public class Player extends Entity {
             gp.cChecker.checkTile(this);
 
             if (!collisionOn){
-                if (direction.equals("up")) y -= speed;
-                else if (direction.equals("down")) y += speed;
-                else if (direction.equals("left")) x -= speed;
-                else if (direction.equals("right")) x += speed;
+                if (direction.equals("up") && y - speed >= minY) y -= speed;
+                else if (direction.equals("down") && y + speed <= maxY) y += speed;
+                else if (direction.equals("left") && x - speed >= minX) x -= speed;
+                else if (direction.equals("right") && x + speed <= maxX) x += speed;
             }
 
             spriteCounter++;
@@ -76,6 +82,7 @@ public class Player extends Entity {
             }
         }
     }
+
 
     public void draw(Graphics2D g2){
         BufferedImage image = null;

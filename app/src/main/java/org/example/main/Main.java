@@ -16,6 +16,8 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        new Thread(org.example.time.GameClock.getInstance()).start();
+
         gamePanel.startGameThread();
     }
 }
