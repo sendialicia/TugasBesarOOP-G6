@@ -34,7 +34,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("org.example.Main") // It's good practice to use .set() for property assignment
+    mainClass.set("org.example.main.Main") // It's good practice to use .set() for property assignment
 }
 
 tasks.named<Test>("test") {

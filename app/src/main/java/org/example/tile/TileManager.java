@@ -58,39 +58,39 @@ public class TileManager {
     public void getTileImage(){
         try {
             tiles[LAND] = new Tile();
-            tiles[LAND].image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/land.png"));
+            tiles[LAND].image = ImageIO.read(getClass().getResourceAsStream("/images/tiles/farm/land.png"));
             tiles[LAND].collision = false;
 
             tiles[TILLED] = new Tile();
-            tiles[TILLED].image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/tilled.png"));
+            tiles[TILLED].image = ImageIO.read(getClass().getResourceAsStream("/images/tiles/farm/tilled.png"));
             tiles[TILLED].collision = false;
 
             tiles[PLANTED] = new Tile();
-            tiles[PLANTED].image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/planted.png"));
+            tiles[PLANTED].image = ImageIO.read(getClass().getResourceAsStream("/images/tiles/farm/planted.png"));
             tiles[PLANTED].collision = false;
 
             tiles[HARVESTED] = new Tile();
-            tiles[HARVESTED].image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/harvested.png"));
+            tiles[HARVESTED].image = ImageIO.read(getClass().getResourceAsStream("/images/tiles/farm/harvestable.png"));
             tiles[HARVESTED].collision = false;
 
             for (int i = 0; i < HOUSE_W * HOUSE_H; i++) {
                 int tileIndex = HOUSE + i;
                 tiles[tileIndex] = new Tile();
-                tiles[tileIndex].image = ImageIO.read(getClass().getResourceAsStream("/tiles/house/house.png"));
+                tiles[tileIndex].image = ImageIO.read(getClass().getResourceAsStream("/images/tiles/house/house.png"));
                 tiles[tileIndex].collision = true;
             }
 
             for (int i = 0; i < SHIPPING_BIN_W * SHIPPING_BIN_H; i++) {
                 int tileIndex = SHIPPING_BIN + i;
                 tiles[tileIndex] = new Tile();
-                tiles[tileIndex].image = ImageIO.read(getClass().getResourceAsStream("/tiles/shippingbin/shippingbin" + (i + 1) + ".png"));
+                tiles[tileIndex].image = ImageIO.read(getClass().getResourceAsStream("/images/tiles/shippingbin/shippingbin" + (i + 1) + ".png"));
                 tiles[tileIndex].collision = true;
             }
 
             for (int i = 0; i < POND_W * POND_H; i++) {
                 int tileIndex = POND + i;
                 tiles[tileIndex] = new Tile();
-                tiles[tileIndex].image = ImageIO.read(getClass().getResourceAsStream("/tiles/pond/water" + (i + 1) + ".png"));
+                tiles[tileIndex].image = ImageIO.read(getClass().getResourceAsStream("/images/tiles/pond/pond" + (i + 1) + ".png"));
                 tiles[tileIndex].collision = true;
             }
 
