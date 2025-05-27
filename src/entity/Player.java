@@ -4,9 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import main.KeyHandler;
 import main.GamePanel;
+import main.KeyHandler;
 
 public class Player extends Entity{
     
@@ -32,12 +31,12 @@ public class Player extends Entity{
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
         solidArea = new Rectangle();
-        solidArea.x = 1;
-        solidArea.y = 1;
+        solidArea.x = 0;
+        solidArea.y = 0;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 44;
-        solidArea.height = 44;
+        solidArea.width = 48;
+        solidArea.height = 48;
 
         setDefaultValues();
         getPlayerImage();
