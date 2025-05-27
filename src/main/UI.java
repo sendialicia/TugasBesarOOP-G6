@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 // import java.awt.RenderingHints;
@@ -280,17 +281,9 @@ public class UI {
         g2.drawString(text, x, y);
         g2.setStroke(new BasicStroke(3));
         if(commandNum == 0) {
-            g2.setColor(new Color(1, 137, 180, 150));
-            g2.fillRect(x+290, y - 40, 150, 50);
-            g2.setColor(new Color(255, 255, 255));
-            g2.drawString(text, x, y);
-            g2.drawRect(x+290, y - 40, 150, 50);
+            drawPartialBorderText(g2, text, "Male", x, y, 15, Color.WHITE, Color.WHITE, new Color(1, 137, 180, 150));
         } else if(commandNum == 1) {
-            g2.setColor(new Color(242, 1, 108, 150));
-            g2.fillRect(x+505, y - 40, 150, 50);
-            g2.setColor(new Color(255, 255, 255));
-            g2.drawString(text, x, y);
-            g2.drawRect(x+505, y - 40, 150, 50);
+            drawPartialBorderText(g2, text, "Female", x, y, 15, Color.WHITE, Color.WHITE, new Color(242, 1, 108, 150));
         }
     }
 
@@ -339,6 +332,36 @@ public class UI {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidth/2 - length/2;
         return x;
+    }
+
+    public void drawPartialBorderText(Graphics2D g2, String fullText, String targetText, int x, int y, int padding, Color textColor, Color borderColor, Color backgroundColor) {
+        FontMetrics fm = g2.getFontMetrics();
+
+        // Measure width up to the target word
+        int prefixWidth = fm.stringWidth(fullText.substring(0, fullText.indexOf(targetText)));
+        int targetWidth = fm.stringWidth(targetText);
+        int textHeight = fm.getAscent();
+
+        // Draw full string
+        g2.setColor(Color.WHITE);
+        g2.drawString(fullText, x, y);
+
+        // Draw border around target word
+        int rectX = x + prefixWidth - padding;
+        int rectY = y - textHeight - padding + fm.getDescent();
+        int rectWidth = targetWidth + padding * 2;
+        int rectHeight = textHeight + padding * 2;
+
+        g2.setColor(backgroundColor); // background
+        g2.fillRect(rectX, rectY, rectWidth, rectHeight);
+
+        g2.setColor(borderColor); // border
+        g2.setStroke(new BasicStroke(2));
+        g2.drawRect(rectX, rectY, rectWidth, rectHeight);
+
+        // Redraw the target word on top
+        g2.setColor(textColor); 
+        g2.drawString(fullText, x, y);
     }
 
 }

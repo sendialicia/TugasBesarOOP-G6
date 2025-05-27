@@ -102,6 +102,7 @@ public class KeyHandler implements KeyListener{
                 gp.ui.commandNum = 1; // Female
             } else if (code == KeyEvent.VK_ENTER) {
                 gp.gameState = gp.playState;
+                gp.playMusic(0); // Start background music
             }
         }
 

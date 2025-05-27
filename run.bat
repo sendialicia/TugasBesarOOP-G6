@@ -12,4 +12,3 @@ echo Running the program...
 java -cp out;res main.Main
 
 pause
-  
