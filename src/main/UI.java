@@ -16,6 +16,9 @@ public class UI {
     int messageCounter = 0;
     public boolean gameFinished = false;
 
+    public StringBuilder playerName = new StringBuilder();
+    private boolean nameEntered = false;
+
     public int commandNum = 0;
 
     double playTime;
@@ -31,7 +34,6 @@ public class UI {
     }
 
     public void showMessage(String text) {
-        
         message = text;
         messageOn = true;
     }
@@ -46,6 +48,10 @@ public class UI {
         if(gp.gameState == gp.titleState)
         {
             drawTitleScreen();
+        }
+
+        if (gp.gameState == gp.nameInputState){
+            drawInputNameScreen();
         }
 
         if(gp.gameState == gp.playState) {
@@ -105,6 +111,42 @@ public class UI {
         g2.drawString(text, x, y);
         if (commandNum == 2){
             g2.drawString(">", x-gp.tileSize, y);
+        }
+    }
+
+    public void drawInputNameScreen() {
+        g2.setColor(new Color(0,0,0));
+        g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
+
+        // TITLE NAME
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "SPAKBOR HILLS";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize * 3;
+
+        // SHADOW
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+5, y+5);
+
+        // COLOR
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+
+        // INPUT NAME
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 48F));
+        text = "Enter your name:";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 3;
+        g2.drawString(text, x, y);
+
+        String nameDisplay = playerName.toString() + (System.currentTimeMillis() / 500 % 2 == 0 ? "_" : ""); // Blinking cursor
+        x = getXforCenteredText(nameDisplay);
+        y += gp.tileSize * 2;
+        g2.drawString(nameDisplay, x, y);
+
+        if (nameEntered) {
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+            g2.drawString("Press ENTER to continue", getXforCenteredText("Press ENTER to continue"), y + gp.tileSize * 2);
         }
     }
 
