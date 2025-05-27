@@ -5,10 +5,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 // import java.awt.RenderingHints;
 // import java.text.DecimalFormat;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 
 
 public class UI {
@@ -24,6 +27,7 @@ public class UI {
     public StringBuilder farmName = new StringBuilder();
     public String currentDialogue;
     public int commandNum = 0;
+    public BufferedImage titleBackground;
 
     // double playTime;
     // DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -36,7 +40,7 @@ public class UI {
             maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
             is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
             purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
-
+            titleBackground = ImageIO.read(getClass().getResourceAsStream("/backgrounds/Title Screen BG.png"));
         } catch (FontFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -105,8 +109,7 @@ public class UI {
 
     public void drawTitleScreen() {
 
-        g2.setColor(new Color(70, 120, 80));
-        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
 
         // TITLE NAME
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
@@ -129,9 +132,17 @@ public class UI {
 
         // MENU
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+        Color c = new Color(0, 0, 0, 210);
+        g2.setColor(c);
+        g2.fillRoundRect(195, 335, 350, 200, 35, 35);
+        c = new Color(255, 255, 255);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(200, 340, 340, 190, 25, 25);
 
         text = "NEW GAME";
         x = getXforCenteredText(text);
+        int x2 = getXforCenteredText(text); // For the ">" symbol
         y += gp.tileSize*3.5;
         g2.drawString(text, x, y);
         if(commandNum == 0) {
@@ -143,7 +154,7 @@ public class UI {
         y += gp.tileSize;
         g2.drawString(text, x, y);
         if(commandNum == 1) {
-            g2.drawString(">", x-gp.tileSize, y);
+            g2.drawString(">", x2-gp.tileSize, y);
         }
 
         text = "QUIT";
@@ -151,12 +162,15 @@ public class UI {
         y += gp.tileSize;
         g2.drawString(text, x, y);
         if(commandNum == 2) {
-            g2.drawString(">", x-gp.tileSize, y);
+            g2.drawString(">", x2-gp.tileSize, y);
         }
     }
 
     public void drawFarmNameScreen() {
-        g2.setColor(new Color(0,0,0));
+
+        g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
+
+        g2.setColor(new Color(0,0,0, 170));
         g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
 
         // TITLE NAME
@@ -187,7 +201,10 @@ public class UI {
     }
 
     public void drawInputNameScreen() {
-        g2.setColor(new Color(0,0,0));
+
+        g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
+
+        g2.setColor(new Color(0,0,0, 170));
         g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
 
         // TITLE NAME
@@ -216,14 +233,17 @@ public class UI {
         y += gp.tileSize + 10;
         g2.drawString(nameDisplay, x, y);
 
-        text = "Choose gender:    Male    /    Female";
+        text = "Choose gender:    Male    /   Female";
         x = getXforCenteredText(text);
         y += gp.tileSize * 2;
         g2.drawString(text, x, y);
     }
 
     public void drawInputGenderScreen() {
-        g2.setColor(new Color(0,0,0));
+
+        g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
+
+        g2.setColor(new Color(0,0,0, 170));
         g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
 
         // TITLE NAME
@@ -254,15 +274,23 @@ public class UI {
 
         // INPUT GENDER
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 48F));
-        text = "Choose gender:    Male    /    Female";
+        text = "Choose gender:    Male    /   Female";
         x = getXforCenteredText(text);
         y += gp.tileSize * 2;
         g2.drawString(text, x, y);
+        g2.setStroke(new BasicStroke(3));
         if(commandNum == 0) {
-            g2.setColor(Color.WHITE);
+            g2.setColor(new Color(1, 137, 180, 150));
+            g2.fillRect(x+290, y - 40, 150, 50);
+            g2.setColor(new Color(255, 255, 255));
+            g2.drawString(text, x, y);
             g2.drawRect(x+290, y - 40, 150, 50);
         } else if(commandNum == 1) {
-            g2.drawRect(x+515, y - 40, 150, 50);
+            g2.setColor(new Color(242, 1, 108, 150));
+            g2.fillRect(x+505, y - 40, 150, 50);
+            g2.setColor(new Color(255, 255, 255));
+            g2.drawString(text, x, y);
+            g2.drawRect(x+505, y - 40, 150, 50);
         }
     }
 

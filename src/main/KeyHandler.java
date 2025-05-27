@@ -74,7 +74,6 @@ public class KeyHandler implements KeyListener{
             }
         }
 
-
         // NAME STATE
         if (gp.gameState == gp.nameInputState) {
             if (code == KeyEvent.VK_BACK_SPACE) {
@@ -125,6 +124,10 @@ public class KeyHandler implements KeyListener{
                 rightPressed = true;
             }
     
+            if(code == KeyEvent.VK_R) {
+                gp.tileM.loadMap("/maps/map.txt");
+            }
+
             if(code == KeyEvent.VK_P) {
                 gp.gameState = gp.pauseState;
             }
