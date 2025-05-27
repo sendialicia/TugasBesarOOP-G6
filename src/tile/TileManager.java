@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import main.GamePanel;
 import main.UtilityTool;
+import main.GamePanel;
 
 public class TileManager {
     

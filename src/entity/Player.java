@@ -4,30 +4,28 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-import main.GamePanel;
 import main.KeyHandler;
-import main.UtilityTool;
+import main.GamePanel;
 
 public class Player extends Entity{
     
-    GamePanel gp;
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
-    // public int hasKey = 0;
     int standCounter = 0;
     boolean moving = false;
     int pixelCounter = 0;
-    PlayerAttribute pa;
 
-    public Player(GamePanel gp, KeyHandler keyH, PlayerAttribute pa) {
-        this.gp = gp;
+    // STATUS
+    String name;
+    String farmName;
+
+    public Player(GamePanel gp, KeyHandler keyH) {
+
+        super(gp);
+
         this.keyH = keyH;
-        this.pa = pa;
 
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
@@ -51,35 +49,38 @@ public class Player extends Entity{
         direction = "down";
     }
 
-    public void getPlayerImage() {
-        up1 = setup("mc_up_left");
-        up2 = setup("mc_up_right");
-        down1 = setup("mc_down_left");
-        down2 = setup("mc_down_right");
-        left1 = setup("mc_left");
-        left2 = setup("mc_walk_left");
-        right1 = setup("mc_right");
-        right2 = setup("mc_walk_right");
+    public String getName() {
+        return name;
     }
-    
-    public BufferedImage setup(String imageName) {
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
 
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFarmName() {
+        return farmName;
+    }
+
+    public void setFarmName(String farmName) {
+        this.farmName = farmName;
+    }
+
+    public void getPlayerImage() {
+        up1 = setup("player", "mc_up_left");
+        up2 = setup("player", "mc_up_right");
+        down1 = setup("player", "mc_down_left");
+        down2 = setup("player", "mc_down_right");
+        left1 = setup("player", "mc_left");
+        left2 = setup("player", "mc_walk_left");
+        right1 = setup("player", "mc_right");
+        right2 = setup("player", "mc_walk_right");
     }
 
     public void update() {
 
         if(moving == false) {
             if(keyH.upPressed == true || keyH.downPressed == true || 
-               keyH.leftPressed == true || keyH.rightPressed == true) {
+               keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) {
                  
                 if(keyH.upPressed == true) {
                     direction = "up";
@@ -111,8 +112,13 @@ public class Player extends Entity{
         }
 
         if(moving == true) {
+
+            // CHECK NPC COLLISION
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
+
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if(collisionOn == false) {
+            if(collisionOn == false && keyH.enterPressed == false) {
                 switch(direction) {
                     case "up": worldY -= speed; break;
                     case "down": worldY += speed; break;
@@ -120,6 +126,8 @@ public class Player extends Entity{
                     case "right": worldX += speed; break;
                 }
             }
+
+            gp.keyH.enterPressed = false;
     
             spriteCounter++;
             if(spriteCounter > 12) {
@@ -141,8 +149,22 @@ public class Player extends Entity{
     }
 
     public void pickUpObject(int i) {
+
         if(i != 999) {
+                
         }
+    }
+
+    public void interactNPC(int i) {
+
+        if(i != 999) {
+            
+            if(gp.keyH.enterPressed == true) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
+        }
+        gp.keyH.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
