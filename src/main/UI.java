@@ -21,7 +21,7 @@ public class UI {
     int messageCounter = 0;
     public boolean gameFinished = false;
     public StringBuilder playerName = new StringBuilder();
-    private boolean nameEntered = false;
+    public StringBuilder farmName = new StringBuilder();
     public String currentDialogue;
     public int commandNum = 0;
 
@@ -63,8 +63,19 @@ public class UI {
             drawTitleScreen();
         }
 
+        // NAME INPUT STATE
         if (gp.gameState == gp.nameInputState){
             drawInputNameScreen();
+        }
+
+        // GENDER INPUT STATE
+        if (gp.gameState == gp.genderInputState){
+            drawInputGenderScreen();
+        }
+
+        // FARM NAME INPUT STATE
+        if (gp.gameState == gp.farmNameInputState){
+            drawFarmNameScreen();
         }
 
         // PLAY STATE
@@ -80,6 +91,16 @@ public class UI {
         if(gp.gameState == gp.dialogueState) {
             drawDialogueScreen();
         }
+
+        // // VIEW ATTRIBUTE STATE
+        // if(gp.gameState == gp.viewAttributeState) {
+        //     drawViewAttribute();
+        // }
+
+        // // VIEW INVENTORY STATE
+        // if(gp.gameState == gp.viewInventoryState) {
+        //     drawViewInventory();
+        // }
     }
 
     public void drawTitleScreen() {
@@ -134,6 +155,37 @@ public class UI {
         }
     }
 
+    public void drawFarmNameScreen() {
+        g2.setColor(new Color(0,0,0));
+        g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
+
+        // TITLE NAME
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "STECU VALLEY";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize * 3;
+
+        // SHADOW
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+5, y+5);
+
+        // COLOR
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+
+        // INPUT NAME
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 48F));
+        text = "Enter your farm name:";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 3;
+        g2.drawString(text, x, y);
+
+        String farmNameDisplay = farmName.toString() + (System.currentTimeMillis() / 500 % 2 == 0 ? "_" : ""); // Blinking cursor
+        x = getXforCenteredText(farmNameDisplay);
+        y += gp.tileSize + 10;
+        g2.drawString(farmNameDisplay, x, y);
+    }
+
     public void drawInputNameScreen() {
         g2.setColor(new Color(0,0,0));
         g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
@@ -161,12 +213,56 @@ public class UI {
 
         String nameDisplay = playerName.toString() + (System.currentTimeMillis() / 500 % 2 == 0 ? "_" : ""); // Blinking cursor
         x = getXforCenteredText(nameDisplay);
-        y += gp.tileSize * 2;
+        y += gp.tileSize + 10;
         g2.drawString(nameDisplay, x, y);
 
-        if (nameEntered) {
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
-            g2.drawString("Press ENTER to continue", getXforCenteredText("Press ENTER to continue"), y + gp.tileSize * 2);
+        text = "Choose gender:    Male    /    Female";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 2;
+        g2.drawString(text, x, y);
+    }
+
+    public void drawInputGenderScreen() {
+        g2.setColor(new Color(0,0,0));
+        g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
+
+        // TITLE NAME
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "STECU VALLEY";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize * 3;
+
+        // SHADOW
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+5, y+5);
+
+        // COLOR
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+
+        // INPUT NAME
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 48F));
+        text = "Enter your name:";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 3;
+        g2.drawString(text, x, y);
+
+        String nameDisplay = playerName.toString();
+        x = getXforCenteredText(nameDisplay);
+        y += gp.tileSize + 10;
+        g2.drawString(nameDisplay, x, y);
+
+        // INPUT GENDER
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 48F));
+        text = "Choose gender:    Male    /    Female";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 2;
+        g2.drawString(text, x, y);
+        if(commandNum == 0) {
+            g2.setColor(Color.WHITE);
+            g2.drawRect(x+290, y - 40, 150, 50);
+        } else if(commandNum == 1) {
+            g2.drawRect(x+515, y - 40, 150, 50);
         }
     }
 

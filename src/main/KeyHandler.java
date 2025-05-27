@@ -41,9 +41,9 @@ public class KeyHandler implements KeyListener{
             }
 
              if(code == KeyEvent.VK_ENTER) {
+
                 if(gp.ui.commandNum == 0) {
-                    gp.gameState = gp.nameInputState;
-                    gp.playMusic(0); // Start background music
+                    gp.gameState = gp.farmNameInputState;
                 }
                 if(gp.ui.commandNum == 1) {
                     // Add later
@@ -51,33 +51,60 @@ public class KeyHandler implements KeyListener{
                 if(gp.ui.commandNum == 2) {
                     System.exit(0);
                 }
-                
             }
         }
-        if (gp.gameState == gp.nameInputState) {
-                if (code == KeyEvent.VK_BACK_SPACE) {
-                    if (gp.ui.playerName.length() > 0) {
-                        gp.ui.playerName.deleteCharAt(gp.ui.playerName.length() - 1);
-                    }
-                } else if (code == KeyEvent.VK_ENTER) {
-                    if (gp.ui.playerName.length() > 0) {
-                        gp.gameState = gp.playState;
-                    } else {
-                        System.out.println("Name input: ENTER pressed, but name is empty. Please enter a name.");
-                    }
 
-                } else {
-                    char typedChar = e.getKeyChar();
-                    if (gp.ui.playerName.length() < 10 && 
-                        (Character.isLetterOrDigit(typedChar) || typedChar == ' ' || Character.isISOControl(typedChar))) { // Allowing letters, digits, space. ISOControl might catch some other useful keys if not filtered by getKeyCode()
-                        if (code != KeyEvent.VK_ENTER && code != KeyEvent.VK_BACK_SPACE) {
-                            if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED && !Character.isISOControl(e.getKeyChar())) {
-                                gp.ui.playerName.append(e.getKeyChar());
-                            }
-                        }
-                    }
+        // FARM NAME STATE
+        if (gp.gameState == gp.farmNameInputState) {
+            if (code == KeyEvent.VK_BACK_SPACE) {
+                if (gp.ui.farmName.length() > 0) {
+                    gp.ui.farmName.deleteCharAt(gp.ui.farmName.length() - 1);
+                }
+            } else if (code == KeyEvent.VK_ENTER) {
+                if (gp.ui.farmName.length() > 0) {
+                    gp.gameState = gp.nameInputState;
+                    gp.ui.commandNum = 0; // reset to choose male/female
+                    code = KeyEvent.VK_UNDEFINED; // Prevent further processing of Enter key
+                }
+            } else {
+                char c = e.getKeyChar();
+                if (Character.isLetterOrDigit(c) && gp.ui.farmName.length() < 12) {
+                    gp.ui.farmName.append(c);
                 }
             }
+        }
+
+
+        // NAME STATE
+        if (gp.gameState == gp.nameInputState) {
+            if (code == KeyEvent.VK_BACK_SPACE) {
+                if (gp.ui.playerName.length() > 0) {
+                    gp.ui.playerName.deleteCharAt(gp.ui.playerName.length() - 1);
+                }
+            } else if (code == KeyEvent.VK_ENTER) {
+                if (gp.ui.playerName.length() > 0) {
+                    gp.gameState = gp.genderInputState;
+                    gp.ui.commandNum = 0; // reset to choose male/female
+                    code = KeyEvent.VK_UNDEFINED; // Prevent further processing of Enter key
+                }
+            } else {
+                char c = e.getKeyChar();
+                if (Character.isLetterOrDigit(c) && gp.ui.playerName.length() < 12) {
+                    gp.ui.playerName.append(c);
+                }
+            }
+        }
+
+        // GENDER STATE
+        if (gp.gameState == gp.genderInputState) {
+            if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A) {
+                gp.ui.commandNum = 0; // Male
+            } else if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D) {
+                gp.ui.commandNum = 1; // Female
+            } else if (code == KeyEvent.VK_ENTER) {
+                gp.gameState = gp.playState;
+            }
+        }
 
         // PLAY STATE
         if(gp.gameState == gp.playState) {

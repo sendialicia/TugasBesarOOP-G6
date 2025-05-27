@@ -49,9 +49,13 @@ public class GamePanel extends JPanel implements Runnable{
     public int gameState;
     public final int titleState = 0;
     public final int nameInputState = 1;
-    public final int playState = 2;
-    public final int pauseState = 3;
-    public final int dialogueState = 4;
+    public final int genderInputState = 2;
+    public final int farmNameInputState = 3;
+    public final int playState = 4;
+    public final int pauseState = 5;
+    public final int dialogueState = 6;
+    public final int viewAttributeState = 7;
+    public final int viewInventoryState = 8;
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set the size of this class (JPanel)
@@ -135,8 +139,12 @@ public class GamePanel extends JPanel implements Runnable{
         // STATE-BASED DRAWING
         if (gameState == titleState) {
             ui.draw(g2); // UI class will handle drawing specific title screen elements
+        } else if (gameState == farmNameInputState) {
+            ui.draw(g2); // UI class will handle drawing specific name input screen elements
         } else if (gameState == nameInputState) {
             ui.draw(g2); // UI class will handle drawing specific name input screen elements
+        } else if (gameState == genderInputState) {
+            ui.draw(g2);
         } else { 
             // For other states like playState, pauseState, etc.
             

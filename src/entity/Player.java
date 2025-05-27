@@ -20,6 +20,7 @@ public class Player extends Entity{
     // STATUS
     String name;
     String farmName;
+    String gender;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -35,8 +36,8 @@ public class Player extends Entity{
         solidArea.y = 1;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 46;
-        solidArea.height = 46;
+        solidArea.width = 44;
+        solidArea.height = 44;
 
         setDefaultValues();
         getPlayerImage();
@@ -65,6 +66,14 @@ public class Player extends Entity{
         this.farmName = farmName;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public void getPlayerImage() {
         up1 = setup("player", "mc_up_left");
         up2 = setup("player", "mc_up_right");
@@ -80,18 +89,18 @@ public class Player extends Entity{
 
         if(moving == false) {
             if(keyH.upPressed == true || keyH.downPressed == true || 
-               keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) {
+               keyH.leftPressed == true || keyH.rightPressed == true) {
                  
-                if(keyH.upPressed == true) {
+                if(keyH.upPressed == true && keyH.enterPressed == false) {
                     direction = "up";
-                } else if(keyH.downPressed == true) {
+                } else if(keyH.downPressed == true && keyH.enterPressed == false) {
                     direction = "down";
-                } else if(keyH.leftPressed == true) {
+                } else if(keyH.leftPressed == true && keyH.enterPressed == false) {
                     direction = "left";
-                } else if(keyH.rightPressed == true) {
+                } else if(keyH.rightPressed == true && keyH.enterPressed == false) {
                     direction = "right";
                 }
-                
+
                 moving = true;
 
                 // CHECK TILE COLLISION
@@ -101,6 +110,11 @@ public class Player extends Entity{
                 // CHECK OBJECT COLLISION
                 int objIndex = gp.cChecker.checkObject(this, true);
                 pickUpObject(objIndex);
+
+                // CHECK NPC COLLISION
+                int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+                interactNPC(npcIndex);
+
             } else {
                 standCounter++;
 
@@ -111,11 +125,12 @@ public class Player extends Entity{
             }
         }
 
-        if(moving == true) {
-
-            // CHECK NPC COLLISION
+        if (keyH.enterPressed) {
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
+        }
+
+        if(moving == true) {
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false && keyH.enterPressed == false) {
