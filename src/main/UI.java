@@ -20,6 +20,8 @@ public class UI {
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
+    public StringBuilder playerName = new StringBuilder();
+    private boolean nameEntered = false;
     public String currentDialogue;
     public int commandNum = 0;
 
@@ -43,7 +45,6 @@ public class UI {
     }
 
     public void showMessage(String text) {
-        
         message = text;
         messageOn = true;
     }
@@ -60,6 +61,10 @@ public class UI {
         // TITLE STATE
         if(gp.gameState == gp.titleState) {
             drawTitleScreen();
+        }
+
+        if (gp.gameState == gp.nameInputState){
+            drawInputNameScreen();
         }
 
         // PLAY STATE
@@ -85,7 +90,7 @@ public class UI {
         // TITLE NAME
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
         String text = "STECU VALLEY";
-        int x = getXForCenteredText(text);
+        int x = getXforCenteredText(text);
         int y = gp.tileSize*3;
 
         // SHADOW
@@ -105,7 +110,7 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
 
         text = "NEW GAME";
-        x = getXForCenteredText(text);
+        x = getXforCenteredText(text);
         y += gp.tileSize*3.5;
         g2.drawString(text, x, y);
         if(commandNum == 0) {
@@ -113,7 +118,7 @@ public class UI {
         }
 
         text = "LOAD GAME";
-        x = getXForCenteredText(text);
+        x = getXforCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text, x, y);
         if(commandNum == 1) {
@@ -121,7 +126,7 @@ public class UI {
         }
 
         text = "QUIT";
-        x = getXForCenteredText(text);
+        x = getXforCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text, x, y);
         if(commandNum == 2) {
@@ -129,11 +134,47 @@ public class UI {
         }
     }
 
+    public void drawInputNameScreen() {
+        g2.setColor(new Color(0,0,0));
+        g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
+
+        // TITLE NAME
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "STECU VALLEY";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize * 3;
+
+        // SHADOW
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+5, y+5);
+
+        // COLOR
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+
+        // INPUT NAME
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 48F));
+        text = "Enter your name:";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 3;
+        g2.drawString(text, x, y);
+
+        String nameDisplay = playerName.toString() + (System.currentTimeMillis() / 500 % 2 == 0 ? "_" : ""); // Blinking cursor
+        x = getXforCenteredText(nameDisplay);
+        y += gp.tileSize * 2;
+        g2.drawString(nameDisplay, x, y);
+
+        if (nameEntered) {
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+            g2.drawString("Press ENTER to continue", getXforCenteredText("Press ENTER to continue"), y + gp.tileSize * 2);
+        }
+    }
+
     public void drawPauseScreen() {
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
         String text = "PAUSED";
-        int x = getXForCenteredText(text);
+        int x = getXforCenteredText(text);
         int y = gp.screenHeight/2;
         g2.drawString(text, x, y);
     }
@@ -170,7 +211,7 @@ public class UI {
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
     }
 
-    public int getXForCenteredText(String text) {
+    public int getXforCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidth/2 - length/2;
         return x;

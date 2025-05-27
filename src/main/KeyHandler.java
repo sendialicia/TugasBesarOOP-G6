@@ -42,7 +42,7 @@ public class KeyHandler implements KeyListener{
 
              if(code == KeyEvent.VK_ENTER) {
                 if(gp.ui.commandNum == 0) {
-                    gp.gameState = gp.playState;
+                    gp.gameState = gp.nameInputState;
                     gp.playMusic(0); // Start background music
                 }
                 if(gp.ui.commandNum == 1) {
@@ -54,6 +54,30 @@ public class KeyHandler implements KeyListener{
                 
             }
         }
+        if (gp.gameState == gp.nameInputState) {
+                if (code == KeyEvent.VK_BACK_SPACE) {
+                    if (gp.ui.playerName.length() > 0) {
+                        gp.ui.playerName.deleteCharAt(gp.ui.playerName.length() - 1);
+                    }
+                } else if (code == KeyEvent.VK_ENTER) {
+                    if (gp.ui.playerName.length() > 0) {
+                        gp.gameState = gp.playState;
+                    } else {
+                        System.out.println("Name input: ENTER pressed, but name is empty. Please enter a name.");
+                    }
+
+                } else {
+                    char typedChar = e.getKeyChar();
+                    if (gp.ui.playerName.length() < 10 && 
+                        (Character.isLetterOrDigit(typedChar) || typedChar == ' ' || Character.isISOControl(typedChar))) { // Allowing letters, digits, space. ISOControl might catch some other useful keys if not filtered by getKeyCode()
+                        if (code != KeyEvent.VK_ENTER && code != KeyEvent.VK_BACK_SPACE) {
+                            if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED && !Character.isISOControl(e.getKeyChar())) {
+                                gp.ui.playerName.append(e.getKeyChar());
+                            }
+                        }
+                    }
+                }
+            }
 
         // PLAY STATE
         if(gp.gameState == gp.playState) {
@@ -98,7 +122,7 @@ public class KeyHandler implements KeyListener{
         }
 
         // DEBUG
-        if(code == KeyEvent.VK_T) {
+        if(code == KeyEvent.VK_F12) {
             if(checkDrawTime == false) {
                 checkDrawTime = true;
             } else if(checkDrawTime == true) {

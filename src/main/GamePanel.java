@@ -1,14 +1,13 @@
 package main;
 
+import entity.Entity;
+import entity.Player;
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Color;
-
-import entity.Entity;
-import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -49,9 +48,10 @@ public class GamePanel extends JPanel implements Runnable{
     // GAME STATE
     public int gameState;
     public final int titleState = 0;
-    public final int playState = 1;
-    public final int pauseState = 2;
-    public final int dialogueState = 3;
+    public final int nameInputState = 1;
+    public final int playState = 2;
+    public final int pauseState = 3;
+    public final int dialogueState = 4;
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set the size of this class (JPanel)
@@ -103,6 +103,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         }
     }
+
     public void update(){
         if(gameState == playState) {
 
@@ -122,7 +123,6 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
     public void paintComponent(Graphics g){
-        
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
@@ -132,35 +132,42 @@ public class GamePanel extends JPanel implements Runnable{
             drawStart = System.nanoTime();
         }
 
-        // TITLE SCREEN
-        if(gameState == titleState) {
-            ui.draw(g2);
-        } 
+        // STATE-BASED DRAWING
+        if (gameState == titleState) {
+            ui.draw(g2); // UI class will handle drawing specific title screen elements
+        } else if (gameState == nameInputState) {
+            ui.draw(g2); // UI class will handle drawing specific name input screen elements
+        } else { 
+            // For other states like playState, pauseState, etc.
+            
+            // Draw game world elements (e.g., tiles, objects, player)
+            // Adjust this condition if some states (other than title/nameInput) shouldn't draw the world
+            if (gameState == playState || gameState == pauseState || gameState == dialogueState) { // Example: Draw world if playing or pause
+
+                // TILE
+                tileM.draw(g2);
         
-        // OTHERS
-        else {
-            // TILE
-            tileM.draw(g2);
-    
-            // OBJECT
-            for(int i = 0; i < obj.length; i++) {
-                if(obj[i] != null) {
-                    obj[i].draw(g2, this);
+                // OBJECT
+                for(int i = 0; i < obj.length; i++) {
+                    if(obj[i] != null) {
+                        obj[i].draw(g2, this);
+                    }
                 }
-            }
-    
-            // NPC
-            for(int i = 0; i < npc.length; i++) {
-                if(npc[i] != null) {
-                    npc[i].draw(g2);
+        
+                // NPC
+                for(int i = 0; i < npc.length; i++) {
+                    if(npc[i] != null) {
+                        npc[i].draw(g2);
+                    }
                 }
+
+                // PLAYER
+                player.draw(g2);
             }
-    
-            // PLAYER
-            player.draw(g2);
-    
-            // UI
-            ui.draw(g2);
+        
+            // Draw UI elements for these other states (e.g., HUD, pause menu)
+            // The UI.draw() method itself has conditions for what to draw based on gameState
+            ui.draw(g2); 
         }
 
 
