@@ -125,7 +125,7 @@ public class KeyHandler implements KeyListener{
             }
     
             if(code == KeyEvent.VK_R) {
-                gp.tileM.loadMap("/maps/map.txt");
+                gp.tileM.loadMap("/maps/farmMap.txt");
             }
 
             if(code == KeyEvent.VK_P) {

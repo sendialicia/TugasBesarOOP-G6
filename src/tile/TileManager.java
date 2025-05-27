@@ -23,13 +23,35 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/map.txt");
+        loadMap("/maps/farmMap.txt");
     }
 
     public void getTileImage() {
+        // PLACEHOLDER TILES
+        setup(1, "Tillable", false);
+        setup(2, "Tillable", false);
+        setup(3, "Tillable", false);
+        setup(4, "Tillable", false);
+        setup(5, "Tillable", false);
+        setup(6, "Tillable", false);
+        setup(7, "Tillable", false);
+        setup(8, "Tillable", false);
+        setup(9, "Tillable", false);
+        
         // MAP TILES
-        setup(10, "grass00", false);
-        setup(11, "water00", true);
+        setup(10, "Tillable", false);
+        setup(12, "DeepWater", true);
+        setup(13, "Water", true);
+        setup(14, "Brick", false);
+        setup(15, "BridgeCoverBrick", true);
+        setup(16, "RightEdgeWater", true);
+        setup(17, "FrontEdge", false);
+        setup(18, "Ground", true);
+        setup(19, "LeftEdgeWater", true);
+        setup(20, "RightEdgeDeepWater", true);
+        setup(21, "LeftEdgeDeepWater", true);
+        setup(22, "RightEdgeGround", true);
+        setup(23, "LeftEdgeGround", true);
     }
 
     public void setup(int index, String imageName, boolean collision) {

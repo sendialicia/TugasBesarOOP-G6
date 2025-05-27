@@ -17,9 +17,12 @@ public class Player extends Entity{
     int pixelCounter = 0;
 
     // STATUS
-    String name;
-    String farmName;
-    String gender;
+    private String name;
+    private String gender;
+    private int energy;
+    private String farmName;
+    private String partner;
+    private int gold;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -47,6 +50,8 @@ public class Player extends Entity{
         worldY = gp.tileSize * 21;
         speed = 4;
         direction = "down";
+        energy = 10000;
+        gold = 0;
     }
 
     public String getName() {
@@ -57,6 +62,22 @@ public class Player extends Entity{
         this.name = name;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
     public String getFarmName() {
         return farmName;
     }
@@ -65,12 +86,20 @@ public class Player extends Entity{
         this.farmName = farmName;
     }
 
-    public String getGender() {
-        return gender;
+    public String getPartner() {
+        return partner;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setPartner(String partner) {
+        this.partner = partner;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     public void getPlayerImage() {
