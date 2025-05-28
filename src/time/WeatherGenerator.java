@@ -30,4 +30,7 @@ public class WeatherGenerator {
     }
 
     public void seasonChange(){ generateRain(); }
+
+    @Override
+    public String toString(){ return "Weather : " + this.getWeatherToday(); }
 }

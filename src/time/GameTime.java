@@ -45,4 +45,7 @@ public class GameTime {
 
     public boolean isBefore(GameTime other){ return hour < other.getHour() || (hour == other.getHour() && min > other.getMinute()); }
     public boolean isAfter(GameTime other){ return hour > other.getHour() || (hour == other.getHour() && min < other.getMinute()); }
+
+    @Override
+    public String toString(){ return String.format("Time : %02d:%02d", hour, min); }
 }

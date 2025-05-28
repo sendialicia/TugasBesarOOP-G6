@@ -56,7 +56,7 @@ public class GameClock implements Runnable {
 
     public synchronized String getFormattedTime() { return time.toString(); }
     public synchronized String getFormattedDate() { return date.toString(); }
-    public synchronized String getTodayWeather() { return weather.getWeatherToday(); }
+    public synchronized String getFormattedWeather() { return weather.toString(); }
     
     public synchronized void pause() { paused = true; }
     public synchronized void resume() { paused = false; }

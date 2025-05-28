@@ -32,4 +32,9 @@ public class GameDate {
             season = (season + 1) % SEASON.length;
         }
     }
+
+    @Override
+    public String toString(){
+        return "Season " + this.getSeasonString() + " Day " + this.day;
+    }
 }

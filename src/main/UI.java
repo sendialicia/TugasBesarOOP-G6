@@ -7,12 +7,10 @@ import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-// import java.awt.RenderingHints;
-// import java.text.DecimalFormat;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.imageio.ImageIO;
+import time.GameClock;
 
 
 public class UI {
@@ -85,6 +83,7 @@ public class UI {
 
         // PLAY STATE
         if(gp.gameState == gp.playState) {
+            drawGameTime();
             // Do playState stuff later
         } 
         // PAUSE STATE
@@ -326,6 +325,18 @@ public class UI {
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+    }
+
+    private void drawGameTime() {
+        String dateStr = GameClock.getInstance().getFormattedDate();
+        String timeStr = GameClock.getInstance().getFormattedTime();
+        String weatherStr = GameClock.getInstance().getFormattedWeather();
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        g2.setColor(Color.WHITE);
+        g2.drawString(dateStr, 20, 40);
+        g2.drawString(timeStr, 20, 80);
+        g2.drawString(weatherStr, 20, 120);
     }
 
     public int getXforCenteredText(String text) {

@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.JFrame;
+import time.GameClock;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,6 +17,8 @@ public class Main {
 
         window.setLocationRelativeTo(null); // Display window at center of screen
         window.setVisible(true);
+
+        new Thread(GameClock.getInstance()).start();
 
         gamePanel.setupGame();
         gamePanel.startGameThread();
