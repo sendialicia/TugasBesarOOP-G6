@@ -1,8 +1,8 @@
 package entity;
 
+import entity.npc.NPC;
 import items.Edible;
 import items.Inventory;
-import items.ItemFactory;
 import items.Items;
 import items.crops.Crops;
 import items.equipments.Equipments;
@@ -10,23 +10,16 @@ import items.fish.Fish;
 import items.food.Food;
 import items.miscellaneous.Miscellaneous;
 import items.seeds.Seeds;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import entity.npc.NPC;
 import main.GamePanel;
 import main.KeyHandler;
-import object.OBJ_Bin;
-import tile.Tile;
 import time.GameClock;
 import time.GameClockSnapshot;
-import time.GameTime;
 
 public class Player extends Entity{
     
@@ -104,12 +97,11 @@ public class Player extends Entity{
     public String getGender() { return gender; }
     public int getEnergy() { return energy; }
     public String getFarmName() { return farmName; }
-    public String getPartner() { return partner; }
+    public NPC getPartner() { return partner; }
     public int getGold() { return gold; }
     public Inventory getInventory() { return inventory; }
     public String getFavItem() {
-        return "The Legends of Spakbor"; // Placeholder for favorite item logic
-        // return inventory.getMostItem();
+        return inventory.getMostItem();
     }
 
     public void addItemToInventory(Items item, int quantity) { inventory.addItem(item, quantity); }
@@ -212,120 +204,120 @@ public class Player extends Entity{
     }
 
     // Actions
-    public void tilling(Tile tile) {
-        if (tile.isTillable()) {
-            Equipments hoe = (Equipments) (inventory.get("Hoe"));
-            hoe.onUse(this);
-            tile.setDeployedObjectChar('t');
-            System.out.println("You have tilled the land.");
-            this.energy -= 5;
-            gameClock.advanceTime(5);
-            System.out.println("Time skips five minutes.");
-        } else {
-            System.out.println("This land is not tillable.");
-        }
-    }
+    // public void tilling(Tile tile) {
+    //     if (tile.isTillable()) {
+    //         Equipments hoe = (Equipments) (inventory.get("Hoe"));
+    //         hoe.onUse(this);
+    //         tile.setDeployedObjectChar('t');
+    //         System.out.println("You have tilled the land.");
+    //         this.energy -= 5;
+    //         gameClock.advanceTime(5);
+    //         System.out.println("Time skips five minutes.");
+    //     } else {
+    //         System.out.println("This land is not tillable.");
+    //     }
+    // }
 
-    public void recoverLand(Tile tile) {
-        if (tile.isTilled()) {
-            Equipments pickaxe = (Equipments) (inventory.get("Hoe"));
-            pickaxe.onUse(this);
-            tile.setDeployedObjectChar('.');
-            System.out.println("You have recovered the land.");
-            this.energy -= 5;
-            gameClock.advanceTime(5);
-            System.out.println("Time skips five minutes.");
-        } else {
-            System.out.println("This land is not recoverable.");
-        }
-    }
+    // public void recoverLand(Tile tile) {
+    //     if (tile.isTilled()) {
+    //         Equipments pickaxe = (Equipments) (inventory.get("Hoe"));
+    //         pickaxe.onUse(this);
+    //         tile.setDeployedObjectChar('.');
+    //         System.out.println("You have recovered the land.");
+    //         this.energy -= 5;
+    //         gameClock.advanceTime(5);
+    //         System.out.println("Time skips five minutes.");
+    //     } else {
+    //         System.out.println("This land is not recoverable.");
+    //     }
+    // }
 
-    public Tile planting(Tile tile) {
-        if (!tile.isTilled()) {
-            System.out.println("This land is not tillable or the seed is invalid.");
-            return tile;
-        }
+    // public Tile planting(Tile tile) {
+    //     if (!tile.isTilled()) {
+    //         System.out.println("This land is not tillable or the seed is invalid.");
+    //         return tile;
+    //     }
 
-        List<Seeds> seedsList = new ArrayList<>();
-        List<Integer> amounts = new ArrayList<>();
-        for (Items item : inventory.getItems().keySet()) {
-            if (item instanceof Seeds) {
-                seedsList.add((Seeds) item);
-                amounts.add(getItemQuantity(item));
-            }
-        }
+    //     List<Seeds> seedsList = new ArrayList<>();
+    //     List<Integer> amounts = new ArrayList<>();
+    //     for (Items item : inventory.getItems().keySet()) {
+    //         if (item instanceof Seeds) {
+    //             seedsList.add((Seeds) item);
+    //             amounts.add(getItemQuantity(item));
+    //         }
+    //     }
 
-        if (seedsList.isEmpty()) {
-            System.out.println("You have no seeds to plant.");
-            return tile;
-        }
+    //     if (seedsList.isEmpty()) {
+    //         System.out.println("You have no seeds to plant.");
+    //         return tile;
+    //     }
 
-        System.out.println("Available seeds:");
-        for (int i = 0; i < seedsList.size(); i++) {
-            System.out.println((i + 1) + ". " + seedsList.get(i).getName() + " (x" + amounts.get(i) + ")");
-        }
+    //     System.out.println("Available seeds:");
+    //     for (int i = 0; i < seedsList.size(); i++) {
+    //         System.out.println((i + 1) + ". " + seedsList.get(i).getName() + " (x" + amounts.get(i) + ")");
+    //     }
 
-        System.out.print("Enter the number of the seed you want to plant: ");
-        int choice;
-        try {
-            choice = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input.");
-            return tile;
-        }
+    //     System.out.print("Enter the number of the seed you want to plant: ");
+    //     int choice;
+    //     try {
+    //         choice = Integer.parseInt(scanner.nextLine());
+    //     } catch (NumberFormatException e) {
+    //         System.out.println("Invalid input.");
+    //         return tile;
+    //     }
 
-        if (choice < 1 || choice > seedsList.size()) {
-            System.out.println("Invalid choice.");
-            return tile;
-        }
+    //     if (choice < 1 || choice > seedsList.size()) {
+    //         System.out.println("Invalid choice.");
+    //         return tile;
+    //     }
 
-        Seeds selectedSeed = seedsList.get(choice - 1);
+    //     Seeds selectedSeed = seedsList.get(choice - 1);
 
-        tile = new PlantedTile(selectedSeed, gameClock.getDate().getDay());
-        removeItemFromInventory(selectedSeed, 1);
-        System.out.println("You have planted " + selectedSeed.getName() + ".");
-        this.energy -= 5;
-        gameClock.advanceTime(5);
-        System.out.println("Time skips five minutes.");
-        return tile;
-    }
+    //     tile = new PlantedTile(selectedSeed, gameClock.getDate().getDay());
+    //     removeItemFromInventory(selectedSeed, 1);
+    //     System.out.println("You have planted " + selectedSeed.getName() + ".");
+    //     this.energy -= 5;
+    //     gameClock.advanceTime(5);
+    //     System.out.println("Time skips five minutes.");
+    //     return tile;
+    // }
 
-    public void watering(Tile tile) {
-        if (tile.isPlanted()){
-            PlantedTile plantedTile = (PlantedTile) tile;
-            Equipments wateringCan = (Equipments) inventory.get("Watering Can");
-            wateringCan.onUse(this);
-            plantedTile.water(gameClock.getDate().getDay());
-            this.energy -= 5;
-            gameClock.advanceTime(5);
-            System.out.println("Time skips five minutes.");
-        } else System.out.println("You can't water this tile");
-    }
+    // public void watering(Tile tile) {
+    //     if (tile.isPlanted()){
+    //         PlantedTile plantedTile = (PlantedTile) tile;
+    //         Equipments wateringCan = (Equipments) inventory.get("Watering Can");
+    //         wateringCan.onUse(this);
+    //         plantedTile.water(gameClock.getDate().getDay());
+    //         this.energy -= 5;
+    //         gameClock.advanceTime(5);
+    //         System.out.println("Time skips five minutes.");
+    //     } else System.out.println("You can't water this tile");
+    // }
 
-    public void harvesting(Tile tile) {
-        if (tile.isHarvestable()){
-            PlantedTile plantedTile = (PlantedTile) tile;
-            if (plantedTile.isReadyToHarvest()){
-                String seedName = plantedTile.getSeed().getName();
-                String cropName;
+    // public void harvesting(Tile tile) {
+    //     if (tile.isHarvestable()){
+    //         PlantedTile plantedTile = (PlantedTile) tile;
+    //         if (plantedTile.isReadyToHarvest()){
+    //             String seedName = plantedTile.getSeed().getName();
+    //             String cropName;
 
-                if (seedName != null && seedName.endsWith(" Seeds")) cropName = seedName.substring(0, seedName.length() - " Seeds".length());
-                else cropName = seedName;
+    //             if (seedName != null && seedName.endsWith(" Seeds")) cropName = seedName.substring(0, seedName.length() - " Seeds".length());
+    //             else cropName = seedName;
 
-                ItemFactory cropsFactory = new ItemFactory();
-                cropsFactory.loadCrops();
+    //             ItemFactory cropsFactory = new ItemFactory();
+    //             cropsFactory.loadCrops();
 
-                Items cropItem = cropsFactory.get(cropName);
-                Crops crop = (Crops) cropItem;
-                inventory.addItem(crop, crop.getHarvestedAmount());
+    //             Items cropItem = cropsFactory.get(cropName);
+    //             Crops crop = (Crops) cropItem;
+    //             inventory.addItem(crop, crop.getHarvestedAmount());
 
-                tile = new Tile();
-                this.energy -= 5;
-                gameClock.advanceTime(5);
-                System.out.println("Time skips five minutes.");
-            } else System.out.println("You can't harvest this tile yet");
-        } else System.out.println("You can't harvest this tile");
-    }
+    //             tile = new Tile();
+    //             this.energy -= 5;
+    //             gameClock.advanceTime(5);
+    //             System.out.println("Time skips five minutes.");
+    //         } else System.out.println("You can't harvest this tile yet");
+    //     } else System.out.println("You can't harvest this tile");
+    // }
 
     public void eating(Items item) {
         if (item != null && getItemQuantity(item) > 0) {
@@ -359,85 +351,85 @@ public class Player extends Entity{
 
     public void cooking() {}
 
-    public void fishing(String location) {
-        gameClock.stopClock();
-        ItemFactory itemFactory = new ItemFactory();
-        itemFactory.loadFish();
+    // public void fishing(String location) {
+    //     gameClock.stopClock();
+    //     ItemFactory itemFactory = new ItemFactory();
+    //     itemFactory.loadFish();
 
-        List<Fish> availableFish = new ArrayList<>();
+    //     List<Fish> availableFish = new ArrayList<>();
 
-        for (Items item : ItemFactory.getAllItems().values()) {
-            if (item instanceof Fish fish) {
-                if (fish.isAvailable(gameClock.getDate().getSeasonString(), gameClock.getWeather().getWeatherToday(), location, gameClock.getTime().getHour())) {
-                    availableFish.add(fish);
-                }
-            }
-        }
+    //     for (Items item : ItemFactory.getAllItems().values()) {
+    //         if (item instanceof Fish fish) {
+    //             if (fish.isAvailable(gameClock.getDate().getSeasonString(), gameClock.getWeather().getWeatherToday(), location, gameClock.getTime().getHour())) {
+    //                 availableFish.add(fish);
+    //             }
+    //         }
+    //     }
 
-        System.out.println("Available fish at this location:");
-        for (Fish fish : availableFish) System.out.println("- " + fish.getName() + " (" + fish.getRarity() + ")");
+    //     System.out.println("Available fish at this location:");
+    //     for (Fish fish : availableFish) System.out.println("- " + fish.getName() + " (" + fish.getRarity() + ")");
 
-        int i = availableFish.size();
-        if (i == 0) {
-            System.out.println("No fish available in this location right now.");
-            return;
-        }
+    //     int i = availableFish.size();
+    //     if (i == 0) {
+    //         System.out.println("No fish available in this location right now.");
+    //         return;
+    //     }
 
-        int randomIndex = (int) (Math.random() * i);
-        Fish fish = availableFish.get(randomIndex);
+    //     int randomIndex = (int) (Math.random() * i);
+    //     Fish fish = availableFish.get(randomIndex);
 
-        System.out.println("You caught a " + fish.getName() + "!");
-        System.out.println("It is a " + fish.getRarity() + " fish.");
-        System.out.println("To get it, you must play a little game.");
+    //     System.out.println("You caught a " + fish.getName() + "!");
+    //     System.out.println("It is a " + fish.getRarity() + " fish.");
+    //     System.out.println("To get it, you must play a little game.");
 
-        int range;
-        if (fish.getRarity().equals("Common")) range = 10;
-        else if (fish.getRarity().equals("Regular")) range = 100;
-        else range = 500;
+    //     int range;
+    //     if (fish.getRarity().equals("Common")) range = 10;
+    //     else if (fish.getRarity().equals("Regular")) range = 100;
+    //     else range = 500;
         
-        int randomNumber = (int) (Math.random() * range) + 1;
+    //     int randomNumber = (int) (Math.random() * range) + 1;
 
-        System.out.println("You need to guess a number between 1 and " + range + " to catch the fish.");
-        System.out.println("You only have 10 attempts.");
+    //     System.out.println("You need to guess a number between 1 and " + range + " to catch the fish.");
+    //     System.out.println("You only have 10 attempts.");
 
-        int j = 0;
-        boolean caught = false;
+    //     int j = 0;
+    //     boolean caught = false;
 
-        while (j < 10) {
-            System.out.print("Enter your guess: ");
-            String input = scanner.nextLine();
-            int guess;
+    //     while (j < 10) {
+    //         System.out.print("Enter your guess: ");
+    //         String input = scanner.nextLine();
+    //         int guess;
 
-            try {
-                guess = Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
-                continue;
-            }
+    //         try {
+    //             guess = Integer.parseInt(input);
+    //         } catch (NumberFormatException e) {
+    //             System.out.println("Please enter a valid number.");
+    //             continue;
+    //         }
 
-            if (guess == randomNumber) {
-                System.out.println("Congratulations! You caught the fish!");
-                addItemToInventory(fish, 1);
-                caught = true;
-                hasFished++;
-                break;
-            }
-            if (guess < randomNumber) System.out.println("Too low! Try again.");
-            else System.out.println("Too high! Try again.");
+    //         if (guess == randomNumber) {
+    //             System.out.println("Congratulations! You caught the fish!");
+    //             addItemToInventory(fish, 1);
+    //             caught = true;
+    //             hasFished++;
+    //             break;
+    //         }
+    //         if (guess < randomNumber) System.out.println("Too low! Try again.");
+    //         else System.out.println("Too high! Try again.");
 
-            j++;
-        }
+    //         j++;
+    //     }
 
-        if (!caught){
-            System.out.println("You failed to catch the fish. Better luck next time!");
-            System.out.println("The correct number was: " + randomNumber);
-        }
+    //     if (!caught){
+    //         System.out.println("You failed to catch the fish. Better luck next time!");
+    //         System.out.println("The correct number was: " + randomNumber);
+    //     }
 
-        System.out.println("You lost 5 energy.");
-        this.energy -= 5;
-        System.out.println("Time skips fifteen minutes.");
-        gameClock.advanceTime(15);
-    }
+    //     System.out.println("You lost 5 energy.");
+    //     this.energy -= 5;
+    //     System.out.println("Time skips fifteen minutes.");
+    //     gameClock.advanceTime(15);
+    // }
 
     public void proposing(NPC npc) {
         if (npc.getHeartPoints() < 150){
@@ -493,33 +485,33 @@ public class Player extends Entity{
         System.out.println("Time skips fifteen minutes.");
     }
 
-    public void visiting() {
-        System.out.println("----" + "VISITING" + "----");
-        System.out.println("Where do you want to visit?");
+    // public void visiting() {
+    //     System.out.println("----" + "VISITING" + "----");
+    //     System.out.println("Where do you want to visit?");
 
-        worldMap.showLocations();
+    //     worldMap.showLocations();
 
-        System.out.print("Enter your choice : ");
+    //     System.out.print("Enter your choice : ");
 
-        int choice;
-        try {
-            choice = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid number. Going back to farm...");
+    //     int choice;
+    //     try {
+    //         choice = Integer.parseInt(scanner.nextLine());
+    //     } catch (NumberFormatException e) {
+    //         System.out.println("Invalid number. Going back to farm...");
             
-            return;
-        }
+    //         return;
+    //     }
 
-        if (choice >= 1 && choice <= 9) worldMap.visitLocation(choice, this);
-        else {
-            System.out.println("Invalid number. Going back to farm...");
-            return;  
-        }
+    //     if (choice >= 1 && choice <= 9) worldMap.visitLocation(choice, this);
+    //     else {
+    //         System.out.println("Invalid number. Going back to farm...");
+    //         return;  
+    //     }
 
-        this.energy -= 10;
-        gameClock.advanceTime(15);
-        System.out.println("Time skips fifteen minutes.");
-    }
+    //     this.energy -= 10;
+    //     gameClock.advanceTime(15);
+    //     System.out.println("Time skips fifteen minutes.");
+    // }
 
     public void chatting(NPC npc) {
         npc.setHeartPoints(npc.getHeartPoints() + 10);
@@ -529,75 +521,75 @@ public class Player extends Entity{
         System.out.println("Time skips ten minutes.");
     }
 
-    public void gifting(NPC npc) {
-        List<Items> giftableItems = new ArrayList<>();
-        for (Items item : inventory.getItems().keySet()) {
-            if (!(item instanceof Equipments)) {
-                giftableItems.add(item);
-            }
-        }
+    // public void gifting(NPC npc) {
+    //     List<Items> giftableItems = new ArrayList<>();
+    //     for (Items item : inventory.getItems().keySet()) {
+    //         if (!(item instanceof Equipments)) {
+    //             giftableItems.add(item);
+    //         }
+    //     }
 
-        if (giftableItems.isEmpty()) {
-            System.out.println("You have no giftable items in your inventory.");
-            return;
-        }
+    //     if (giftableItems.isEmpty()) {
+    //         System.out.println("You have no giftable items in your inventory.");
+    //         return;
+    //     }
 
-        System.out.println("Choose an item to gift to " + npc.getName() + ":");
-        for (int i = 0; i < giftableItems.size(); i++) {
-            Items item = giftableItems.get(i);
-            System.out.println((i + 1) + ". " + item.getName() + " (x" + getItemQuantity(item) + ")");
-        }
-        System.out.print("Enter the number of the item: ");
-        int choice;
-        try {
-            choice = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input.");
-            return;
-        }
+    //     System.out.println("Choose an item to gift to " + npc.getName() + ":");
+    //     for (int i = 0; i < giftableItems.size(); i++) {
+    //         Items item = giftableItems.get(i);
+    //         System.out.println((i + 1) + ". " + item.getName() + " (x" + getItemQuantity(item) + ")");
+    //     }
+    //     System.out.print("Enter the number of the item: ");
+    //     int choice;
+    //     try {
+    //         choice = Integer.parseInt(scanner.nextLine());
+    //     } catch (NumberFormatException e) {
+    //         System.out.println("Invalid input.");
+    //         return;
+    //     }
 
-        if (choice < 1 || choice > giftableItems.size()) {
-            System.out.println("Invalid choice.");
-            return;
-        }
+    //     if (choice < 1 || choice > giftableItems.size()) {
+    //         System.out.println("Invalid choice.");
+    //         return;
+    //     }
 
-        Items item = giftableItems.get(choice - 1);
-        int maxAmount = getItemQuantity(item);
-        System.out.println("You have " + maxAmount + " of this item. Enter the amount you want to gift:");
-        int amount;
-        try {
-            amount = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid amount.");
-            return;
-        }
+    //     Items item = giftableItems.get(choice - 1);
+    //     int maxAmount = getItemQuantity(item);
+    //     System.out.println("You have " + maxAmount + " of this item. Enter the amount you want to gift:");
+    //     int amount;
+    //     try {
+    //         amount = Integer.parseInt(scanner.nextLine());
+    //     } catch (NumberFormatException e) {
+    //         System.out.println("Invalid amount.");
+    //         return;
+    //     }
 
-        if (amount <= 0 || amount > maxAmount) {
-            System.out.println("Invalid amount.");
-            return;
-        }
+    //     if (amount <= 0 || amount > maxAmount) {
+    //         System.out.println("Invalid amount.");
+    //         return;
+    //     }
 
-        removeItemFromInventory(item, amount);
+    //     removeItemFromInventory(item, amount);
 
-        int heartPointsChange = 0;
-        String message = npc.getName() + " felt neutral about your gift.";
-        if (Arrays.asList(npc.getLovedItems()).contains(item)) {
-            heartPointsChange = 25 * amount;
-            message = npc.getName() + " loved your gift! (+" + (25 * amount) + " heart points)";
-        } else if (Arrays.asList(npc.getLikedItems()).contains(item)) {
-            heartPointsChange = 20 * amount;
-            message = npc.getName() + " liked your gift! (+" + (20 * amount) + " heart points)";
-        } else if (Arrays.asList(npc.getHatedItems()).contains(item)) {
-            heartPointsChange = -25 * amount;
-            message = npc.getName() + " hated your gift! (" + (-25 * amount) + " heart points)";
-        }
-        npc.addHeartPoints(heartPointsChange);
-        System.out.println(message);
+    //     int heartPointsChange = 0;
+    //     String message = npc.getName() + " felt neutral about your gift.";
+    //     if (Arrays.asList(npc.getLovedItems()).contains(item)) {
+    //         heartPointsChange = 25 * amount;
+    //         message = npc.getName() + " loved your gift! (+" + (25 * amount) + " heart points)";
+    //     } else if (Arrays.asList(npc.getLikedItems()).contains(item)) {
+    //         heartPointsChange = 20 * amount;
+    //         message = npc.getName() + " liked your gift! (+" + (20 * amount) + " heart points)";
+    //     } else if (Arrays.asList(npc.getHatedItems()).contains(item)) {
+    //         heartPointsChange = -25 * amount;
+    //         message = npc.getName() + " hated your gift! (" + (-25 * amount) + " heart points)";
+    //     }
+    //     npc.addHeartPoints(heartPointsChange);
+    //     System.out.println(message);
 
-        this.energy -= 5 * amount;
-        gameClock.advanceTime(10 * amount);
-        System.out.println("Time skips " + (10 * amount) + " minutes.");
-    }
+    //     this.energy -= 5 * amount;
+    //     gameClock.advanceTime(10 * amount);
+    //     System.out.println("Time skips " + (10 * amount) + " minutes.");
+    // }
 
     public void moving(int x, int y) {
         setPosition(x, y);
@@ -646,10 +638,10 @@ public class Player extends Entity{
         System.out.println("You are at " + worldX + ", " + worldY); 
     }
 
-    public void selling(OBJ_Bin shippingBin, boolean isAround) {
-        if (isAround){
-            shippingBin.interact(this);    
-        }
-        System.out.println("You must be near Shipping Bin to perform this action!");
-    }
+    // public void selling(OBJ_Bin shippingBin, boolean isAround) {
+    //     if (isAround){
+    //         shippingBin.interact(this);    
+    //     }
+    //     System.out.println("You must be near Shipping Bin to perform this action!");
+    // }
 }
