@@ -12,23 +12,32 @@ public class SuperObject {
     public boolean collision = true;
     public int worldX, worldY;
     public int width, height;
-    public Rectangle solidArea = new Rectangle(0, 0, 0, 0);
-    public int solidAreaDefaultX = 0;
-    public int solidAreaDefaultY = 0;
+
+    public Rectangle[] solidAreas; 
+    public int solidAreaDefaultX = 0; 
+    public int solidAreaDefaultY = 0; 
+
+    public SuperObject() {
+    }
 
     public void draw(Graphics2D g2, GamePanel gp) {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if (worldX + width > gp.player.worldX - gp.player.screenX &&
+        
+        if (worldX + width > gp.player.worldX - gp.player.screenX - gp.tileSize && 
             worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
-            worldY + height > gp.player.worldY - gp.player.screenY &&
+            worldY + height > gp.player.worldY - gp.player.screenY - gp.tileSize && 
             worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
 
             g2.drawImage(image, screenX, screenY, width, height, null);
 
             g2.setColor(java.awt.Color.RED);
-            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+            if (solidAreas != null) {
+                for (Rectangle rect : solidAreas) {
+                    g2.drawRect(screenX + rect.x, screenY + rect.y, rect.width, rect.height);
+                }
+            }
         }
     }
 }

@@ -1,8 +1,9 @@
 package object;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import main.GamePanel;
+import main.GamePanel; 
 
 public class OBJ_House extends SuperObject {
 
@@ -13,18 +14,34 @@ public class OBJ_House extends SuperObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        collision = true;
-        worldX = x;
-        worldY = y;
+        collision = true; 
+        worldX = x; 
+        worldY = y; 
 
-        width = gp.tileSize * 6;
-        height = gp.tileSize * 7;
-        solidArea.x = 0;
-        solidArea.y = 0;
-        solidArea.width = width;
-        solidArea.height = height - gp.tileSize;
+        width = gp.tileSize * 6; 
+        height = gp.tileSize * 8; 
 
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
+        solidAreas = new Rectangle[3]; 
+
+        solidAreas[0] = new Rectangle();
+        solidAreas[0].x = 0; 
+        solidAreas[0].y = 0; 
+        solidAreas[0].width = gp.tileSize; 
+        solidAreas[0].height = gp.tileSize; 
+
+        solidAreas[1] = new Rectangle();
+        solidAreas[1].x = 0; 
+        solidAreas[1].y = gp.tileSize; 
+        solidAreas[1].width = width; 
+        solidAreas[1].height = gp.tileSize * 6; 
+
+        solidAreas[2] = new Rectangle();
+        solidAreas[2].x = 0; 
+        solidAreas[2].y = gp.tileSize * 7; 
+        solidAreas[2].width = gp.tileSize; 
+        solidAreas[2].height = gp.tileSize; 
+
+        solidAreaDefaultX = 0;
+        solidAreaDefaultY = 0;
     }
 }
