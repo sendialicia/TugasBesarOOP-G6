@@ -17,10 +17,10 @@ public class AssetSetter {
 
     public void setObject() {
         int houseTileWidth = 6;
-        int houseTileHeight = 7;
+        int houseTileHeight = 8;
 
-        int houseCandidateX = random.nextInt(30 - houseTileWidth + 1);
-        int houseCandidateY = random.nextInt(30 - houseTileHeight + 1);
+        int houseCandidateX = 1 + random.nextInt(30 - houseTileWidth - 1);
+        int houseCandidateY = 2 + random.nextInt(27 - houseTileHeight);
 
         gp.obj[0] = new OBJ_House(gp, houseCandidateX * gp.tileSize, houseCandidateY * gp.tileSize);
 
@@ -28,42 +28,45 @@ public class AssetSetter {
         int binTileHeight = 2;
 
         int binCandidateX = houseCandidateX + houseTileWidth + 1;
-
-        if (binCandidateX + binTileWidth > gp.maxWorldCol) {
+        if (binCandidateX + binTileWidth > 30) {
             binCandidateX = 30 - binTileWidth;
+            if (binCandidateX <= 0) binCandidateX = 1;
         }
 
-        int binCandidateY = houseCandidateY + random.nextInt(Math.max(1, houseTileHeight - binTileHeight + 1));
-        if (binCandidateY + binTileHeight > 30) {
-            binCandidateY = 30 - binTileHeight;
-        }
+        int binMinY = houseCandidateY;
+        int binMaxY = houseCandidateY + houseTileHeight - binTileHeight;
+
+        binMinY = Math.max(binMinY, 2);
+        binMaxY = Math.min(binMaxY, 27 - binTileHeight);
+
+        int binCandidateY;
+        if (binMaxY < binMinY) binCandidateY = binMinY;
+        else binCandidateY = binMinY + random.nextInt(binMaxY - binMinY + 1);
 
         gp.obj[1] = new OBJ_Bin(gp, binCandidateX * gp.tileSize, binCandidateY * gp.tileSize);
 
         int pondTileWidth = 4;
-        int pondTileHeight = 3;
+        int pondTileHeight = 4;
         int pondCandidateX, pondCandidateY;
         boolean pondCanBePlaced;
         int attempts = 0;
 
         do {
-            pondCandidateX = random.nextInt(30 - pondTileWidth + 1);
-            pondCandidateY = random.nextInt(30 - pondTileHeight + 1);
-            
-            pondCanBePlaced = true;
-            if (checkOverlap(pondCandidateX, pondCandidateY, pondTileWidth, pondTileHeight, gp.obj[0])) {
-                pondCanBePlaced = false;
-            }
+            pondCandidateX = 1 + random.nextInt(30 - pondTileWidth);
+            pondCandidateY = 2 + random.nextInt(28 - pondTileHeight);
 
-            if (pondCanBePlaced && checkOverlap(pondCandidateX, pondCandidateY, pondTileWidth, pondTileHeight, gp.obj[1])) {
-                pondCanBePlaced = false;
-            }
+            pondCanBePlaced = true;
+
+            if (checkOverlap(pondCandidateX, pondCandidateY, pondTileWidth, pondTileHeight, gp.obj[0])) pondCanBePlaced = false;
+            if (pondCanBePlaced && checkOverlap(pondCandidateX, pondCandidateY, pondTileWidth, pondTileHeight, gp.obj[1])) pondCanBePlaced = false;
+
             attempts++;
         } while (!pondCanBePlaced && attempts < 100);
 
         if (pondCanBePlaced) gp.obj[2] = new OBJ_Pond(gp, pondCandidateX * gp.tileSize, pondCandidateY * gp.tileSize);
         else System.out.println("Could not place pond without overlap after " + attempts + " attempts.");
     }
+
 
     private boolean checkOverlap(int newObjTileX, int newObjTileY, int newObjTileWidth, int newObjTileHeight, SuperObject existingObj) {
         if (existingObj == null) return false;

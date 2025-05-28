@@ -54,53 +54,22 @@ public class Player extends Entity{
         gold = 0;
     }
 
-    public String getName() {
-        return name;
-    }
+    
+    public void setName(String name) { this.name = name; }
+    public void setGender(String gender) { this.gender = gender; }
+    public void setEnergy(int energy) { this.energy = energy; }
+    public void setFarmName(String farmName) { this.farmName = farmName; }
+    public void setPartner(String partner) { this.partner = partner; }
+    public void setGold(int gold) { this.gold = gold; }
+    
+    public String getName() { return name; }
+    public String getGender() { return gender; }
+    public int getEnergy() { return energy; }
+    public String getFarmName() { return farmName; }
+    public String getPartner() { return partner; }
+    public int getGold() { return gold; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getEnergy() {
-        return energy;
-    }
-
-    public void setEnergy(int energy) {
-        this.energy = energy;
-    }
-
-    public String getFarmName() {
-        return farmName;
-    }
-
-    public void setFarmName(String farmName) {
-        this.farmName = farmName;
-    }
-
-    public String getPartner() {
-        return partner;
-    }
-
-    public void setPartner(String partner) {
-        this.partner = partner;
-    }
-
-    public int getGold() {
-        return gold;
-    }
-
-    public void setGold(int gold) {
-        this.gold = gold;
-    }
+    public void addEnergy(int energy){ this.energy += energy; }
 
     public void getPlayerImage() {
         up1 = setup("player", "mc_up_left");
@@ -114,8 +83,6 @@ public class Player extends Entity{
     }
 
     public void update() {
-
-        // ALWAYS RESET COLLISION FLAG AT THE BEGINNING OF THE FRAME
         collisionOn = false;
 
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
