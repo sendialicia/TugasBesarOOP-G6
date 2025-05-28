@@ -365,10 +365,10 @@ public class UI {
             g2.drawString(text, x, y);
             y += 30;
             
-            if(gp.player.getPartner() == null || gp.player.getPartner().isEmpty()) {
+            if(gp.player.getPartner() == null || gp.player.getPartner().getName().isEmpty()) {
                 text = "None";
             } else {
-                text = gp.player.getPartner();
+                text = gp.player.getPartner().getName();
             }
             g2.drawString(text, x + 27, y);
             y -= 130;
@@ -413,6 +413,7 @@ public class UI {
 
             //  CURSOR
             
+
         }
     }
 
