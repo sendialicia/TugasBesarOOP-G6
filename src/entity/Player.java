@@ -96,6 +96,7 @@ public class Player extends Entity{
     
     public String getName() { return name; }
     public String getGender() { return gender; }
+    public int getEnergy() { return energy; }
     public String getFarmName() { return farmName; }
     public NPC getPartner() { return partner; }
     public int getGold() { return gold; }
