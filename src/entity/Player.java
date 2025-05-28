@@ -34,12 +34,12 @@ public class Player extends Entity{
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
         solidArea = new Rectangle();
-        solidArea.x = 0;
-        solidArea.y = 0;
+        solidArea.x = 6;
+        solidArea.y = 10;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 48;
-        solidArea.height = 48;
+        solidArea.width = 38;
+        solidArea.height = 46;
 
         setDefaultValues();
         getPlayerImage();
@@ -115,54 +115,33 @@ public class Player extends Entity{
 
     public void update() {
 
-        if(moving == false) {
-            if(keyH.upPressed == true || keyH.downPressed == true || 
-               keyH.leftPressed == true || keyH.rightPressed == true) {
-                 
-                if(keyH.upPressed == true && keyH.enterPressed == false) {
-                    direction = "up";
-                } else if(keyH.downPressed == true && keyH.enterPressed == false) {
-                    direction = "down";
-                } else if(keyH.leftPressed == true && keyH.enterPressed == false) {
-                    direction = "left";
-                } else if(keyH.rightPressed == true && keyH.enterPressed == false) {
-                    direction = "right";
-                }
+        // ALWAYS RESET COLLISION FLAG AT THE BEGINNING OF THE FRAME
+        collisionOn = false;
 
-                moving = true;
-
-                // CHECK TILE COLLISION
-                collisionOn = false;
-                gp.cChecker.checkTile(this);
-
-                // CHECK OBJECT COLLISION
-                int objIndex = gp.cChecker.checkObject(this, true);
-                pickUpObject(objIndex);
-
-                // CHECK NPC COLLISION
-                int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-                interactNPC(npcIndex);
-
-            } else {
-                standCounter++;
-
-                if(standCounter > 20) {
-                    spriteNum = 1;
-                    standCounter = 0; 
-                }
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+            if (keyH.upPressed) {
+                direction = "up";
+            } else if (keyH.downPressed) {
+                direction = "down";
+            } else if (keyH.leftPressed) {
+                direction = "left";
+            } else if (keyH.rightPressed) {
+                direction = "right";
             }
-        }
 
-        if (keyH.enterPressed) {
+            // CHECK TILE COLLISION
+            gp.cChecker.checkTile(this);
+
+            // CHECK OBJECT COLLISION
+            int objIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
+
+            // CHECK NPC COLLISION
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
-        }
 
-        if(moving == true) {
-
-            // IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if(collisionOn == false && keyH.enterPressed == false) {
-                switch(direction) {
+            if (collisionOn == false && keyH.enterPressed == false) {
+                switch (direction) {
                     case "up": worldY -= speed; break;
                     case "down": worldY += speed; break;
                     case "left": worldX -= speed; break;
@@ -170,87 +149,66 @@ public class Player extends Entity{
                 }
             }
 
-            gp.keyH.enterPressed = false;
-    
             spriteCounter++;
-            if(spriteCounter > 12) {
+            if (spriteCounter > 12) {
                 if (spriteNum == 1) {
                     spriteNum = 2;
-                } else if(spriteNum == 2) {
+                } else if (spriteNum == 2) {
                     spriteNum = 1;
                 }
                 spriteCounter = 0;
             }
 
-            pixelCounter += speed;
-
-            if(pixelCounter == 48) {
-                moving = false;
-                pixelCounter = 0;
+        } else {
+            standCounter++;
+            if (standCounter > 20) {
+                spriteNum = 1;
+                standCounter = 0;
             }
-        }     
+        }
+
+        if (keyH.enterPressed) {
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
+            gp.keyH.enterPressed = false;
+        }
     }
 
     public void pickUpObject(int i) {
-
         if(i != 999) {
-                
+            // Your object pickup logic here
         }
     }
 
     public void interactNPC(int i) {
-
         if(i != 999) {
-            
             if(gp.keyH.enterPressed == true) {
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
             }
         }
-        gp.keyH.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
-        // g2.setColor(Color.white);
-        // g2.fillRect(x, y, gp.tileSize, gp.tileSize);
-
         BufferedImage image = null;
-        
+
         switch(direction) {
-        case "up":
-            if(spriteNum == 1) {
-                image = up1;
-            }
-            if(spriteNum == 2) {
-                image = up2;
-            }
-            break;
-        case "down":
-            if(spriteNum == 1) {
-                image = down1;
-            }
-            if(spriteNum == 2) {
-                image = down2;
-            }
-            break;
-        case "left":
-            if(spriteNum == 1) {
-                image = left1;
-            }
-            if(spriteNum == 2) {
-                image = left2;
-            }
-            break;
-        case "right":
-            if(spriteNum == 1) {
-                image = right1;
-            }
-            if(spriteNum == 2) {
-                image = right2;
-            }
-            break;
+            case "up":
+                image = (spriteNum == 1) ? up1 : up2;
+                break;
+            case "down":
+                image = (spriteNum == 1) ? down1 : down2;
+                break;
+            case "left":
+                image = (spriteNum == 1) ? left1 : left2;
+                break;
+            case "right":
+                image = (spriteNum == 1) ? right1 : right2;
+                break;
         }
         g2.drawImage(image, screenX, screenY, null);
+
+        // FOR DEBUGGING
         g2.setColor(Color.RED);
         g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }

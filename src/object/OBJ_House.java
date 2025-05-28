@@ -2,14 +2,14 @@ package object;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import main.GamePanel; // Import GamePanel
+import main.GamePanel;
 
 public class OBJ_House extends SuperObject {
 
-    public OBJ_House(GamePanel gp, int x, int y) { // Added GamePanel gp parameter
+    public OBJ_House(GamePanel gp, int x, int y) {
         name = "House";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/house.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/House.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -17,15 +17,12 @@ public class OBJ_House extends SuperObject {
         worldX = x;
         worldY = y;
 
-        // Dimensions in pixels
-        width = gp.tileSize * 6; // 6 tiles wide
-        height = gp.tileSize * 7; // 7 tiles tall
-
-        // Collision area, relative to the object's top-left corner (worldX, worldY)
-        solidArea.x = 0; // Relative to object's worldX
-        solidArea.y = 0; // Relative to object's worldY
-        solidArea.width = width; // Full width collision
-        solidArea.height = height - gp.tileSize; // Collision for the first 6 rows (7th row is not collision)
+        width = gp.tileSize * 6;
+        height = gp.tileSize * 7;
+        solidArea.x = 0;
+        solidArea.y = 0;
+        solidArea.width = width;
+        solidArea.height = height - gp.tileSize;
 
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
