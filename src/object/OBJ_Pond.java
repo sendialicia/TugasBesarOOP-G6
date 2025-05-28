@@ -2,13 +2,13 @@ package object;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import main.GamePanel; // Import GamePanel
+import main.GamePanel;
 
 public class OBJ_Pond extends SuperObject {
-    public OBJ_Pond(GamePanel gp, int x, int y) { // Added GamePanel gp parameter
-        name = "Pond"; // Corrected name
+    public OBJ_Pond(GamePanel gp, int x, int y) {
+        name = "Pond"; 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/pond.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/Pond.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -16,15 +16,13 @@ public class OBJ_Pond extends SuperObject {
         worldX = x;
         worldY = y;
 
-        // Dimensions in pixels
-        width = gp.tileSize * 4; // 4 tiles wide
-        height = gp.tileSize * 3; // 3 tiles tall (image dimension)
+        width = gp.tileSize * 4;
+        height = gp.tileSize * 3; 
 
-        // Collision area, relative to the object's top-left corner (worldX, worldY)
         solidArea.x = 0;
-        solidArea.y = gp.tileSize; // Collision starts from the second tile row (first row is not collision)
+        solidArea.y = gp.tileSize;
         solidArea.width = width;
-        solidArea.height = height - gp.tileSize; // Collidable height is 2 tiles (effectively a 4x2 collision box)
+        solidArea.height = height - gp.tileSize;
 
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;

@@ -4,35 +4,29 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import main.GamePanel;
-// UtilityTool import can be removed if not used elsewhere in this class
-// import main.UtilityTool;
 
 public class SuperObject {
 
     public BufferedImage image;
     public String name;
-    public boolean collision = true; // Default to true, can be overridden by subclasses
+    public boolean collision = true;
     public int worldX, worldY;
-    public int width, height; // These will store the pixel dimensions of the object
-    public Rectangle solidArea = new Rectangle(0, 0, 0, 0); // Initialize with 0,0,0,0
+    public int width, height;
+    public Rectangle solidArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX = 0;
     public int solidAreaDefaultY = 0;
-    // UtilityTool uTool = new UtilityTool(); // This can be removed if not scaling images here
 
     public void draw(Graphics2D g2, GamePanel gp) {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        // Check if the object is within the screen view plus a tileSize margin for safety
         if (worldX + width > gp.player.worldX - gp.player.screenX &&
-            worldX < gp.player.worldX + gp.player.screenX + gp.tileSize && // Adjusted for object potentially being wider than screen
+            worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
             worldY + height > gp.player.worldY - gp.player.screenY &&
-            worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) { // Adjusted for object potentially being taller than screen
+            worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
 
-            // Draw the image using its actual width and height
             g2.drawImage(image, screenX, screenY, width, height, null);
 
-            // Optional: Draw collision box for debugging
             g2.setColor(java.awt.Color.RED);
             g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
         }

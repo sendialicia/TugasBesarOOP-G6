@@ -2,14 +2,14 @@ package object;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import main.GamePanel; // Import GamePanel
+import main.GamePanel; 
 
 public class OBJ_Bin extends SuperObject {
 
-    public OBJ_Bin(GamePanel gp, int x, int y) { // Added GamePanel gp parameter
+    public OBJ_Bin(GamePanel gp, int x, int y) { 
         name = "Bin";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/shippingbin.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/ShippingBin.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -17,11 +17,9 @@ public class OBJ_Bin extends SuperObject {
         worldX = x;
         worldY = y;
 
-        // Dimensions in pixels
-        width = gp.tileSize * 3; // 3 tiles wide
-        height = gp.tileSize * 2; // 2 tiles tall
+        width = gp.tileSize * 3; 
+        height = gp.tileSize * 2; 
 
-        // Collision area, relative to the object's top-left corner (worldX, worldY)
         solidArea.x = 0;
         solidArea.y = 0;
         solidArea.width = width;

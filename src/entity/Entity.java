@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -21,7 +22,7 @@ public class Entity {
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
-    public Rectangle solidArea = new Rectangle(0, 0, 44, 44);
+    public Rectangle solidArea = new Rectangle(0, 0, 48, 56);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
@@ -134,6 +135,10 @@ public class Entity {
                 break;
             }    
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+            // FOR DEBUGGING
+            g2.setColor(Color.RED);
+            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
         }
     }
 
