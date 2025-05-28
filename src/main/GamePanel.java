@@ -148,7 +148,7 @@ public class GamePanel extends JPanel implements Runnable{
         } else if (gameState == genderInputState) {
             ui.draw(g2);
         } else { 
-            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || gameState == viewInventoryState) { 
+            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || gameState == viewInventoryState || gameState == houseInteractState) { 
                 
                 // TILE
                 tileM.draw(g2);

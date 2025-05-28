@@ -171,6 +171,36 @@ public class KeyHandler implements KeyListener{
             }
         }
 
+        else if(gp.gameState == gp.houseInteractState) {
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 2;
+                }
+            }
+    
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 2) {
+                    gp.ui.commandNum = 0;
+                }
+            }
+
+             if(code == KeyEvent.VK_ENTER) {
+                if(gp.ui.commandNum == 0) {
+                    gp.player.sleeping();
+                    //ui
+                    gp.gameState = gp.playState;
+                }
+                if(gp.ui.commandNum == 1) {
+                    gp.player.cooking();
+                }
+                if(gp.ui.commandNum == 2) {
+                    gp.gameState = gp.playState;
+                }
+            }
+        }
+
         // DEBUG
         if(code == KeyEvent.VK_F12) {
             if(checkDrawTime == false) {

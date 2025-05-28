@@ -431,30 +431,35 @@ public class UI {
 
         drawSubWindow(x, y, width, height);
 
-        // HEADER
+        // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
         g2.setColor(Color.white);
         String title = "Inside Your House";
-        int titleX = x + (width - g2.getFontMetrics().stringWidth(title)) / 2;
+        int titleX = getXforCenteredText(title);
         g2.drawString(title, titleX, y + gp.tileSize);
 
         // MENU OPTIONS
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
-        int menuX = x + gp.tileSize;
-        int menuY = y + gp.tileSize * 2;
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        y += gp.tileSize * 2;
 
         String[] options = {
-            "1. Sleep",
-            "2. Store Items",
-            "3. Change Outfit",
-            "4. Exit House"
+            "SLEEPING",
+            "COOKING",
+            "EXIT"
         };
 
-        for (String option : options) {
-            g2.drawString(option, menuX, menuY);
-            menuY += 40;
+        for (int i = 0; i < options.length; i++) {
+            String text = options[i];
+            int textX = getXforCenteredText(text);
+            y += gp.tileSize;
+
+            g2.drawString(text, textX, y);
+            if (commandNum == i) {
+                g2.drawString(">", textX - gp.tileSize, y);
+            }
         }
     }
+
 
 
     public void drawSubWindow(int x, int y, int width, int height) {
