@@ -1,7 +1,10 @@
 @echo off
 echo Compiling Java files...
 
-javac -d out -cp res ^
+REM Define classpath (Gson JAR and res folder)
+set CLASSPATH=lib/gson-2.10.1.jar;res
+
+javac -d out -cp %CLASSPATH% ^
 src\main\*.java ^
 src\entity\*.java ^
 src\entity\npc\*.java ^
@@ -16,7 +19,6 @@ src\tile\*.java ^
 src\object\*.java ^
 src\time\*.java
 
-
 if %ERRORLEVEL% neq 0 (
     echo Compilation failed.
     pause
@@ -24,6 +26,6 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo Running the program...
-java -cp out;res main.Main
+java -cp "out;lib/gson-2.10.1.jar;res" main.Main
 
 pause
