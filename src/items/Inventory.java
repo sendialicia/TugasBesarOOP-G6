@@ -1,12 +1,13 @@
 package items;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import items.equipments.FishingRod;
 import items.equipments.Hoe;
 import items.equipments.Pickaxe;
 import items.equipments.WateringCan;
 import items.seeds.Seeds;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Inventory {
     private Map<Items, Integer> items;
@@ -40,6 +41,20 @@ public class Inventory {
             else items.remove(item);
         }
     }
+
+    public String getMostItem() {
+        if (items.isEmpty()) return null;
+        Items mostItem = null;
+        int maxQuantity = 0;
+        for (Map.Entry<Items, Integer> entry : items.entrySet()) {
+            if (entry.getValue() > maxQuantity) {
+                maxQuantity = entry.getValue();
+                mostItem = entry.getKey();
+            }
+        }
+        return mostItem != null ? mostItem.getName() : null;
+    }
+
 
     public int getItemQuantity(Items item) { return items.getOrDefault(item, 0); }
     public void clear() { items.clear(); }

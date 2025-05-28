@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -46,8 +47,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 3;
-        worldY = gp.tileSize * 4;
+        worldX = gp.tileSize * 3 + gp.tileSize;
+        worldY = gp.tileSize * 4 - gp.tileSize;
         speed = 4;
         direction = "down";
         energy = 10000;
@@ -68,6 +69,10 @@ public class Player extends Entity{
     public String getFarmName() { return farmName; }
     public String getPartner() { return partner; }
     public int getGold() { return gold; }
+    public String getFavItem() {
+        return "The Legends of Spakbor"; // Placeholder for favorite item logic
+        // return inventory.getMostItem();
+    }
 
     public void addEnergy(int energy){ this.energy += energy; }
 

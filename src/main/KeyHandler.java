@@ -69,7 +69,7 @@ public class KeyHandler implements KeyListener{
                 }
             } else {
                 char c = e.getKeyChar();
-                if (Character.isLetterOrDigit(c) && gp.ui.farmName.length() < 12) {
+                if (Character.isLetterOrDigit(c) && gp.ui.farmName.length() < 9) {
                     gp.ui.farmName.append(c);
                 }
             }
@@ -89,7 +89,7 @@ public class KeyHandler implements KeyListener{
                 }
             } else {
                 char c = e.getKeyChar();
-                if (Character.isLetterOrDigit(c) && gp.ui.playerName.length() < 12) {
+                if (Character.isLetterOrDigit(c) && gp.ui.playerName.length() < 9) {
                     gp.ui.playerName.append(c);
                 }
             }
@@ -107,6 +107,7 @@ public class KeyHandler implements KeyListener{
                 } else if (gp.ui.commandNum == 1) {
                     gp.player.setGender("Female");
                 }
+
                 gp.gameState = gp.playState;
                 gp.playMusic(0); // Start background music
             }

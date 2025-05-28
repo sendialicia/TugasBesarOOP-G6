@@ -6,7 +6,7 @@ public class Seeds extends Items {
     private String season;
     private int harvestDays;
 
-    public Seeds(String name, String Season, int harvestDays, int buyPrice){
+    public Seeds(String name, String season, int harvestDays, int buyPrice){
         super(name, buyPrice / 2, buyPrice);
         this.season = season;
         this.harvestDays = harvestDays;

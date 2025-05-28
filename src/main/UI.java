@@ -319,15 +319,22 @@ public class UI {
 
     public void drawAttributeScreen() {
 
+        int screenMidX = gp.screenWidth/2 - (gp.tileSize/2);
+        int screenMidY = gp.screenHeight/2 - (gp.tileSize/2);
+
         // WINDOW
-        int x = 20;
-        int y = gp.tileSize/2; 
-        int width = gp.screenWidth - (gp.tileSize*9);
-        int height = gp.screenHeight - (gp.tileSize*2);
+        int x = 0;
+        int y = screenMidY + gp.tileSize*2;
+        int width = gp.screenWidth;
+        int height = gp.screenHeight - y;
 
         drawSubWindow(x, y, width, height);
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+        // PLAYER AVATAR
+        g2.drawImage(gp.player.down1, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, y + gp.tileSize/3, gp.tileSize*3 - 5, gp.tileSize*3 - 5, null);
+
+        // PLAYER ATTRIBUTES
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
         x += gp.tileSize;
         y += gp.tileSize;
 
@@ -336,24 +343,25 @@ public class UI {
         y += 30;
         
         text = gp.player.getName();
-        g2.drawString(text, x + gp.tileSize, y);
-        y += 40;
+        g2.drawString(text, x + 27, y);
+        y += 70;
 
         text = "2. Gender: ";
         g2.drawString(text, x, y);
         y += 30;
         
         text = gp.player.getGender();
-        g2.drawString(text, x + gp.tileSize, y);
-        y += 40;
+        g2.drawString(text, x + 27, y);
+        y -= 130;
+        x += gp.tileSize * 4;
 
         text = "3. Energy: ";
         g2.drawString(text, x, y);
         y += 30;
         
         text = String.valueOf(gp.player.getEnergy());
-        g2.drawString(text, x + gp.tileSize, y);
-        y += 40; 
+        g2.drawString(text, x + 27, y);
+        y += 70; 
         
         text = "4. Partner: ";
         g2.drawString(text, x, y);
@@ -364,16 +372,29 @@ public class UI {
         } else {
             text = gp.player.getPartner();
         }
-        g2.drawString(text, x + gp.tileSize, y);
-        y += 40;
+        g2.drawString(text, x + 27, y);
+        y -= 130;
+        x += gp.tileSize * 4;
 
         text = "5. Gold: ";
         g2.drawString(text, x, y);
         y += 30;
         
         text = String.valueOf(gp.player.getGold());
-        g2.drawString(text, x + gp.tileSize, y);
-        y += 40;
+        g2.drawString(text, x + 27, y);
+        y += 70;
+
+        text = "6. Fav Item: ";
+        g2.drawString(text, x, y);
+        y += 30;
+        
+        if(gp.player.getFavItem() == null || gp.player.getFavItem().isEmpty()) {
+            text = "None";
+        } else {
+            text = gp.player.getFavItem();
+        }
+        g2.drawString(text, x + 27, y);
+        y += 70;
      
     }
 
