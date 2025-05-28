@@ -84,6 +84,7 @@ public class Player extends Entity{
     public void setPartner(NPC partner) { this.partner = partner; }
     public void setGold(int gold) { this.gold = Math.max(0, gold); }
     public void setPosition(int x, int y) { this.worldX = x; this.worldY = y; }
+    public void setInventory(Inventory inventory) { this.inventory = inventory; }
     public void setEnergy(int energy) {
         if (energy > MAX_ENERGY) this.energy = MAX_ENERGY;
         else if (energy < MIN_ENERGY) this.energy = MIN_ENERGY;
@@ -98,9 +99,9 @@ public class Player extends Entity{
     public String getFarmName() { return farmName; }
     public NPC getPartner() { return partner; }
     public int getGold() { return gold; }
-    public String getFavItem() {
-        return inventory.getMostItem();
-    }
+    public Inventory getInventory() { return inventory; }
+    public int getEnergy() { return energy; }
+    public String getFavItem() { return inventory.getMostItem(); }
 
     public void addItemToInventory(Items item, int quantity) { inventory.addItem(item, quantity); }
     public void removeItemFromInventory(Items item, int quantity) { inventory.removeItem(item, quantity); }
