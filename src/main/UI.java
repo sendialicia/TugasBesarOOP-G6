@@ -107,6 +107,11 @@ public class UI {
             drawAttributeScreen();
         }
 
+        // HOUSE INTERACT STATE
+        if (gp.gameState == gp.houseInteractState){
+            drawHouseScreen();
+        }
+
         // // VIEW INVENTORY STATE
         // if(gp.gameState == gp.viewInventoryState) {
         //     drawViewInventory();
@@ -488,6 +493,46 @@ public class UI {
             g2.drawString("No item selected", dFrameX + 20, dFrameY + 60);
         }
     }
+
+    public void drawHouseScreen() {
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 6;
+
+        drawSubWindow(x, y, width, height);
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = "Inside Your House";
+        int titleX = getXforCenteredText(title);
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        // MENU OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        y += gp.tileSize * 2;
+
+        String[] options = {
+            "SLEEPING",
+            "COOKING",
+            "EXIT"
+        };
+
+        for (int i = 0; i < options.length; i++) {
+            String text = options[i];
+            int textX = getXforCenteredText(text);
+            y += gp.tileSize;
+
+            g2.drawString(text, textX, y);
+            if (commandNum == i) {
+                g2.drawString(">", textX - gp.tileSize, y);
+            }
+        }
+    }
+
+
 
     public void drawSubWindow(int x, int y, int width, int height) {
         

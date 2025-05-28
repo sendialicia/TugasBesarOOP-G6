@@ -1,9 +1,8 @@
 package main;
 
 import entity.Entity;
-import tile.Tile;
-
 import java.awt.Rectangle;
+import tile.Tile;
 
 public class CollisionChecker {
     

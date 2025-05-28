@@ -56,6 +56,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int viewAttributeState = 7;
     public final int viewInventoryState = 8;
 
+    public final int houseInteractState = 20;
+
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set the size of this class (JPanel)
         this.setBackground(Color.black);
@@ -146,7 +148,7 @@ public class GamePanel extends JPanel implements Runnable{
         } else if (gameState == genderInputState) {
             ui.draw(g2);
         } else { 
-            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || gameState == viewInventoryState) { 
+            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || gameState == viewInventoryState || gameState == houseInteractState) { 
                 
                 // TILE
                 tileM.draw(g2);

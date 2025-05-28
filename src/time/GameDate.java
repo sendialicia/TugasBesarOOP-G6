@@ -40,5 +40,5 @@ public class GameDate {
     @Override
     public String toString(){
         return "Season " + this.getSeasonString() + " Day " + this.day;
-    }
+    } // pisahin season ama date
 }
