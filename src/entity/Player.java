@@ -141,7 +141,7 @@ public class Player extends Entity{
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
-            if (collisionOn == false && keyH.enterPressed == false) {
+            if (!collisionOn && !keyH.enterPressed) {
                 switch (direction) {
                     case "up": worldY -= speed; break;
                     case "down": worldY += speed; break;
@@ -152,8 +152,7 @@ public class Player extends Entity{
 
             spriteCounter++;
             if (spriteCounter > 12) {
-                if (spriteNum == 1) spriteNum = 2;
-                else if (spriteNum == 2) spriteNum = 1;
+                spriteNum = (spriteNum == 1) ? 2 : 1;
                 spriteCounter = 0;
             }
 
@@ -168,9 +167,39 @@ public class Player extends Entity{
         if (keyH.enterPressed) {
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
-            gp.keyH.enterPressed = false;
+
+            int tileSize = 48;
+
+            int interactX = worldX;
+            int interactY = worldY;
+
+            switch (direction) {
+                case "up": interactY -= tileSize; break;
+                case "down": interactY += tileSize; break;
+                case "left": interactX -= tileSize; break;
+                case "right": interactX += tileSize; break;
+            }
+
+            int houseX = gp.obj[0].worldX;
+            int houseY = gp.obj[0].worldY;
+
+            int targetX = houseX + 5 * tileSize;
+            int targetY = houseY + 7 * tileSize;
+
+            int playerFeetX = worldX + tileSize / 2;
+            int playerFeetY = worldY + tileSize;
+
+            int toleranceX = 8;
+            int toleranceY = 20;
+
+            if (Math.abs(playerFeetX - (targetX + tileSize / 2)) <= toleranceX &&
+                Math.abs(playerFeetY - (targetY + tileSize / 2)) <= toleranceY && 
+                keyH.enterPressed) interactHouse();
+
+            keyH.enterPressed = false;
         }
     }
+
 
     public void pickUpObject(int i) {
         if(i != 999) {}
@@ -183,6 +212,10 @@ public class Player extends Entity{
                 gp.npc[i].speak();
             }
         }
+    }
+
+    public void interactHouse(){
+        gp.gameState = gp.houseInteractState;
     }
 
     public void draw(Graphics2D g2) {

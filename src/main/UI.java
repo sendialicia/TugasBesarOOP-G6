@@ -101,6 +101,11 @@ public class UI {
             drawAttributeScreen();
         }
 
+        // HOUSE INTERACT STATE
+        if (gp.gameState == gp.houseInteractState){
+            drawHouseScreen();
+        }
+
         // // VIEW INVENTORY STATE
         // if(gp.gameState == gp.viewInventoryState) {
         //     drawViewInventory();
@@ -416,6 +421,41 @@ public class UI {
 
         }
     }
+
+    public void drawHouseScreen() {
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 6;
+
+        drawSubWindow(x, y, width, height);
+
+        // HEADER
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = "Inside Your House";
+        int titleX = x + (width - g2.getFontMetrics().stringWidth(title)) / 2;
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        // MENU OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+        int menuX = x + gp.tileSize;
+        int menuY = y + gp.tileSize * 2;
+
+        String[] options = {
+            "1. Sleep",
+            "2. Store Items",
+            "3. Change Outfit",
+            "4. Exit House"
+        };
+
+        for (String option : options) {
+            g2.drawString(option, menuX, menuY);
+            menuY += 40;
+        }
+    }
+
 
     public void drawSubWindow(int x, int y, int width, int height) {
         
