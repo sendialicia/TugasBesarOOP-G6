@@ -142,12 +142,12 @@ public class Entity {
         }
     }
 
-    public BufferedImage setup(String packageName, String imageName) {
+    public BufferedImage setup(String imageName) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/" + packageName + "/" + imageName + ".png"));
+            image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             e.printStackTrace();

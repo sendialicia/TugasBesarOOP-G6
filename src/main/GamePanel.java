@@ -138,20 +138,16 @@ public class GamePanel extends JPanel implements Runnable{
 
         // STATE-BASED DRAWING
         if (gameState == titleState) {
-            ui.draw(g2); // UI class will handle drawing specific title screen elements
+            ui.draw(g2);
         } else if (gameState == farmNameInputState) {
-            ui.draw(g2); // UI class will handle drawing specific name input screen elements
+            ui.draw(g2);
         } else if (gameState == nameInputState) {
-            ui.draw(g2); // UI class will handle drawing specific name input screen elements
+            ui.draw(g2);
         } else if (gameState == genderInputState) {
             ui.draw(g2);
         } else { 
-            // For other states like playState, pauseState, etc.
-            
-            // Draw game world elements (e.g., tiles, objects, player)
-            // Adjust this condition if some states (other than title/nameInput) shouldn't draw the world
-            if (gameState == playState || gameState == pauseState || gameState == dialogueState) { // Example: Draw world if playing or pause
-
+            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || gameState == viewInventoryState) { 
+                
                 // TILE
                 tileM.draw(g2);
         
@@ -172,9 +168,7 @@ public class GamePanel extends JPanel implements Runnable{
                 // PLAYER
                 player.draw(g2);
             }
-        
-            // Draw UI elements for these other states (e.g., HUD, pause menu)
-            // The UI.draw() method itself has conditions for what to draw based on gameState
+
             ui.draw(g2); 
         }
 

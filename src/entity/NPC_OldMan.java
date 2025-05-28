@@ -17,14 +17,14 @@ public class NPC_OldMan extends Entity{
     }
 
     public void getImage() {
-        up1 = setup("npc", "oldman_up_left");
-        up2 = setup("npc", "oldman_up_right");
-        down1 = setup("npc", "oldman_down_left");
-        down2 = setup("npc", "oldman_down_right");
-        left1 = setup("npc", "oldman_left");
-        left2 = setup("npc", "oldman_walk_left");
-        right1 = setup("npc", "oldman_right");
-        right2 = setup("npc", "oldman_walk_right");
+        up1 = setup("/npc/Oldman/oldman_up_left");
+        up2 = setup("/npc/Oldman/oldman_up_right");
+        down1 = setup("/npc/Oldman/oldman_down_left");
+        down2 = setup("/npc/Oldman/oldman_down_right");
+        left1 = setup("/npc/Oldman/oldman_left");
+        left2 = setup("/npc/Oldman/oldman_walk_left");
+        right1 = setup("/npc/Oldman/oldman_right");
+        right2 = setup("/npc/Oldman/oldman_walk_right");
     }
 
     public void setDialogue() {

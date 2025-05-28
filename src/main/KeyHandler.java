@@ -55,13 +55,14 @@ public class KeyHandler implements KeyListener{
         }
 
         // FARM NAME STATE
-        if (gp.gameState == gp.farmNameInputState) {
+        else if (gp.gameState == gp.farmNameInputState) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 if (gp.ui.farmName.length() > 0) {
                     gp.ui.farmName.deleteCharAt(gp.ui.farmName.length() - 1);
                 }
             } else if (code == KeyEvent.VK_ENTER) {
                 if (gp.ui.farmName.length() > 0) {
+                    gp.player.setFarmName(gp.ui.farmName.toString());
                     gp.gameState = gp.nameInputState;
                     gp.ui.commandNum = 0; // reset to choose male/female
                     code = KeyEvent.VK_UNDEFINED; // Prevent further processing of Enter key
@@ -75,16 +76,16 @@ public class KeyHandler implements KeyListener{
         }
 
         // NAME STATE
-        if (gp.gameState == gp.nameInputState) {
+        else if (gp.gameState == gp.nameInputState) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 if (gp.ui.playerName.length() > 0) {
                     gp.ui.playerName.deleteCharAt(gp.ui.playerName.length() - 1);
                 }
             } else if (code == KeyEvent.VK_ENTER) {
                 if (gp.ui.playerName.length() > 0) {
+                    gp.player.setName(gp.ui.playerName.toString());
                     gp.gameState = gp.genderInputState;
                     gp.ui.commandNum = 0; // reset to choose male/female
-                    code = KeyEvent.VK_UNDEFINED; // Prevent further processing of Enter key
                 }
             } else {
                 char c = e.getKeyChar();
@@ -95,19 +96,24 @@ public class KeyHandler implements KeyListener{
         }
 
         // GENDER STATE
-        if (gp.gameState == gp.genderInputState) {
+        else if (gp.gameState == gp.genderInputState) {
             if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A) {
                 gp.ui.commandNum = 0; // Male
             } else if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D) {
                 gp.ui.commandNum = 1; // Female
             } else if (code == KeyEvent.VK_ENTER) {
+                if (gp.ui.commandNum == 0) {
+                    gp.player.setGender("Male");
+                } else if (gp.ui.commandNum == 1) {
+                    gp.player.setGender("Female");
+                }
                 gp.gameState = gp.playState;
                 gp.playMusic(0); // Start background music
             }
         }
 
         // PLAY STATE
-        if(gp.gameState == gp.playState) {
+        else if(gp.gameState == gp.playState) {
 
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 upPressed = true;
@@ -133,21 +139,33 @@ public class KeyHandler implements KeyListener{
                 gp.gameState = gp.pauseState;
             }
 
+            if(code == KeyEvent.VK_V) {
+                gp.gameState = gp.viewAttributeState;
+                e.consume();
+            }
+
             if(code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
             }
         }
 
         // PAUSE STATE
-        if(gp.gameState == gp.pauseState) {
+        else if(gp.gameState == gp.pauseState) {
             if(code == KeyEvent.VK_P) {
                 gp.gameState = gp.playState;
             }
         }
 
         // DIALOGUE STATE
-        if(gp.gameState == gp.dialogueState) {
+        else if(gp.gameState == gp.dialogueState) {
             if(code == KeyEvent.VK_ENTER) {
+                gp.gameState = gp.playState;
+            }
+        }
+
+        // VIEW ATTRIBUTE STATE
+        else if(gp.gameState == gp.viewAttributeState) {
+            if(code == KeyEvent.VK_V) {
                 gp.gameState = gp.playState;
             }
         }

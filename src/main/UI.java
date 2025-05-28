@@ -96,10 +96,10 @@ public class UI {
             drawDialogueScreen();
         }
 
-        // // VIEW ATTRIBUTE STATE
-        // if(gp.gameState == gp.viewAttributeState) {
-        //     drawViewAttribute();
-        // }
+        // VIEW ATTRIBUTE STATE
+        if(gp.gameState == gp.viewAttributeState) {
+            drawAttributeScreen();
+        }
 
         // // VIEW INVENTORY STATE
         // if(gp.gameState == gp.viewInventoryState) {
@@ -280,9 +280,11 @@ public class UI {
         g2.drawString(text, x, y);
         g2.setStroke(new BasicStroke(3));
         if(commandNum == 0) {
-            drawPartialBorderText(g2, text, "Male", x, y, 15, Color.WHITE, Color.WHITE, new Color(1, 137, 180, 150));
+            drawPartialBorderText(g2, text, "Male", x, y, 15, Color.WHITE, 
+                                  Color.WHITE, new Color(1, 137, 180, 150));
         } else if(commandNum == 1) {
-            drawPartialBorderText(g2, text, "Female", x, y, 15, Color.WHITE, Color.WHITE, new Color(242, 1, 108, 150));
+            drawPartialBorderText(g2, text, "Female", x, y, 15, Color.WHITE, 
+                                  Color.WHITE, new Color(242, 1, 108, 150));
         }
     }
 
@@ -315,6 +317,66 @@ public class UI {
         }
     }
 
+    public void drawAttributeScreen() {
+
+        // WINDOW
+        int x = 20;
+        int y = gp.tileSize/2; 
+        int width = gp.screenWidth - (gp.tileSize*9);
+        int height = gp.screenHeight - (gp.tileSize*2);
+
+        drawSubWindow(x, y, width, height);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+        x += gp.tileSize;
+        y += gp.tileSize;
+
+        String text = "1. Name: ";
+        g2.drawString(text, x, y);
+        y += 30;
+        
+        text = gp.player.getName();
+        g2.drawString(text, x + gp.tileSize, y);
+        y += 40;
+
+        text = "2. Gender: ";
+        g2.drawString(text, x, y);
+        y += 30;
+        
+        text = gp.player.getGender();
+        g2.drawString(text, x + gp.tileSize, y);
+        y += 40;
+
+        text = "3. Energy: ";
+        g2.drawString(text, x, y);
+        y += 30;
+        
+        text = String.valueOf(gp.player.getEnergy());
+        g2.drawString(text, x + gp.tileSize, y);
+        y += 40; 
+        
+        text = "4. Partner: ";
+        g2.drawString(text, x, y);
+        y += 30;
+        
+        if(gp.player.getPartner() == null || gp.player.getPartner().isEmpty()) {
+            text = "None";
+        } else {
+            text = gp.player.getPartner();
+        }
+        g2.drawString(text, x + gp.tileSize, y);
+        y += 40;
+
+        text = "5. Gold: ";
+        g2.drawString(text, x, y);
+        y += 30;
+        
+        text = String.valueOf(gp.player.getGold());
+        g2.drawString(text, x + gp.tileSize, y);
+        y += 40;
+     
+    }
+
     public void drawSubWindow(int x, int y, int width, int height) {
         
         Color c = new Color(0, 0, 0, 210);
@@ -345,7 +407,9 @@ public class UI {
         return x;
     }
 
-    public void drawPartialBorderText(Graphics2D g2, String fullText, String targetText, int x, int y, int padding, Color textColor, Color borderColor, Color backgroundColor) {
+    public void drawPartialBorderText(Graphics2D g2, String fullText, String targetText, int x, int y, 
+                                      int padding, Color textColor, Color borderColor, Color backgroundColor) {
+
         FontMetrics fm = g2.getFontMetrics();
 
         // Measure width up to the target word
