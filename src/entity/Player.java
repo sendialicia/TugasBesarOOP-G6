@@ -88,7 +88,7 @@ public class Player extends Entity{
     public void setName(String name) { this.name = name; }
     public void setGender(String gender) { this.gender = gender; }
     public void setFarmName(String farmName) { this.farmName = farmName; }
-    public void setPartner(String partner) { this.partner = partner; }
+    public void setPartner(NPC partner) { this.partner = partner; }
     public void setGold(int gold) { this.gold = Math.max(0, gold); }
     public void setPosition(int x, int y) { this.worldX = x; this.worldY = y; }
     public void setEnergy(int energy) {
@@ -102,9 +102,11 @@ public class Player extends Entity{
     
     public String getName() { return name; }
     public String getGender() { return gender; }
+    public int getEnergy() { return energy; }
     public String getFarmName() { return farmName; }
     public String getPartner() { return partner; }
     public int getGold() { return gold; }
+    public Inventory getInventory() { return inventory; }
     public String getFavItem() {
         return "The Legends of Spakbor"; // Placeholder for favorite item logic
         // return inventory.getMostItem();

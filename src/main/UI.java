@@ -319,83 +319,101 @@ public class UI {
 
     public void drawAttributeScreen() {
 
-        int screenMidX = gp.screenWidth/2 - (gp.tileSize/2);
-        int screenMidY = gp.screenHeight/2 - (gp.tileSize/2);
+        // WINDOW PLAYER ATTRIBUTES
+        int frameX = 0;
+        int frameY = gp.screenHeight/2 - (gp.tileSize/2) + gp.tileSize*2;
+        int frameWidth = gp.screenWidth;
+        int frameHeight = gp.screenHeight - frameY;
 
-        // WINDOW
-        int x = 0;
-        int y = screenMidY + gp.tileSize*2;
-        int width = gp.screenWidth;
-        int height = gp.screenHeight - y;
-
-        drawSubWindow(x, y, width, height);
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
         // PLAYER AVATAR
-        g2.drawImage(gp.player.down1, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, y + gp.tileSize/3, gp.tileSize*3 - 5, gp.tileSize*3 - 5, null);
+        g2.drawImage(gp.player.down1, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/3, gp.tileSize*3 - 5, gp.tileSize*3 - 5, null);
 
         // PLAYER ATTRIBUTES
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
-        x += gp.tileSize;
-        y += gp.tileSize;
-
-        String text = "1. Name: ";
-        g2.drawString(text, x, y);
-        y += 30;
-        
-        text = gp.player.getName();
-        g2.drawString(text, x + 27, y);
-        y += 70;
-
-        text = "2. Gender: ";
-        g2.drawString(text, x, y);
-        y += 30;
-        
-        text = gp.player.getGender();
-        g2.drawString(text, x + 27, y);
-        y -= 130;
-        x += gp.tileSize * 4;
-
-        text = "3. Energy: ";
-        g2.drawString(text, x, y);
-        y += 30;
-        
-        text = String.valueOf(gp.player.getEnergy());
-        g2.drawString(text, x + 27, y);
-        y += 70; 
-        
-        text = "4. Partner: ";
-        g2.drawString(text, x, y);
-        y += 30;
-        
-        if(gp.player.getPartner() == null || gp.player.getPartner().isEmpty()) {
-            text = "None";
-        } else {
-            text = gp.player.getPartner();
+        {
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+            int x = frameX + gp.tileSize;
+            int y = frameY + gp.tileSize;
+    
+            String text = "1. Name: ";
+            g2.drawString(text, x, y);
+            y += 30;
+            
+            text = gp.player.getName();
+            g2.drawString(text, x + 27, y);
+            y += 70;
+    
+            text = "2. Gender: ";
+            g2.drawString(text, x, y);
+            y += 30;
+            
+            text = gp.player.getGender();
+            g2.drawString(text, x + 27, y);
+            y -= 130;
+            x += gp.tileSize * 4;
+    
+            text = "3. Energy: ";
+            g2.drawString(text, x, y);
+            y += 30;
+            
+            text = String.valueOf(gp.player.getEnergy());
+            g2.drawString(text, x + 27, y);
+            y += 70; 
+            
+            text = "4. Partner: ";
+            g2.drawString(text, x, y);
+            y += 30;
+            
+            if(gp.player.getPartner() == null || gp.player.getPartner().isEmpty()) {
+                text = "None";
+            } else {
+                text = gp.player.getPartner();
+            }
+            g2.drawString(text, x + 27, y);
+            y -= 130;
+            x += gp.tileSize * 4;
+    
+            text = "5. Gold: ";
+            g2.drawString(text, x, y);
+            y += 30;
+            
+            text = String.valueOf(gp.player.getGold());
+            g2.drawString(text, x + 27, y);
+            y += 70;
+    
+            text = "6. Fav Item: ";
+            g2.drawString(text, x, y);
+            y += 30;
+            
+            if(gp.player.getFavItem() == null || gp.player.getFavItem().isEmpty()) {
+                text = "None";
+            } else {
+                text = gp.player.getFavItem();
+            }
+            g2.drawString(text, x + 27, y);
+            y += 70;
         }
-        g2.drawString(text, x + 27, y);
-        y -= 130;
-        x += gp.tileSize * 4;
-
-        text = "5. Gold: ";
-        g2.drawString(text, x, y);
-        y += 30;
-        
-        text = String.valueOf(gp.player.getGold());
-        g2.drawString(text, x + 27, y);
-        y += 70;
-
-        text = "6. Fav Item: ";
-        g2.drawString(text, x, y);
-        y += 30;
-        
-        if(gp.player.getFavItem() == null || gp.player.getFavItem().isEmpty()) {
-            text = "None";
-        } else {
-            text = gp.player.getFavItem();
-        }
-        g2.drawString(text, x + 27, y);
-        y += 70;
      
+
+        // WINDOW PLAYER ATTRIBUTES
+        frameX = 0;
+        frameY = 0;
+        frameWidth = gp.screenWidth;
+        frameHeight = gp.screenHeight/2 - (gp.tileSize/2) + gp.tileSize*2;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+        
+        // PLAYER INVENTORY
+        {
+            // SLOT
+            final int slotXStart = frameX + 20;
+            final int slotYStart = frameY + 20;
+            int slotX = slotXStart;
+            int slotY = slotYStart;
+
+            //  CURSOR
+            
+        }
     }
 
     public void drawSubWindow(int x, int y, int width, int height) {
