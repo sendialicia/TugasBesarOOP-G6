@@ -21,7 +21,7 @@ public class OBJ_Bin extends SuperObject {
         width = gp.tileSize * 3; 
         height = gp.tileSize * 2; 
 
-        solidAreas = new Rectangle[5]; 
+        solidAreas = new Rectangle[1]; 
 
         solidAreas[0] = new Rectangle();
         solidAreas[0].x = 0; 

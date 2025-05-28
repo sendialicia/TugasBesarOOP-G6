@@ -21,7 +21,7 @@ public class OBJ_House extends SuperObject {
         width = gp.tileSize * 6; 
         height = gp.tileSize * 8; 
 
-        solidAreas = new Rectangle[5]; 
+        solidAreas = new Rectangle[3]; 
 
         solidAreas[0] = new Rectangle();
         solidAreas[0].x = 0; 
@@ -30,28 +30,16 @@ public class OBJ_House extends SuperObject {
         solidAreas[0].height = gp.tileSize; 
 
         solidAreas[1] = new Rectangle();
-        solidAreas[1].x = gp.tileSize * 5; 
-        solidAreas[1].y = 0; 
-        solidAreas[1].width = gp.tileSize; 
-        solidAreas[1].height = gp.tileSize; 
+        solidAreas[1].x = 0; 
+        solidAreas[1].y = gp.tileSize; 
+        solidAreas[1].width = width; 
+        solidAreas[1].height = gp.tileSize * 6; 
 
         solidAreas[2] = new Rectangle();
         solidAreas[2].x = 0; 
-        solidAreas[2].y = gp.tileSize; 
-        solidAreas[2].width = width; 
-        solidAreas[2].height = gp.tileSize * 6; 
-
-        solidAreas[3] = new Rectangle();
-        solidAreas[3].x = 0; 
-        solidAreas[3].y = gp.tileSize * 7; 
-        solidAreas[3].width = gp.tileSize; 
-        solidAreas[3].height = gp.tileSize; 
-
-        solidAreas[4] = new Rectangle();
-        solidAreas[4].x = gp.tileSize * 5; 
-        solidAreas[4].y = gp.tileSize * 7; 
-        solidAreas[4].width = gp.tileSize; 
-        solidAreas[4].height = gp.tileSize; 
+        solidAreas[2].y = gp.tileSize * 7; 
+        solidAreas[2].width = gp.tileSize; 
+        solidAreas[2].height = gp.tileSize; 
 
         solidAreaDefaultX = 0;
         solidAreaDefaultY = 0;
