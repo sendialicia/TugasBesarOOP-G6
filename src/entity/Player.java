@@ -101,7 +101,6 @@ public class Player extends Entity{
     public NPC getPartner() { return partner; }
     public int getGold() { return gold; }
     public Inventory getInventory() { return inventory; }
-    public int getEnergy() { return energy; }
     public String getFavItem() { return inventory.getMostItem(); }
 
     public void addItemToInventory(Items item, int quantity) { inventory.addItem(item, quantity); }
