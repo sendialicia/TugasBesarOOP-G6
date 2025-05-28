@@ -1,9 +1,13 @@
 package items;
 
+import java.awt.image.BufferedImage;
+
 public class Items {
     private String name;
+    private String description = null;
     private Integer sellPrice = null;
     private Integer buyPrice = null;
+    private BufferedImage image = null;
 
     public Items(String name){
         this.name = name;
@@ -19,11 +23,14 @@ public class Items {
     }
 
     public String getName(){ return name; }
+    public String getDescription() { return description; }
+    public BufferedImage getItemImage() { return image; }
     public Integer getSellPrice(){ return sellPrice; }
     public Integer getBuyPrice(){ return buyPrice; }
 
     public void setName(String name) { this.name = name; }
+    public void setDescription(String description) { this.description = description; }
+    public void setItemImage(BufferedImage image) { this.image = image; }
     public void setSellPrice(Integer sellPrice){ this.sellPrice = sellPrice; }
     public void setBuyPrice(Integer buyPrice){ this.buyPrice = buyPrice; }
 }
-

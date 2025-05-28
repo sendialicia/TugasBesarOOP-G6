@@ -9,7 +9,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
+
 import javax.imageio.ImageIO;
+
+import items.Items;
 import time.GameClock;
 
 
@@ -27,6 +31,8 @@ public class UI {
     public String currentDialogue;
     public int commandNum = 0;
     public BufferedImage titleBackground;
+    public int slotCol = 0;
+    public int slotRow = 0;
 
     // double playTime;
     // DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -321,14 +327,14 @@ public class UI {
 
         // WINDOW PLAYER ATTRIBUTES
         int frameX = 0;
-        int frameY = gp.screenHeight/2 - (gp.tileSize/2) + gp.tileSize*2;
+        int frameY = gp.screenHeight/2 + (gp.tileSize+3)*2;
         int frameWidth = gp.screenWidth;
         int frameHeight = gp.screenHeight - frameY;
 
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
         // PLAYER AVATAR
-        g2.drawImage(gp.player.down1, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/3, gp.tileSize*3 - 5, gp.tileSize*3 - 5, null);
+        g2.drawImage(gp.player.down1, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/3, gp.tileSize*3 - 35, gp.tileSize*3 - 35, null);
 
         // PLAYER ATTRIBUTES
         {
@@ -342,7 +348,7 @@ public class UI {
             
             text = gp.player.getName();
             g2.drawString(text, x + 27, y);
-            y += 70;
+            y += 50;
     
             text = "2. Gender: ";
             g2.drawString(text, x, y);
@@ -350,7 +356,7 @@ public class UI {
             
             text = gp.player.getGender();
             g2.drawString(text, x + 27, y);
-            y -= 130;
+            y -= 110;
             x += gp.tileSize * 4;
     
             text = "3. Energy: ";
@@ -359,7 +365,7 @@ public class UI {
             
             text = String.valueOf(gp.player.getEnergy());
             g2.drawString(text, x + 27, y);
-            y += 70; 
+            y += 50; 
             
             text = "4. Partner: ";
             g2.drawString(text, x, y);
@@ -371,7 +377,7 @@ public class UI {
                 text = gp.player.getPartner().getName();
             }
             g2.drawString(text, x + 27, y);
-            y -= 130;
+            y -= 110;
             x += gp.tileSize * 4;
     
             text = "5. Gold: ";
@@ -380,7 +386,7 @@ public class UI {
             
             text = String.valueOf(gp.player.getGold());
             g2.drawString(text, x + 27, y);
-            y += 70;
+            y += 50;
     
             text = "6. Fav Item: ";
             g2.drawString(text, x, y);
@@ -392,28 +398,94 @@ public class UI {
                 text = gp.player.getFavItem();
             }
             g2.drawString(text, x + 27, y);
-            y += 70;
         }
      
 
-        // WINDOW PLAYER ATTRIBUTES
+        // WINDOW PLAYER INVENTORY
         frameX = 0;
         frameY = 0;
-        frameWidth = gp.screenWidth;
-        frameHeight = gp.screenHeight/2 - (gp.tileSize/2) + gp.tileSize*2;
+        frameWidth = gp.screenWidth - (gp.tileSize-3)*6;
+        frameHeight = gp.screenHeight/2 + (gp.tileSize+3)*2;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
         
         // PLAYER INVENTORY
-        {
-            // SLOT
-            final int slotXStart = frameX + 20;
-            final int slotYStart = frameY + 20;
-            int slotX = slotXStart;
-            int slotY = slotYStart;
 
-            //  CURSOR
+        // SLOT
+        final int slotXstart = frameX + 20;
+        final int slotYstart = frameY + 20;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+        int slotSize = gp.tileSize + 3;
+        String[][] slotFilled = new String[9][7];
+
+        // DRAW PLAYER'S ITEMS
+        for (Map.Entry<Items, Integer> entry : gp.player.getInventory().getItems().entrySet()) {
+            Items item = entry.getKey();
+            int quantity = entry.getValue();
             
+            int col = (slotX - slotXstart) / slotSize;
+            int row = (slotY - slotYstart) / slotSize;
+            slotFilled[col][row] = gp.player.getInventory().get(item.getName()).getName();
+            g2.drawImage(item.getItemImage(), slotX, slotY, null);
 
+            slotX += slotSize;
+
+            if(slotX >= frameX + frameWidth - gp.tileSize) {
+                slotX = slotXstart;
+                slotY += slotSize;
+            }
+        }
+
+        //  CURSOR
+        int cursorX = slotXstart + (slotSize * slotCol);
+        int cursorY = slotYstart + (slotSize * slotRow);
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+
+        // DRAW CURSOR
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+        
+
+        // WINDOW DESCRIPTION
+        int dFrameX = gp.screenWidth - (gp.tileSize-3)*6;
+        int dFrameY = 0;
+        int dFrameWidth = (gp.tileSize-3)*6;
+        int dFrameHeight = gp.screenHeight/2 + (gp.tileSize+3)*2;
+
+        drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
+        // ITEM DESCRIPTION
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        String itemName = slotFilled[slotCol][slotRow];
+        if(itemName != null) {
+            Items item = gp.player.getInventory().get(itemName);
+            String description = item.getDescription() != null ? item.getDescription() : "No description";
+            int dX = dFrameX + 20;
+            int dY = dFrameY + 40;
+
+            g2.setColor(Color.cyan);
+            g2.drawString(item.getName(), dX, dY);
+            dY += 40;
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+            g2.setColor(Color.white);
+            g2.drawString(description, dX, dY);
+            dY += 40;
+
+            if(item.getSellPrice() != null) {
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+                g2.setColor(Color.red);
+                g2.drawString("Sell Price: " + item.getSellPrice(), dX, dY);
+                dY += 40;
+            }
+            if(item.getBuyPrice() != null) {
+                g2.setColor(Color.green);
+                g2.drawString("Buy Price: " + item.getBuyPrice(), dX, dY);
+                dY += 40;
+            }
+        } else {
+            g2.drawString("No item selected", dFrameX + 20, dFrameY + 60);
         }
     }
 

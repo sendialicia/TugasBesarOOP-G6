@@ -43,25 +43,36 @@ public class Inventory {
     }
 
     public String getMostItem() {
-        if (items.isEmpty()) return null;
-        Items mostItem = null;
-        int maxQuantity = 0;
-        for (Map.Entry<Items, Integer> entry : items.entrySet()) {
-            if (entry.getValue() > maxQuantity) {
-                maxQuantity = entry.getValue();
-                mostItem = entry.getKey();
-            }
-        }
-        return mostItem != null ? mostItem.getName() : null;
+        // if (items.isEmpty()) return null;
+        // Items mostItem = null;
+        // int maxQuantity = 0;
+        // for (Map.Entry<Items, Integer> entry : items.entrySet()) {
+        //     if (entry.getValue() > maxQuantity) {
+        //         maxQuantity = entry.getValue();
+        //         mostItem = entry.getKey();
+        //     }
+        // }
+        // return mostItem != null ? mostItem.getName() : null;
+        return "The Legends of Spakbor";
     }
 
-
+    public int totalItems() {
+        int total = 0;
+        for (int quantity : items.values()) total += quantity;
+        return total;
+    }
     public int getItemQuantity(Items item) { return items.getOrDefault(item, 0); }
+    
     public void clear() { items.clear(); }
+    
     public boolean isEmpty() { return items.isEmpty(); }
     
     public Items get(String itemName) {
-        for (Items item : items.keySet()) if (item.getName().equalsIgnoreCase(itemName)) return item;
+        for (Items item : items.keySet()) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                return item;
+            }
+        }
         return null;
     }
 }
