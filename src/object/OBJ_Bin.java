@@ -1,5 +1,6 @@
 package object;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import main.GamePanel; 
@@ -20,12 +21,15 @@ public class OBJ_Bin extends SuperObject {
         width = gp.tileSize * 3; 
         height = gp.tileSize * 2; 
 
-        solidArea.x = 0;
-        solidArea.y = 0;
-        solidArea.width = width;
-        solidArea.height = height;
+        solidAreas = new Rectangle[5]; 
 
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
+        solidAreas[0] = new Rectangle();
+        solidAreas[0].x = 0; 
+        solidAreas[0].y = 0; 
+        solidAreas[0].width = width; 
+        solidAreas[0].height = height; 
+
+        solidAreaDefaultX = 0;
+        solidAreaDefaultY = 0;
     }
 }

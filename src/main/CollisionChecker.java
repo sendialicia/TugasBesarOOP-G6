@@ -69,41 +69,45 @@ public class CollisionChecker {
     public int checkObject(Entity entity, boolean player) {
         int index = 999;
 
-        Rectangle entityArea = new Rectangle(
-            entity.worldX + entity.solidArea.x,
-            entity.worldY + entity.solidArea.y,
+        int originalWorldX = entity.worldX;
+        int originalWorldY = entity.worldY;
+
+        switch (entity.direction) {
+            case "up": originalWorldY -= entity.speed; break;
+            case "down": originalWorldY += entity.speed; break;
+            case "left": originalWorldX -= entity.speed; break;
+            case "right": originalWorldX += entity.speed; break;
+        }
+
+        Rectangle entitySolidAreaSimulated = new Rectangle(
+            originalWorldX + entity.solidArea.x,
+            originalWorldY + entity.solidArea.y,
             entity.solidArea.width,
             entity.solidArea.height
         );
 
         for (int i = 0; i < gp.obj.length; i++) {
             if (gp.obj[i] != null) {
-                Rectangle objectArea = new Rectangle(
-                    gp.obj[i].worldX + gp.obj[i].solidArea.x,
-                    gp.obj[i].worldY + gp.obj[i].solidArea.y,
-                    gp.obj[i].solidArea.width,
-                    gp.obj[i].solidArea.height
-                );
+                if (gp.obj[i].collision && gp.obj[i].solidAreas != null) { 
+                    for (Rectangle objectSolidRect : gp.obj[i].solidAreas) {
+                        Rectangle objectArea = new Rectangle(
+                            gp.obj[i].worldX + objectSolidRect.x,
+                            gp.obj[i].worldY + objectSolidRect.y,
+                            objectSolidRect.width,
+                            objectSolidRect.height
+                        );
 
-                // Simulate movement
-                switch (entity.direction) {
-                    case "up": entityArea.y -= entity.speed; break;
-                    case "down": entityArea.y += entity.speed; break;
-                    case "left": entityArea.x -= entity.speed; break;
-                    case "right": entityArea.x += entity.speed; break;
-                }
-
-                if (entityArea.intersects(objectArea)) {
-                    if (gp.obj[i].collision) {
-                        entity.collisionOn = true;
-                    }
-                    if (player) {
-                        index = i;
+                        if (entitySolidAreaSimulated.intersects(objectArea)) {
+                            entity.collisionOn = true;
+                            if (player) {
+                                index = i;
+                            }
+                            break;
+                        }
                     }
                 }
             }
         }
-
         return index;
     }
 
