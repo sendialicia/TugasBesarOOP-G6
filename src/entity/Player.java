@@ -72,14 +72,14 @@ public class Player extends Entity{
     public void addEnergy(int energy){ this.energy += energy; }
 
     public void getPlayerImage() {
-        up1 = setup("player", "mc_up_left");
-        up2 = setup("player", "mc_up_right");
-        down1 = setup("player", "mc_down_left");
-        down2 = setup("player", "mc_down_right");
-        left1 = setup("player", "mc_left");
-        left2 = setup("player", "mc_walk_left");
-        right1 = setup("player", "mc_right");
-        right2 = setup("player", "mc_walk_right");
+        up1 = setup("/player/mc_up_left");
+        up2 = setup("/player/mc_up_right");
+        down1 = setup("/player/mc_down_left");
+        down2 = setup("/player/mc_down_right");
+        left1 = setup("/player/mc_left");
+        left2 = setup("/player/mc_walk_left");
+        right1 = setup("/player/mc_right");
+        right2 = setup("/player/mc_walk_right");
     }
 
     public void update() {

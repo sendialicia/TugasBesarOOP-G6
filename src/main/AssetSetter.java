@@ -19,8 +19,10 @@ public class AssetSetter {
         int houseTileWidth = 6;
         int houseTileHeight = 8;
 
-        int houseCandidateX = 1 + random.nextInt(30 - houseTileWidth - 1);
+        int maxHouseX = 25 - houseTileWidth;
+        int houseCandidateX = 1 + random.nextInt(maxHouseX); // So starts from 1 to 19
         int houseCandidateY = 2 + random.nextInt(27 - houseTileHeight);
+
 
         gp.obj[0] = new OBJ_House(gp, houseCandidateX * gp.tileSize, houseCandidateY * gp.tileSize);
 
