@@ -19,8 +19,7 @@ public class AssetSetter {
         int houseTileWidth = 6;
         int houseTileHeight = 8;
 
-        int maxHouseX = 25 - houseTileWidth;
-        int houseCandidateX = 1 + random.nextInt(maxHouseX); // So starts from 1 to 19
+        int houseCandidateX = 1 + random.nextInt(25 - houseTileHeight);
         int houseCandidateY = 2 + random.nextInt(27 - houseTileHeight);
 
 
@@ -32,7 +31,7 @@ public class AssetSetter {
         int binCandidateX = houseCandidateX + houseTileWidth + 1;
         if (binCandidateX + binTileWidth > 30) {
             binCandidateX = 30 - binTileWidth;
-            if (binCandidateX <= 0) binCandidateX = 1;
+            if (binCandidateX <= 0) binCandidateX = 2;
         }
 
         int binMinY = houseCandidateY;
@@ -54,7 +53,7 @@ public class AssetSetter {
         int attempts = 0;
 
         do {
-            pondCandidateX = 1 + random.nextInt(30 - pondTileWidth);
+            pondCandidateX = 2 + random.nextInt(28 - pondTileWidth);
             pondCandidateY = 2 + random.nextInt(28 - pondTileHeight);
 
             pondCanBePlaced = true;

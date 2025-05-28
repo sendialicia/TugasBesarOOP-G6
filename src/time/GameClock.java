@@ -54,6 +54,16 @@ public class GameClock implements Runnable {
     public synchronized boolean isNight() { return (time.getHour() >= 18 || time.getHour() < 6); }
     public synchronized int getCurrentNightCycle() { return time.getHour() < 6 ? date.getDay() - 1 : date.getDay(); }
 
+    public synchronized int getMinutesSince(GameClockSnapshot snapshot) {
+        int currentTotalMinutes = getTotalMinutesSinceOrigin(this.getDate(), this.getTime());
+        int snapshotTotalMinutes = getTotalMinutesSinceOrigin(snapshot.getDate(), snapshot.getTime());
+        return currentTotalMinutes - snapshotTotalMinutes;
+    }
+
+    private int getTotalMinutesSinceOrigin(GameDate date, GameTime time) {
+        return (date.getSeason() * 10 + date.getOriginDay()) * 24 * 60 + time.getHour() * 60 + time.getMinute();
+    }
+
     public synchronized String getFormattedTime() { return time.toString(); }
     public synchronized String getFormattedDate() { return date.toString(); }
     public synchronized String getFormattedWeather() { return weather.toString(); }
