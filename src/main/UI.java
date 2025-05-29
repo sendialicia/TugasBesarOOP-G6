@@ -149,7 +149,7 @@ public class UI {
         x = gp.screenWidth/2 - (gp.tileSize*2)/2;
         y += gp.tileSize*2;
         g2.drawImage(gp.player.def_avatar, x + 100, y, gp.tileSize*2, gp.tileSize*2, null);
-        g2.drawImage(gp.player.def_avatar_female, x - 100, y - 20, gp.tileSize*2 + 30, gp.tileSize*2 + 30, null);
+        g2.drawImage(gp.player.def_avatar_female, x - 150, y - 20, gp.tileSize*2 + 30, gp.tileSize*2 + 30, null);
 
         // MENU
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
@@ -303,9 +303,13 @@ public class UI {
         if(commandNum == 0) {
             drawPartialBorderText(g2, text, "Male", x, y, 15, Color.WHITE, 
                                   Color.WHITE, new Color(1, 137, 180, 150));
+            g2.drawImage(gp.player.def_avatar, gp.screenWidth/2 - gp.tileSize, y, 
+                        gp.tileSize, gp.tileSize, null);
         } else if(commandNum == 1) {
             drawPartialBorderText(g2, text, "Female", x, y, 15, Color.WHITE, 
                                   Color.WHITE, new Color(242, 1, 108, 150));
+            g2.drawImage(gp.player.def_avatar_female, gp.screenWidth - gp.tileSize - 35, y - 10, 
+                        gp.tileSize+20, gp.tileSize+20, null);
         }
     }
 
@@ -349,8 +353,24 @@ public class UI {
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
         // PLAYER AVATAR
-        g2.drawImage(gp.player.down1, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/3, gp.tileSize*3 - 35, gp.tileSize*3 - 35, null);
+        // g2.drawImage(gp.player.down1, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/3, gp.tileSize*3 - 35, gp.tileSize*3 - 35, null);
 
+        BufferedImage playerAvatarImage;
+        int avatarWidth, avatarHeight;
+
+        if ("Male".equals(gp.player.getGender())) {
+            playerAvatarImage = gp.player.def_avatar; 
+            avatarWidth = gp.tileSize * 3 - 35;
+            avatarHeight = gp.tileSize * 3 - 35;
+            
+        } else { // Female
+            playerAvatarImage = gp.player.def_avatar_female; 
+            avatarWidth = gp.tileSize * 3 + 30; 
+            avatarHeight = gp.tileSize * 3 + 30;
+        }
+
+        g2.drawImage(playerAvatarImage, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/3, avatarWidth, avatarHeight, null);
+        
         // PLAYER ATTRIBUTES
         {
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
