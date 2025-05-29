@@ -123,6 +123,8 @@ public class UI {
         if (gp.gameState == gp.fishingInteractState) drawFishingScreen();
         if (gp.gameState == gp.fishingSucceeded) drawSucceededScreen();
         if (gp.gameState == gp.fishingFailed) drawFailedScreen();
+
+        if (gp.gameState == gp.binInteractState) drawBinScreen();
     }
 
     public void drawTitleScreen() {
@@ -552,7 +554,7 @@ public class UI {
         // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
         g2.setColor(Color.white);
-        String title = "Fishing at " + gp.player.location;
+        String title = "Fishing at " + gp.player.fishingLocation;
         int titleX = getXforCenteredText(title);
         g2.drawString(title, titleX, y + gp.tileSize);
 
@@ -613,6 +615,43 @@ public class UI {
         int x = getXforCenteredText(text);
         int y = gp.screenHeight/2;
         g2.drawString(text, x, y);
+    }
+
+    public void drawBinScreen() {
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 6;
+
+        drawSubWindow(x, y, width, height);
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = "Shipping Bin";
+        int titleX = getXforCenteredText(title);
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        // MENU OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        y += gp.tileSize * 2;
+
+        String[] options = {
+            "SELL ITEMS",
+            "EXIT"
+        };
+
+        for (int i = 0; i < options.length; i++) {
+            String text = options[i];
+            int textX = getXforCenteredText(text);
+            y += gp.tileSize;
+
+            g2.drawString(text, textX, y);
+            if (commandNum == i) {
+                g2.drawString(">", textX - gp.tileSize, y);
+            }
+        }
     }
 
     public void drawSubWindow(int x, int y, int width, int height) {

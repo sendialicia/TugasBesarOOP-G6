@@ -1,7 +1,9 @@
 package items.miscellaneous;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,10 +13,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import items.Items;
+
 public class MiscellaneousLoader {
 
     public static List<Miscellaneous> load() {
         String fullPath = "res/files/miscellaneous.json"; 
+        Items items = new Items(null);
 
         try {
             String jsonContent = Files.readString(Paths.get(fullPath));
@@ -24,7 +29,8 @@ public class MiscellaneousLoader {
 
             List<Miscellaneous> miscellaneousList = new ArrayList<>();
             for (MiscellaneousData data : miscellaneousDataList) {
-                Miscellaneous miscellaneous = new Miscellaneous(data.name, data.sellPrice, data.buyPrice);
+                BufferedImage image = items.setup(data.imagePath);
+                Miscellaneous miscellaneous = new Miscellaneous(data.name, data.sellPrice, data.buyPrice, image, data.description);
                 miscellaneousList.add(miscellaneous);
             }
 

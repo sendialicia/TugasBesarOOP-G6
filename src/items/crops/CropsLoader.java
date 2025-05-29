@@ -1,5 +1,6 @@
 package items.crops;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -11,10 +12,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import items.Items;
+
 public class CropsLoader {
 
     public static List<Crops> load() {
         String fullPath = "res/files/crops.json";
+        Items items = new Items(null);
 
         try {
             String jsonContent = Files.readString(Paths.get(fullPath));
@@ -24,7 +28,9 @@ public class CropsLoader {
 
             List<Crops> cropsList = new ArrayList<>();
             for (CropsData data : cropsDataList) {
-                Crops crop = new Crops(data.name, data.harvestedAmount, data.sellPrice, data.buyPrice);
+
+                BufferedImage image = items.setup(data.imagePath);
+                Crops crop = new Crops(data.name, data.harvestedAmount, data.sellPrice, data.buyPrice, image, data.description);
                 cropsList.add(crop);
             }
 

@@ -1,4 +1,16 @@
 [
-    {"name": "Coal", "sellPrice": 10, "buyPrice" : 20},
-    {"name": "Firewood", "sellPrice": 5, "buyPrice" : 10}
+  {
+    "name": "Coal",
+    "sellPrice": 10,
+    "buyPrice": 20,
+    "description": "A dark, combustible fossil fuel, essential for crafting and smelting.",
+    "imagePath": "/items/Miscellaneous/Coal.png"
+  },
+  {
+    "name": "Firewood",
+    "sellPrice": 5,
+    "buyPrice": 10,
+    "description": "Chopped wood, perfect for fueling fires or as a basic building material.",
+    "imagePath": "/items/Miscellaneous/Firewood.png"
+  }
 ]

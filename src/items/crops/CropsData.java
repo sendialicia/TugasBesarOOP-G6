@@ -5,5 +5,6 @@ public class CropsData {
     public int harvestedAmount;
     public int sellPrice;
     public int buyPrice;
-    public boolean isEdible;
+    public String description;
+    public String imagePath;
 }

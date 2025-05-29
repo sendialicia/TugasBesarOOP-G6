@@ -7,4 +7,6 @@ public class FishData {
     public String[] weathers;
     public String[] locations;
     public String[][] timeRanges;
+    public String description;
+    public String imagePath;
 }

@@ -32,7 +32,7 @@ public class Player extends Entity{
     int standCounter = 0;
     boolean moving = false;
     int pixelCounter = 0;
-    public String location;
+    public String fishingLocation;
 
     // STATUS
     private String name;
@@ -196,25 +196,44 @@ public class Player extends Entity{
             int targetHouseY = gp.obj[0].worldY + 7 * tileSize;
 
             int targetPondX1 =  gp.obj[2].worldX + tileSize;
-            int targetPondX2 =  gp.obj[2].worldX + 2 * tileSize;
+            int targetPondX2 =  targetPondX1 + tileSize;
             int targetPondY = gp.obj[2].worldY;
+
+            int targetBinX1 = gp.obj[1].worldX;
+            int targetBinX2 = targetBinX1 + tileSize;
+            int targetBinX3 = targetBinX2 + tileSize;
+            int targetBinY = gp.obj[1].worldY + tileSize + tileSize/2;
 
             int playerFeetX = worldX + tileSize / 2;
             int playerFeetY = worldY + tileSize;
 
-            int toleranceX = 8;
-            int toleranceY = 20;
+            int toleranceX = 48;
+            int toleranceY = 48;
+
+            System.out.println("Feet: " + playerFeetX + "," + playerFeetY);
+            System.out.println("Target center: " + (targetBinX1 + tileSize/2) + "," + (targetBinY + tileSize/2));
+            System.out.println("Distance: " + Math.abs(playerFeetX - (targetBinX1 + tileSize / 2)) + "," + Math.abs(playerFeetY - (targetBinY + tileSize / 2)));
+
 
             if (Math.abs(playerFeetX - (targetHouseX + tileSize / 2)) <= toleranceX &&
                 Math.abs(playerFeetY - (targetHouseY + tileSize / 2)) <= toleranceY && 
-                keyH.enterPressed && direction.equals("up")) interactHouse();
+                keyH.enterPressed && direction.equals("up")) 
+                interactHouse();
 
             if ((Math.abs(playerFeetX - (targetPondX1 + tileSize / 2)) <= toleranceX ||
                 Math.abs(playerFeetX - (targetPondX2 + tileSize / 2)) <= toleranceX) && 
                 Math.abs(playerFeetY - (targetPondY + tileSize / 2)) <= toleranceY && 
                 keyH.enterPressed && direction.equals("down")) {
-                location = "Pond";
+                fishingLocation = "Pond";
                 interactFishing();
+            }
+
+            if ((Math.abs(playerFeetX - (targetBinX1 + tileSize / 2)) <= toleranceX ||
+                Math.abs(playerFeetX - (targetBinX2 + tileSize / 2)) <= toleranceX ||
+                Math.abs(playerFeetX - (targetBinX3 + tileSize / 2)) <= toleranceX) && 
+                Math.abs(playerFeetY - (targetBinY + tileSize / 2)) <= toleranceY && 
+                keyH.enterPressed && direction.equals("up")) {
+                interactBin();
             }
 
             keyH.enterPressed = false;
@@ -249,7 +268,7 @@ public class Player extends Entity{
 
         for (Items item : ItemFactory.getAllItems().values()) {
             if (item instanceof Fish fish) {
-                if (fish.isAvailable(gameClock.getDate().getSeasonString(), gameClock.getWeather().getWeatherToday(), location, gameClock.getTime().getHour())) {
+                if (fish.isAvailable(gameClock.getDate().getSeasonString(), gameClock.getWeather().getWeatherToday(), fishingLocation, gameClock.getTime().getHour())) {
                     availableFish.add(fish);
                 }
             }
@@ -269,6 +288,12 @@ public class Player extends Entity{
         int number = random.nextInt(range) + 1;
         gp.fished = fish;
         gp.luckyNumber = number;
+
+        fishing();
+    }
+
+    public void interactBin(){
+        gp.gameState = gp.binInteractState;
     }
 
     public void draw(Graphics2D g2) {
@@ -436,85 +461,11 @@ public class Player extends Entity{
 
     public void cooking() {}
 
-    // public void fishing(String location) {
-    //     gameClock.stopClock();
-    //     ItemFactory itemFactory = new ItemFactory();
-    //     itemFactory.loadFish();
-
-    //     List<Fish> availableFish = new ArrayList<>();
-
-    //     for (Items item : ItemFactory.getAllItems().values()) {
-    //         if (item instanceof Fish fish) {
-    //             if (fish.isAvailable(gameClock.getDate().getSeasonString(), gameClock.getWeather().getWeatherToday(), location, gameClock.getTime().getHour())) {
-    //                 availableFish.add(fish);
-    //             }
-    //         }
-    //     }
-
-    //     System.out.println("Available fish at this location:");
-    //     for (Fish fish : availableFish) System.out.println("- " + fish.getName() + " (" + fish.getRarity() + ")");
-
-    //     int i = availableFish.size();
-    //     if (i == 0) {
-    //         System.out.println("No fish available in this location right now.");
-    //         return;
-    //     }
-
-    //     int randomIndex = (int) (Math.random() * i);
-    //     Fish fish = availableFish.get(randomIndex);
-
-    //     System.out.println("You caught a " + fish.getName() + "!");
-    //     System.out.println("It is a " + fish.getRarity() + " fish.");
-    //     System.out.println("To get it, you must play a little game.");
-
-    //     int range;
-    //     if (fish.getRarity().equals("Common")) range = 10;
-    //     else if (fish.getRarity().equals("Regular")) range = 100;
-    //     else range = 500;
-        
-    //     int randomNumber = (int) (Math.random() * range) + 1;
-
-    //     System.out.println("You need to guess a number between 1 and " + range + " to catch the fish.");
-    //     System.out.println("You only have 10 attempts.");
-
-    //     int j = 0;
-    //     boolean caught = false;
-
-    //     while (j < 10) {
-    //         System.out.print("Enter your guess: ");
-    //         String input = scanner.nextLine();
-    //         int guess;
-
-    //         try {
-    //             guess = Integer.parseInt(input);
-    //         } catch (NumberFormatException e) {
-    //             System.out.println("Please enter a valid number.");
-    //             continue;
-    //         }
-
-    //         if (guess == randomNumber) {
-    //             System.out.println("Congratulations! You caught the fish!");
-    //             addItemToInventory(fish, 1);
-    //             caught = true;
-    //             hasFished++;
-    //             break;
-    //         }
-    //         if (guess < randomNumber) System.out.println("Too low! Try again.");
-    //         else System.out.println("Too high! Try again.");
-
-    //         j++;
-    //     }
-
-    //     if (!caught){
-    //         System.out.println("You failed to catch the fish. Better luck next time!");
-    //         System.out.println("The correct number was: " + randomNumber);
-    //     }
-
-    //     System.out.println("You lost 5 energy.");
-    //     this.energy -= 5;
-    //     System.out.println("Time skips fifteen minutes.");
-    //     gameClock.advanceTime(15);
-    // }
+    public void fishing() {
+        gameClock.stopClock();
+        this.energy -= 5;
+        gameClock.advanceTime(15);
+    }
 
     public void proposing(NPC npc) {
         if (npc.getHeartPoints() < 150){

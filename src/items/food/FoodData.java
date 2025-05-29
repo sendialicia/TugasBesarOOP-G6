@@ -5,4 +5,6 @@ public class FoodData {
     public int energyGained;
     public int sellPrice;
     public int buyPrice;
+    public String description;
+    public String imagePath;
 }
