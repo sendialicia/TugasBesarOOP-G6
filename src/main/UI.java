@@ -146,7 +146,8 @@ public class UI {
         // CHARACTER IMAGE
         x = gp.screenWidth/2 - (gp.tileSize*2)/2;
         y += gp.tileSize*2;
-        g2.drawImage(gp.player.down1, x, y, gp.tileSize*2, gp.tileSize*2, null);
+        g2.drawImage(gp.player.def_avatar, x + 100, y, gp.tileSize*2, gp.tileSize*2, null);
+        g2.drawImage(gp.player.def_avatar_female, x - 100, y - 20, gp.tileSize*2 + 30, gp.tileSize*2 + 30, null);
 
         // MENU
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));

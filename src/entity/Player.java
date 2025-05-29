@@ -69,7 +69,7 @@ public class Player extends Entity{
         solidArea.height = 46;
 
         setDefaultValues();
-        getPlayerImage();
+        getPlayerImage(getGender());
     }
 
     public void setDefaultValues() {
@@ -80,6 +80,7 @@ public class Player extends Entity{
         energy = 100;
         gold = 10000;
         inventory = new Inventory();
+        gender = "Male";
     }
 
     public void setName(String name) { this.name = name; }
@@ -99,7 +100,10 @@ public class Player extends Entity{
     public void subtractEnergy(int energy) { setEnergy(this.energy - energy); }
     
     public String getName() { return name; }
-    public String getGender() { return gender; }
+    public String getGender() { 
+        return gender;
+        
+    }
     public int getEnergy() { return energy; }
     public String getFarmName() { return farmName; }
     public NPC getPartner() { return partner; }
@@ -114,30 +118,20 @@ public class Player extends Entity{
     public boolean isInventoryEmpty() { return inventory.isEmpty(); }
     public Items getItemFromInventory(String itemName) { return inventory.get(itemName); }
 
-    // male
-    public void getPlayerImage() {
-        up1 = setup("/player/mc_up_left");
-        up2 = setup("/player/mc_up_right");
-        down1 = setup("/player/mc_down_left");
-        down2 = setup("/player/mc_down_right");
-        left1 = setup("/player/mc_left");
-        left2 = setup("/player/mc_walk_left");
-        right1 = setup("/player/mc_right");
-        right2 = setup("/player/mc_walk_right");
+    public void getPlayerImage(String gender) {
+        up1 = setup("/player/" + gender + "/mc_up_left");
+        up2 = setup("/player/" + gender + "/mc_up_right");
+        down1 = setup("/player/" + gender + "/mc_down_left");
+        down2 = setup("/player/" + gender + "/mc_down_right");
+        left1 = setup("/player/" + gender + "/mc_left");
+        left2 = setup("/player/" + gender + "/mc_walk_left");
+        right1 = setup("/player/" + gender + "/mc_right");
+        right2 = setup("/player/" + gender + "/mc_walk_right");
     }
 
-    // female
+    public BufferedImage def_avatar = setup("/player/Male/mc_down_left");
 
-    // public void getPlayerImage(){
-    //     up1 = setup("/player/images/female_player_05");
-    //     up2 = setup("/player/images/female_player_06");
-    //     down1 = setup("/player/images/female_player_01");
-    //     down2 = setup("/player/images/female_player_02");
-    //     left1 = setup("/player/images/female_player_07");
-    //     left2 = setup("/player/images/female_player_08");
-    //     right1 = setup("/player/images/female_player_03");
-    //     right2 = setup("/player/images/female_player_04");
-    // }
+    public BufferedImage def_avatar_female = setup("/player/Female/mc_down_left");
 
     public void update() {
         collisionOn = false;
@@ -286,7 +280,7 @@ public class Player extends Entity{
             case "left": image = (spriteNum == 1) ? left1 : left2; break;
             case "right": image = (spriteNum == 1) ? right1 : right2; break;
         }
-
+        
         g2.drawImage(image, screenX, screenY, null);
 
         // FOR DEBUGGING

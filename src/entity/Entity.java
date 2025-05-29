@@ -27,8 +27,15 @@ public class Entity {
     String dialogues[] = new String[20];
     int dialougeIndex = 0;
 
+    public int customDrawHeight;
+    public int customDrawWidth;
+    public boolean useDefault = true;
+
     public Entity(GamePanel gp) {
         this.gp = gp;
+        this.useDefault = true;
+        this.customDrawHeight = gp.tileSize;
+        this.customDrawWidth = gp.tileSize;
     }
 
     public void setAction() {}
@@ -131,8 +138,19 @@ public class Entity {
                     image = right2;
                 }
                 break;
-            }    
-            g2.drawImage(image, screenX, screenY, gp.tileSize + 15, gp.tileSize + 15, null);
+            }
+
+            int drawWidth;
+            int drawHeight;
+
+            if (useDefault) {
+                drawWidth = gp.tileSize;
+                drawHeight = gp.tileSize;
+            } else {
+                drawWidth = customDrawWidth;
+                drawHeight = customDrawHeight;
+    }
+            g2.drawImage(image, screenX, screenY, drawWidth, drawHeight, null);
 
             // FOR DEBUGGING
             g2.setColor(Color.RED);
