@@ -69,7 +69,7 @@ public class Player extends Entity{
         solidArea.height = 46;
 
         setDefaultValues();
-        getPlayerImage(getGender());
+        getPlayerImage();
     }
 
     public void setDefaultValues() {
@@ -80,11 +80,14 @@ public class Player extends Entity{
         energy = 100;
         gold = 10000;
         inventory = new Inventory();
-        gender = "Male";
+        gender = "Female";
     }
 
     public void setName(String name) { this.name = name; }
-    public void setGender(String gender) { this.gender = gender; }
+    public void setGender(String gender) { 
+        this.gender = gender; 
+        getPlayerImage();
+    }
     public void setFarmName(String farmName) { this.farmName = farmName; }
     public void setPartner(NPC partner) { this.partner = partner; }
     public void setGold(int gold) { this.gold = Math.max(0, gold); }
@@ -118,15 +121,15 @@ public class Player extends Entity{
     public boolean isInventoryEmpty() { return inventory.isEmpty(); }
     public Items getItemFromInventory(String itemName) { return inventory.get(itemName); }
 
-    public void getPlayerImage(String gender) {
-        up1 = setup("/player/" + gender + "/mc_up_left");
-        up2 = setup("/player/" + gender + "/mc_up_right");
-        down1 = setup("/player/" + gender + "/mc_down_left");
-        down2 = setup("/player/" + gender + "/mc_down_right");
-        left1 = setup("/player/" + gender + "/mc_left");
-        left2 = setup("/player/" + gender + "/mc_walk_left");
-        right1 = setup("/player/" + gender + "/mc_right");
-        right2 = setup("/player/" + gender + "/mc_walk_right");
+    public void getPlayerImage() {
+        up1 = setup("/player/" + getGender() + "/mc_up_left");
+        up2 = setup("/player/" + getGender() + "/mc_up_right");
+        down1 = setup("/player/" + getGender() + "/mc_down_left");
+        down2 = setup("/player/" + getGender() + "/mc_down_right");
+        left1 = setup("/player/" + getGender() + "/mc_left");
+        left2 = setup("/player/" + getGender() + "/mc_walk_left");
+        right1 = setup("/player/" + getGender() + "/mc_right");
+        right2 = setup("/player/" + getGender() + "/mc_walk_right");
     }
 
     public BufferedImage def_avatar = setup("/player/Male/mc_down_left");

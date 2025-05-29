@@ -149,7 +149,7 @@ public class Entity {
             } else {
                 drawWidth = customDrawWidth;
                 drawHeight = customDrawHeight;
-    }
+            }
             g2.drawImage(image, screenX, screenY, drawWidth, drawHeight, null);
 
             // FOR DEBUGGING
