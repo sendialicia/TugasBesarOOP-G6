@@ -132,7 +132,7 @@ public class Entity {
                 }
                 break;
             }    
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY, gp.tileSize + 15, gp.tileSize + 15, null);
 
             // FOR DEBUGGING
             g2.setColor(Color.RED);
