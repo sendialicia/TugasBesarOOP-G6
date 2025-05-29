@@ -1,21 +1,192 @@
 [
-    {"name":"Bullhead","rarity":"Common","seasons":["Any"],"timeRanges":[["Any"]],"weathers":["Any"],"locations":["Mountain Lake"]},
-    {"name":"Carp","rarity":"Common","seasons":["Any"],"timeRanges":[["Any"]],"weathers":["Any"],"locations":["Mountain Lake","Pond"]},
-    {"name":"Chub","rarity":"Common","seasons":["Any"],"timeRanges":[["Any"]],"weathers":["Any"],"locations":["Forest River","Mountain Lake"]},
-    {"name":"Largemouth Bass","rarity":"Regular","seasons":["Any"],"timeRanges":[["06:00","18:00"]],"weathers":["Any"],"locations":["Mountain Lake"]},
-    {"name":"Rainbow Trout","rarity":"Regular","seasons":["Summer"],"timeRanges":[["06:00","18:00"]],"weathers":["Sunny"],"locations":["Forest River","Mountain Lake"]},
-    {"name":"Sturgeon","rarity":"Regular","seasons":["Summer","Winter"],"timeRanges":[["06:00","18:00"]],"weathers":["Any"],"locations":["Mountain Lake"]},
-    {"name":"Midnight Carp","rarity":"Regular","seasons":["Winter","Fall"],"timeRanges":[["20:00","23:59"],["00:00","02:00"]],"weathers":["Any"],"locations":["Mountain Lake","Pond"]},
-    {"name":"Flounder","rarity":"Regular","seasons":["Spring","Summer"],"timeRanges":[["06:00","22:00"]],"weathers":["Any"],"locations":["Ocean"]},
-    {"name":"Halibut","rarity":"Regular","seasons":["Any"],"timeRanges":[["06:00","11:00"],["19:00","23:59"],["00:00","02:00"]],"weathers":["Any"],"locations":["Ocean"]},
-    {"name":"Octopus","rarity":"Regular","seasons":["Summer"],"timeRanges":[["06:00","22:00"]],"weathers":["Any"],"locations":["Ocean"]},
-    {"name":"Pufferfish","rarity":"Regular","seasons":["Summer"],"timeRanges":[["00:00","16:00"]],"weathers":["Sunny"],"locations":["Ocean"]},
-    {"name":"Sardine","rarity":"Regular","seasons":["Any"],"timeRanges":[["06:00","18:00"]],"weathers":["Any"],"locations":["Ocean"]},
-    {"name":"Super Cucumber","rarity":"Regular","seasons":["Summer","Fall","Winter"],"timeRanges":[["18:00","23:59"],["00:00","02:00"]],"weathers":["Any"],"locations":["Ocean"]},
-    {"name":"Catfish","rarity":"Regular","seasons":["Spring","Summer","Fall"],"timeRanges":[["06:00","22:00"]],"weathers":["Rainy"],"locations":["Forest River","Pond"]},
-    {"name":"Salmon","rarity":"Regular","seasons":["Fall"],"timeRanges":[["06:00","18:00"]],"weathers":["Any"],"locations":["Forest River"]},
-    {"name":"Angler","rarity":"Legendary","seasons":["Fall"],"timeRanges":[["08:00","20:00"]],"weathers":["Any"],"locations":["Pond"]},
-    {"name":"Crimsonfish","rarity":"Legendary","seasons":["Summer"],"timeRanges":[["08:00","20:00"]],"weathers":["Any"],"locations":["Ocean"]},
-    {"name":"Glacierfish","rarity":"Legendary","seasons":["Winter"],"timeRanges":[["08:00","20:00"]],"weathers":["Any"],"locations":["Forest River"]},
-    {"name":"Legend","rarity":"Legendary","seasons":["Spring"],"timeRanges":[["08:00","20:00"]],"weathers":["Rainy"],"locations":["Mountain Lake"]}
+  {
+    "name": "Bullhead",
+    "rarity": "Common",
+    "seasons": ["Any"],
+    "timeRanges": [["Any"]],
+    "weathers": ["Any"],
+    "locations": ["Mountain Lake"],
+    "description": "A common freshwater fish known for its broad head.",
+    "imagePath": "/items/Fish/Bullhead.png"
+  },
+  {
+    "name": "Carp",
+    "rarity": "Common",
+    "seasons": ["Any"],
+    "timeRanges": [["Any"]],
+    "weathers": ["Any"],
+    "locations": ["Mountain Lake", "Pond"],
+    "description": "A hardy bottom-feeder, often found in lakes and ponds.",
+    "imagePath": "/items/Fish/Carp.png"
+  },
+  {
+    "name": "Chub",
+    "rarity": "Common",
+    "seasons": ["Any"],
+    "timeRanges": [["Any"]],
+    "weathers": ["Any"],
+    "locations": ["Forest River", "Mountain Lake"],
+    "description": "A small, stream-dwelling fish with a plump body.",
+    "imagePath": "/items/Fish/Chub.png"
+  },
+  {
+    "name": "Largemouth Bass",
+    "rarity": "Regular",
+    "seasons": ["Any"],
+    "timeRanges": [["06:00", "18:00"]],
+    "weathers": ["Any"],
+    "locations": ["Mountain Lake"],
+    "description": "A popular game fish, recognized by its large mouth and aggressive nature.",
+    "imagePath": "/items/Fish/Largemouth Bass.png"
+  },
+  {
+    "name": "Rainbow Trout",
+    "rarity": "Regular",
+    "seasons": ["Summer"],
+    "timeRanges": [["06:00", "18:00"]],
+    "weathers": ["Sunny"],
+    "locations": ["Forest River", "Mountain Lake"],
+    "description": "A beautiful freshwater fish with a distinctive rainbow stripe.",
+    "imagePath": "/items/Fish/Rainbow Trout.png"
+  },
+  {
+    "name": "Sturgeon",
+    "rarity": "Regular",
+    "seasons": ["Summer", "Winter"],
+    "timeRanges": [["06:00", "18:00"]],
+    "weathers": ["Any"],
+    "locations": ["Mountain Lake"],
+    "description": "An ancient and large fish, often found in deeper lake waters.",
+    "imagePath": "/items/Fish/Sturgeon.png"
+  },
+  {
+    "name": "Midnight Carp",
+    "rarity": "Regular",
+    "seasons": ["Winter", "Fall"],
+    "timeRanges": [["20:00", "23:59"], ["00:00", "02:00"]],
+    "weathers": ["Any"],
+    "locations": ["Mountain Lake", "Pond"],
+    "description": "A nocturnal carp that only appears late at night.",
+    "imagePath": "/items/Fish/Midgnight Carp.png"
+  },
+  {
+    "name": "Flounder",
+    "rarity": "Regular",
+    "seasons": ["Spring", "Summer"],
+    "timeRanges": [["06:00", "22:00"]],
+    "weathers": ["Any"],
+    "locations": ["Ocean"],
+    "description": "A flatfish that blends in with the seabed, found in coastal waters.",
+    "imagePath": "/items/Fish/Flounder.png"
+  },
+  {
+    "name": "Halibut",
+    "rarity": "Regular",
+    "seasons": ["Any"],
+    "timeRanges": [["06:00", "11:00"], ["19:00", "23:59"], ["00:00", "02:00"]],
+    "weathers": ["Any"],
+    "locations": ["Ocean"],
+    "description": "A large and delicious flatfish, often caught in the ocean.",
+    "imagePath": "/items/Fish/Halibut.png"
+  },
+  {
+    "name": "Octopus",
+    "rarity": "Regular",
+    "seasons": ["Summer"],
+    "timeRanges": [["06:00", "22:00"]],
+    "weathers": ["Any"],
+    "locations": ["Ocean"],
+    "description": "An intelligent cephalopod that can be challenging to catch.",
+    "imagePath": "/items/Fish/Octopus.png"
+  },
+  {
+    "name": "Pufferfish",
+    "rarity": "Regular",
+    "seasons": ["Summer"],
+    "timeRanges": [["00:00", "16:00"]],
+    "weathers": ["Sunny"],
+    "locations": ["Ocean"],
+    "description": "A peculiar fish that inflates itself when threatened. Be careful!",
+    "imagePath": "/items/Fish/Pufferfish.png"
+  },
+  {
+    "name": "Sardine",
+    "rarity": "Regular",
+    "seasons": ["Any"],
+    "timeRanges": [["06:00", "18:00"]],
+    "weathers": ["Any"],
+    "locations": ["Ocean"],
+    "description": "A small, silvery fish often found in large schools near the coast.",
+    "imagePath": "/items/Fish/Sardine.png"
+  },
+  {
+    "name": "Super Cucumber",
+    "rarity": "Regular",
+    "seasons": ["Summer", "Fall", "Winter"],
+    "timeRanges": [["18:00", "23:59"], ["00:00", "02:00"]],
+    "weathers": ["Any"],
+    "locations": ["Ocean"],
+    "description": "A rare and elongated sea creature with a distinctive appearance.",
+    "imagePath": "/items/Fish/Super Cucumber.png"
+  },
+  {
+    "name": "Catfish",
+    "rarity": "Regular",
+    "seasons": ["Spring", "Summer", "Fall"],
+    "timeRanges": [["06:00", "22:00"]],
+    "weathers": ["Rainy"],
+    "locations": ["Forest River", "Pond"],
+    "description": "A whiskered bottom-dweller, often sought after during rainy weather.",
+    "imagePath": "/items/Fish/Catfish.png"
+  },
+  {
+    "name": "Salmon",
+    "rarity": "Regular",
+    "seasons": ["Fall"],
+    "timeRanges": [["06:00", "18:00"]],
+    "weathers": ["Any"],
+    "locations": ["Forest River"],
+    "description": "A prized fish that migrates upstream in the fall.",
+    "imagePath": "/items/Fish/Salmon.png"
+  },
+  {
+    "name": "Angler",
+    "rarity": "Legendary",
+    "seasons": ["Fall"],
+    "timeRanges": [["08:00", "20:00"]],
+    "weathers": ["Any"],
+    "locations": ["Pond"],
+    "description": "One of the legendary fish, known for its elusive nature and unique lure.",
+    "imagePath": "/items/Fish/Angler.png"
+  },
+  {
+    "name": "Crimsonfish",
+    "rarity": "Legendary",
+    "seasons": ["Summer"],
+    "timeRanges": [["08:00", "20:00"]],
+    "weathers": ["Any"],
+    "locations": ["Ocean"],
+    "description": "A vibrant red legendary fish found in the ocean during summer.",
+    "imagePath": "/items/Fish/Crimsonfish.png"
+  },
+  {
+    "name": "Glacierfish",
+    "rarity": "Legendary",
+    "seasons": ["Winter"],
+    "timeRanges": [["08:00", "20:00"]],
+    "weathers": ["Any"],
+    "locations": ["Forest River"],
+    "description": "A formidable legendary fish that thrives in icy winter waters.",
+    "imagePath": "/items/Fish/Glacierfish.png"
+  },
+  {
+    "name": "Legend",
+    "rarity": "Legendary",
+    "seasons": ["Spring"],
+    "timeRanges": [["08:00", "20:00"]],
+    "weathers": ["Rainy"],
+    "locations": ["Mountain Lake"],
+    "description": "The most elusive of all fish, said to only appear during rainy springs in the mountain lake.",
+    "imagePath": "/items/Fish/Legend.png"
+  }
 ]

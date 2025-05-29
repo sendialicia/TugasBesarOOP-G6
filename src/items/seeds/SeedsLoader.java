@@ -1,7 +1,9 @@
 package items.seeds;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,10 +13,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import items.Items;
+
 public class SeedsLoader {
 
     public static List<Seeds> load() {
         String fullPath = "res/files/seeds.json"; 
+        Items items = new Items(null);
 
         try {
             String jsonContent = Files.readString(Paths.get(fullPath));
@@ -24,7 +29,8 @@ public class SeedsLoader {
 
             List<Seeds> seedsList = new ArrayList<>();
             for (SeedsData data : seedsDataList) {
-                Seeds seed = new Seeds(data.name, data.season, data.harvestDays, data.buyPrice);
+                BufferedImage image = items.setup(data.imagePath);
+                Seeds seed = new Seeds(data.name, data.season, data.harvestDays, data.buyPrice, image, data.description);
                 seedsList.add(seed);
             }
 

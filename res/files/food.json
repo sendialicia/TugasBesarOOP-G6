@@ -1,14 +1,98 @@
 [
-  { "name": "Fish n' Chips", "energyGained": 50, "buyPrice": 150, "sellPrice": 135 },
-  { "name": "Baguette", "energyGained": 25, "buyPrice": 100, "sellPrice": 80 },
-  { "name": "Sashimi", "energyGained": 70, "buyPrice": 300, "sellPrice": 275 },
-  { "name": "Fugu", "energyGained": 50, "buyPrice": null, "sellPrice": 135 },
-  { "name": "Wine", "energyGained": 20, "buyPrice": 100, "sellPrice": 90 },
-  { "name": "Pumpkin Pie", "energyGained": 35, "buyPrice": 120, "sellPrice": 100 },
-  { "name": "Veggie Soup", "energyGained": 40, "buyPrice": 140, "sellPrice": 120 },
-  { "name": "Fish Stew", "energyGained": 70, "buyPrice": 280, "sellPrice": 260 },
-  { "name": "Spakbor Salad", "energyGained": 70, "buyPrice": null, "sellPrice": 250 },
-  { "name": "Fish Sandwich", "energyGained": 50, "buyPrice": 200, "sellPrice": 180 },
-  { "name": "The Legends of Spakbor", "energyGained": 100, "buyPrice": null, "sellPrice": 2000 },
-  { "name": "Cooked Pig's Head", "energyGained": 100, "buyPrice": 1000, "sellPrice": null }
+  {
+    "name": "Fish n' Chips",
+    "energyGained": 50,
+    "buyPrice": 150,
+    "sellPrice": 135,
+    "description": "A classic deep-fried dish, combining crispy fish with hearty potato fries.",
+    "imagePath": "/items/Food/Fish n' Chips.png"
+  },
+  {
+    "name": "Baguette",
+    "energyGained": 25,
+    "buyPrice": 100,
+    "sellPrice": 80,
+    "description": "A long, crusty loaf of French bread, perfect for a quick snack.",
+    "imagePath": "/items/Food/Baguette.png"
+  },
+  {
+    "name": "Sashimi",
+    "energyGained": 70,
+    "buyPrice": 300,
+    "sellPrice": 275,
+    "description": "Delicate slices of fresh, raw fish, a true culinary delight.",
+    "imagePath": "/items/Food/Sashimi.png"
+  },
+  {
+    "name": "Fugu",
+    "energyGained": 50,
+    "buyPrice": null,
+    "sellPrice": 135,
+    "description": "A notorious delicacy, prepared with extreme care due to its poisonous nature.",
+    "imagePath": "/items/Food/Fugu.png"
+  },
+  {
+    "name": "Wine",
+    "energyGained": 20,
+    "buyPrice": 100,
+    "sellPrice": 90,
+    "description": "A fermented grape beverage, known for its relaxing properties.",
+    "imagePath": "/items/Food/Wine.png"
+  },
+  {
+    "name": "Pumpkin Pie",
+    "energyGained": 35,
+    "buyPrice": 120,
+    "sellPrice": 100,
+    "description": "A sweet and spiced dessert made from autumn pumpkins, a comforting treat.",
+    "imagePath": "/items/Food/Pumpkin Pie.png"
+  },
+  {
+    "name": "Veggie Soup",
+    "energyGained": 40,
+    "buyPrice": 140,
+    "sellPrice": 120,
+    "description": "A light and healthy soup packed with fresh garden vegetables.",
+    "imagePath": "/items/Food/Veggie Soup.png"
+  },
+  {
+    "name": "Fish Stew",
+    "energyGained": 70,
+    "buyPrice": 280,
+    "sellPrice": 260,
+    "description": "A hearty and flavorful stew, brimming with tender fish and vegetables.",
+    "imagePath": "/items/Food/Fish Stew.png"
+  },
+  {
+    "name": "Spakbor Salad",
+    "energyGained": 70,
+    "buyPrice": null,
+    "sellPrice": 250,
+    "description": "A unique and refreshing salad, made with exotic Spakbor ingredients.",
+    "imagePath": "/items/Food/Spakbor Salad.png"
+  },
+  {
+    "name": "Fish Sandwich",
+    "energyGained": 50,
+    "buyPrice": 200,
+    "sellPrice": 180,
+    "description": "A simple yet satisfying sandwich, featuring a fillet of fish between two slices of bread.",
+    "imagePath": "/items/Food/Fish Sandwich.png"
+  },
+  {
+    "name": "The Legends of Spakbor",
+    "energyGained": 100,
+    "buyPrice": null,
+    "sellPrice": 2000,
+    "description": "A legendary dish, rumored to grant immense energy and knowledge. A true masterpiece.",
+    "imagePath": "/items/Food/The Legends of Spakbor.png"
+  },
+  {
+    "name": "Cooked Pig's Head",
+    "energyGained": 100,
+    "buyPrice": 1000,
+    "sellPrice": null,
+    "description": "A substantial and unconventional meal, providing a significant energy boost.",
+    "imagePath": "/items/Food/Cooked Pig's Head.png"
+  }
 ]

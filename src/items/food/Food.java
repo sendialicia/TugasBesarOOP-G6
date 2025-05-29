@@ -1,5 +1,7 @@
 package items.food;
 
+import java.awt.image.BufferedImage;
+
 import entity.Player;
 import items.Edible;
 import items.Items;
@@ -7,8 +9,8 @@ import items.Items;
 public class Food extends Items implements Edible {
     private int energy;
 
-    public Food(String name, int sellPrice, int buyPrice, int energy){
-        super(name, sellPrice, buyPrice);
+    public Food(String name, int sellPrice, int buyPrice, int energy, BufferedImage image, String description) {
+        super(name, sellPrice, buyPrice, image, description);
         this.energy = energy;
     }
 

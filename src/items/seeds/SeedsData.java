@@ -5,4 +5,6 @@ public class SeedsData {
     public String season;
     public int harvestDays;
     public int buyPrice;
+    public String description;
+    public String imagePath;
 }

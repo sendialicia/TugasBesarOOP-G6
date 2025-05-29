@@ -14,11 +14,16 @@ public class Inventory {
 
     public Inventory() {
         items = new HashMap<>();
+        ItemFactory itemFactory = new ItemFactory();
+        itemFactory.loadSeeds();
+
+        Seeds seed = (Seeds) itemFactory.get("Parsnip Seeds");
+
         items.put(new Hoe(), 1);
         items.put(new FishingRod(), 1);
         items.put(new Pickaxe(), 1);
         items.put(new WateringCan(), 1);
-        items.put(new Seeds("Parsnip Seeds", "Spring", 1, 20), 15);
+        items.put(seed, 15); // Example seed item
     }
 
     public Inventory(Map<Items, Integer> items) {

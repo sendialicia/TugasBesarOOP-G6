@@ -1,5 +1,6 @@
 package items.fish;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -14,10 +15,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import items.Items;
+
 public class FishLoader {
 
     public static List<Fish> load() {
         String fullPath = "res/files/fish.json";
+        Items items = new Items(null);
 
         try {
             String jsonContent = Files.readString(Paths.get(fullPath));
@@ -28,7 +32,8 @@ public class FishLoader {
             List<Fish> fishList = new ArrayList<>();
             for (FishData data : fishDataList) {
                 TimeOfDayRange[] timeRanges = parseTimeRanges(data.timeRanges);
-                Fish fish = new Fish(data.name, data.rarity, data.seasons, data.weathers, data.locations, timeRanges);
+                BufferedImage image = items.setup(data.imagePath);
+                Fish fish = new Fish(data.name, data.rarity, data.seasons, data.weathers, data.locations, timeRanges, image, data.description);
                 fishList.add(fish);
             }
 

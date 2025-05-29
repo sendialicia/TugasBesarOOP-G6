@@ -1,14 +1,98 @@
 [
-    {"name":"Parsnip Seeds","season":"Spring","harvestTime":1,"buyPrice":20},
-    {"name":"Cauliflower Seeds","season":"Spring","harvestTime":5,"buyPrice":80},
-    {"name":"Potato Seeds","season":"Spring","harvestTime":3,"buyPrice":50},
-    {"name":"Wheat Seeds","season":"Spring","harvestTime":1,"buyPrice":60},
-    {"name":"Blueberry Seeds","season":"Summer","harvestTime":7,"buyPrice":80},
-    {"name":"Tomato Seeds","season":"Summer","harvestTime":3,"buyPrice":50},
-    {"name":"Hot Pepper Seeds","season":"Summer","harvestTime":1,"buyPrice":40},
-    {"name":"Melon Seeds","season":"Summer","harvestTime":4,"buyPrice":80},
-    {"name":"Cranberry Seeds","season":"Fall","harvestTime":2,"buyPrice":100},
-    {"name":"Pumpkin Seeds","season":"Fall","harvestTime":7,"buyPrice":150},
-    {"name":"Wheat Seeds","season":"Fall","harvestTime":1,"buyPrice":60},
-    {"name":"Grape Seeds","season":"Fall","harvestTime":3,"buyPrice":60}
+  {
+    "name": "Parsnip Seeds",
+    "season": "Spring",
+    "harvestTime": 1,
+    "buyPrice": 20,
+    "description": "Plant these in spring to grow a humble parsnip. Quick to harvest!",
+    "imagePath": "/items/Seeds/Parsnip Seeds.png"
+  },
+  {
+    "name": "Cauliflower Seeds",
+    "season": "Spring",
+    "harvestTime": 5,
+    "buyPrice": 80,
+    "description": "Plant these in spring for a large, valuable cauliflower.",
+    "imagePath": "/items/Seeds/Cauliflower Seeds.png"
+  },
+  {
+    "name": "Potato Seeds",
+    "season": "Spring",
+    "harvestTime": 3,
+    "buyPrice": 50,
+    "description": "Plant these in spring to grow versatile potatoes.",
+    "imagePath": "/items/Seeds/Potato Seeds.png"
+  },
+  {
+    "name": "Wheat Seeds",
+    "season": "Spring",
+    "harvestTime": 1,
+    "buyPrice": 60,
+    "description": "Plant these in spring or fall to grow wheat, a staple grain.",
+    "imagePath": "/items/Seeds/Wheat Seeds.png"
+  },
+  {
+    "name": "Wheat Seeds",
+    "season": "Fall",
+    "harvestTime": 1,
+    "buyPrice": 60,
+    "description": "Plant these in spring or fall to grow wheat, a staple grain.",
+    "imagePath": "/items/Seeds/Wheat Seeds.png"
+  },
+  {
+    "name": "Blueberry Seeds",
+    "season": "Summer",
+    "harvestTime": 7,
+    "buyPrice": 80,
+    "description": "Plant these in summer to grow sweet blueberries that keep producing.",
+    "imagePath": "/items/Seeds/Blueberry Seeds.png"
+  },
+  {
+    "name": "Tomato Seeds",
+    "season": "Summer",
+    "harvestTime": 3,
+    "buyPrice": 50,
+    "description": "Plant these in summer for juicy tomatoes that regrow.",
+    "imagePath": "/items/Seeds/Tomato Seeds.png"
+  },
+  {
+    "name": "Hot Pepper Seeds",
+    "season": "Summer",
+    "harvestTime": 1,
+    "buyPrice": 40,
+    "description": "Plant these in summer for spicy hot peppers that regrow quickly.",
+    "imagePath": "/items/Seeds/Hot Pepper Seeds.png"
+  },
+  {
+    "name": "Melon Seeds",
+    "season": "Summer",
+    "harvestTime": 4,
+    "buyPrice": 80,
+    "description": "Plant these in summer to grow large, refreshing melons.",
+    "imagePath": "/items/Seeds/Melon Seeds.png"
+  },
+  {
+    "name": "Cranberry Seeds",
+    "season": "Fall",
+    "harvestTime": 2,
+    "buyPrice": 100,
+    "description": "Plant these in fall for tart cranberries that yield multiple berries.",
+    "imagePath": "/items/Seeds/Cranberry Seeds.png"
+  },
+  {
+    "name": "Pumpkin Seeds",
+    "season": "Fall",
+    "harvestTime": 7,
+    "buyPrice": 150,
+    "description": "Plant these in fall for a large, valuable pumpkin.",
+    "imagePath": "/items/Seeds/Pumpkin Seeds.png"
+  },
+  {
+    "name": "Grape Seeds",
+    "season": "Fall",
+    "harvestTime": 3,
+    "buyPrice": 60,
+    "description": "Plant these in fall to grow sweet grapes that produce in bunches.",
+    "imagePath": "/items/Seeds/Grape Seeds.png"
+  }
 ]

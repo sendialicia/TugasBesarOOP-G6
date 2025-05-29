@@ -1,5 +1,7 @@
 package items.fish;
 
+import java.awt.image.BufferedImage;
+
 import entity.Player;
 import items.Edible;
 import items.Items;
@@ -14,8 +16,8 @@ public class Fish extends Items implements Edible {
 
     private static final int ENERGY = 1;
 
-    public Fish(String name, String rarity, String[] seasons, String[] weathers, String[] locations, TimeOfDayRange[] timeOfDayRanges){
-        super(name);
+    public Fish(String name, String rarity, String[] seasons, String[] weathers, String[] locations, TimeOfDayRange[] timeOfDayRanges, BufferedImage image, String description){
+        super(name, null, null, image, description);
         this.rarity = rarity;
         this.seasons = seasons;
         this.weathers = weathers;

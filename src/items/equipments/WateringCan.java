@@ -4,7 +4,7 @@ import entity.Player;
 
 public class WateringCan extends Equipments {
     public WateringCan() {
-        super("Watering Can");
+        super("Watering Can", "");
     }
 
     @Override

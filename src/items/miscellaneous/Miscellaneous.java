@@ -1,10 +1,11 @@
 package items.miscellaneous;
+import java.awt.image.BufferedImage;
 
 import items.Items;
 
 public class Miscellaneous extends Items {
-    public Miscellaneous(String name, Integer sellPrice, Integer buyPrice) {
-        super(name);
+    public Miscellaneous(String name, Integer sellPrice, Integer buyPrice, BufferedImage image, String description) {
+        super(name, null, null, image, description);
         if (sellPrice != null && buyPrice != null && sellPrice < buyPrice){
             super.setBuyPrice(buyPrice);
             super.setSellPrice(sellPrice);
