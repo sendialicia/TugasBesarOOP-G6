@@ -63,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int fishingInteractState = 21;
     public final int fishingSucceeded = 22;
     public final int fishingFailed = 23;
+    public final int binInteractState = 24;
 
 
     public GamePanel(){
@@ -155,7 +156,7 @@ public class GamePanel extends JPanel implements Runnable{
             ui.draw(g2);
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
-            gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState) { 
+            gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || gameState == binInteractState) { 
                 
                 // TILE
                 tileM.draw(g2);
