@@ -2,6 +2,7 @@ package main;
 
 import entity.Entity;
 import entity.Player;
+import items.fish.Fish;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -43,6 +44,8 @@ public class GamePanel extends JPanel implements Runnable{
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10];
     public Entity npc[] = new Entity[10];
+    public Fish fished = null;
+    public Integer luckyNumber = null;
 
     // GAME STATE
     public int gameState;
@@ -57,6 +60,10 @@ public class GamePanel extends JPanel implements Runnable{
     public final int viewInventoryState = 8;
 
     public final int houseInteractState = 20;
+    public final int fishingInteractState = 21;
+    public final int fishingSucceeded = 22;
+    public final int fishingFailed = 23;
+
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set the size of this class (JPanel)
@@ -101,7 +108,6 @@ public class GamePanel extends JPanel implements Runnable{
             }
 
             if(timer >= 1000000000) {
-                System.out.println("FPS: " + drawCount);
                 drawCount = 0;
                 timer = 0;
             }
@@ -148,7 +154,8 @@ public class GamePanel extends JPanel implements Runnable{
         } else if (gameState == genderInputState) {
             ui.draw(g2);
         } else { 
-            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || gameState == viewInventoryState || gameState == houseInteractState) { 
+            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
+            gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState) { 
                 
                 // TILE
                 tileM.draw(g2);

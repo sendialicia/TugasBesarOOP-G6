@@ -109,7 +109,6 @@ public class KeyHandler implements KeyListener{
                 }
 
                 gp.gameState = gp.playState;
-                gp.playMusic(0); // Start background music
             }
         }
 
@@ -225,7 +224,59 @@ public class KeyHandler implements KeyListener{
                 }
             }
         }
+        else if (gp.gameState == gp.fishingInteractState) {
+            if (code == KeyEvent.VK_BACK_SPACE) {
+                if (gp.ui.guessString.length() > 0) {
+                    gp.ui.guessString.deleteCharAt(gp.ui.guessString.length() - 1);
+                }
+            } else if (code == KeyEvent.VK_ENTER) {
+                if (gp.ui.guessString.length() > 0) {
+                    try {
+                        gp.ui.guess = Integer.parseInt(gp.ui.guessString.toString());
+                    } catch (NumberFormatException ex) {
+                        gp.ui.fishingWarning = "Enter a valid number!";
+                        gp.ui.guess = -1;
+                    }
 
+                    if (gp.ui.guess != gp.luckyNumber) {
+                        if (gp.ui.fishingAttempts < 10) {
+                            if (gp.ui.guess < gp.luckyNumber) gp.ui.fishingWarning = "Too Low!";
+                            if (gp.ui.guess > gp.luckyNumber) gp.ui.fishingWarning = "Too High!";
+                            gp.ui.fishingAttempts++;
+                        } else {
+                            gp.gameState = gp.fishingFailed;
+                        }
+                    } else {
+                        gp.gameState = gp.fishingSucceeded;
+                        gp.player.addItemToInventory(gp.fished, 1);
+                        gp.fished = null;
+                        gp.luckyNumber = null;
+                        gp.ui.fishingWarning = null;
+                    }
+                }
+            } else if (code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.fishingFailed;
+            } else {
+                char c = e.getKeyChar();
+                if (Character.isLetterOrDigit(c) && gp.ui.guessString.length() < 9) {
+                    gp.ui.guessString.append(c);
+                }
+            }
+        }
+        else if (gp.gameState == gp.fishingSucceeded) {
+            if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.playState;
+                gp.ui.guessString.setLength(0);
+                gp.ui.fishingAttempts = 0;
+            }
+        }
+        else if (gp.gameState == gp.fishingFailed) {
+            if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.playState;
+                gp.ui.guessString.setLength(0); 
+                gp.ui.fishingAttempts = 0;
+            }
+        }
         // DEBUG
         if(code == KeyEvent.VK_F12) {
             if(checkDrawTime == false) {
