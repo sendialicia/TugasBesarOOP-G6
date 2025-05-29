@@ -3,6 +3,7 @@ package entity;
 import entity.npc.NPC;
 import items.Edible;
 import items.Inventory;
+import items.ItemFactory;
 import items.Items;
 import items.crops.Crops;
 import items.equipments.Equipments;
@@ -14,8 +15,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import main.GamePanel;
 import main.KeyHandler;
 import time.GameClock;
@@ -29,6 +32,7 @@ public class Player extends Entity{
     int standCounter = 0;
     boolean moving = false;
     int pixelCounter = 0;
+    public String location;
 
     // STATUS
     private String name;
@@ -179,12 +183,13 @@ public class Player extends Entity{
                 case "left": interactX -= tileSize; break;
                 case "right": interactX += tileSize; break;
             }
+            
+            int targetHouseX =  gp.obj[0].worldX + 5 * tileSize;
+            int targetHouseY = gp.obj[0].worldY + 7 * tileSize;
 
-            int houseX = gp.obj[0].worldX;
-            int houseY = gp.obj[0].worldY;
-
-            int targetX = houseX + 5 * tileSize;
-            int targetY = houseY + 7 * tileSize;
+            int targetPondX1 =  gp.obj[2].worldX + tileSize;
+            int targetPondX2 =  gp.obj[2].worldX + 2 * tileSize;
+            int targetPondY = gp.obj[2].worldY;
 
             int playerFeetX = worldX + tileSize / 2;
             int playerFeetY = worldY + tileSize;
@@ -192,9 +197,17 @@ public class Player extends Entity{
             int toleranceX = 8;
             int toleranceY = 20;
 
-            if (Math.abs(playerFeetX - (targetX + tileSize / 2)) <= toleranceX &&
-                Math.abs(playerFeetY - (targetY + tileSize / 2)) <= toleranceY && 
-                keyH.enterPressed) interactHouse();
+            if (Math.abs(playerFeetX - (targetHouseX + tileSize / 2)) <= toleranceX &&
+                Math.abs(playerFeetY - (targetHouseY + tileSize / 2)) <= toleranceY && 
+                keyH.enterPressed && direction.equals("up")) interactHouse();
+
+            if ((Math.abs(playerFeetX - (targetPondX1 + tileSize / 2)) <= toleranceX ||
+                Math.abs(playerFeetX - (targetPondX2 + tileSize / 2)) <= toleranceX) && 
+                Math.abs(playerFeetY - (targetPondY + tileSize / 2)) <= toleranceY && 
+                keyH.enterPressed && direction.equals("down")) {
+                location = "Pond";
+                interactFishing();
+            }
 
             keyH.enterPressed = false;
         }
@@ -216,6 +229,38 @@ public class Player extends Entity{
 
     public void interactHouse(){
         gp.gameState = gp.houseInteractState;
+    }
+
+    public void interactFishing(){
+        gp.gameState = gp.fishingInteractState;
+
+        ItemFactory itemFactory = new ItemFactory();
+        itemFactory.loadFish();
+
+        List<Fish> availableFish = new ArrayList<>();
+
+        for (Items item : ItemFactory.getAllItems().values()) {
+            if (item instanceof Fish fish) {
+                if (fish.isAvailable(gameClock.getDate().getSeasonString(), gameClock.getWeather().getWeatherToday(), location, gameClock.getTime().getHour())) {
+                    availableFish.add(fish);
+                }
+            }
+        }
+
+        if (availableFish.isEmpty()) return;
+
+        Random random = new Random();
+        int fishIndex = random.nextInt(availableFish.size());
+        Fish fish = availableFish.get(fishIndex);
+
+        int range;
+        if (fish.getRarity().equals("Common")) range = 10;
+        else if (fish.getRarity().equals("Regular")) range = 100;
+        else range = 500;
+
+        int number = random.nextInt(range) + 1;
+        gp.fished = fish;
+        gp.luckyNumber = number;
     }
 
     public void draw(Graphics2D g2) {

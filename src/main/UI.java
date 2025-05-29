@@ -1,5 +1,6 @@
 package main;
 
+import items.Items;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,10 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
-
-import items.Items;
 import time.GameClock;
 
 
@@ -33,6 +31,11 @@ public class UI {
     public BufferedImage titleBackground;
     public int slotCol = 0;
     public int slotRow = 0;
+
+    public int fishingAttempts = 0;
+    public int guess = 0;
+    public String fishingWarning = null;
+    public StringBuilder guessString = new StringBuilder();
 
     // double playTime;
     // DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -116,6 +119,10 @@ public class UI {
         // if(gp.gameState == gp.viewInventoryState) {
         //     drawViewInventory();
         // }
+
+        if (gp.gameState == gp.fishingInteractState) drawFishingScreen();
+        if (gp.gameState == gp.fishingSucceeded) drawSucceededScreen();
+        if (gp.gameState == gp.fishingFailed) drawFailedScreen();
     }
 
     public void drawTitleScreen() {
@@ -532,7 +539,80 @@ public class UI {
         }
     }
 
+    public void drawFishingScreen(){
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 10;
 
+        drawSubWindow(x, y, width, height);
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = "Fishing at " + gp.player.location;
+        int titleX = getXforCenteredText(title);
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,24F));
+        String text = "You fished " + gp.fished.getName() + "!";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 2;
+        g2.drawString(text, x, y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+        String range;
+        String rarity = gp.fished.getRarity();
+        if (rarity.equals("Common")) range = "10";
+        else if (rarity.equals("Regular")) range = "100";
+        else range = "500";
+
+        text = "You must guess a number between 1 to " + range + " to catch this fish!";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+
+        // INPUT NAME
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+        text = "Attempts left: " + (10 - fishingAttempts);
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+        text = "Enter your guess:";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+
+        String guessStringDisplay = guessString.toString() + (System.currentTimeMillis() / 500 % 2 == 0 ? "_" : ""); // Blinking cursor
+        x = getXforCenteredText(guessStringDisplay);
+        y += gp.tileSize + 10;
+        g2.drawString(guessStringDisplay, x, y);
+
+        if (fishingWarning != null){
+            x = getXforCenteredText(fishingWarning);
+            y += gp.tileSize;
+            g2.drawString(fishingWarning, x, y);
+        }
+    }
+
+    public void drawFailedScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
+        String text = "FAILED";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+    }
+
+    public void drawSucceededScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
+        String text = "SUCCEEDED";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+    }
 
     public void drawSubWindow(int x, int y, int width, int height) {
         
