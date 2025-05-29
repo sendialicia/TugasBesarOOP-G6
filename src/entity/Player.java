@@ -114,6 +114,7 @@ public class Player extends Entity{
     public boolean isInventoryEmpty() { return inventory.isEmpty(); }
     public Items getItemFromInventory(String itemName) { return inventory.get(itemName); }
 
+    // male
     public void getPlayerImage() {
         up1 = setup("/player/mc_up_left");
         up2 = setup("/player/mc_up_right");
@@ -124,6 +125,19 @@ public class Player extends Entity{
         right1 = setup("/player/mc_right");
         right2 = setup("/player/mc_walk_right");
     }
+
+    // female
+
+    // public void getPlayerImage(){
+    //     up1 = setup("/player/images/female_player_05");
+    //     up2 = setup("/player/images/female_player_06");
+    //     down1 = setup("/player/images/female_player_01");
+    //     down2 = setup("/player/images/female_player_02");
+    //     left1 = setup("/player/images/female_player_07");
+    //     left2 = setup("/player/images/female_player_08");
+    //     right1 = setup("/player/images/female_player_03");
+    //     right2 = setup("/player/images/female_player_04");
+    // }
 
     public void update() {
         collisionOn = false;
