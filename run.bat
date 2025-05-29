@@ -1,5 +1,3 @@
-
-
 @echo off
 echo Compiling Java files...
 
