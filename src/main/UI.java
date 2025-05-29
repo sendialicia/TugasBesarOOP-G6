@@ -32,7 +32,7 @@ public class UI {
     public int slotCol = 0;
     public int slotRow = 0;
 
-    public int fishingAttempts = 0;
+    public int fishingAttempts = 1;
     public int guess = 0;
     public String fishingWarning = null;
     public StringBuilder guessString = new StringBuilder();
@@ -598,7 +598,7 @@ public class UI {
 
         // INPUT NAME
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
-        text = "Attempts left: " + (10 - fishingAttempts);
+        text = "Attempts left: " + (11 - fishingAttempts);
         x = getXforCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text, x, y);

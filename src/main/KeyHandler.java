@@ -109,6 +109,7 @@ public class KeyHandler implements KeyListener{
                 }
 
                 gp.gameState = gp.playState;
+                gp.playMusic(0);
             }
         }
 
@@ -252,6 +253,9 @@ public class KeyHandler implements KeyListener{
                         gp.fished = null;
                         gp.luckyNumber = null;
                         gp.ui.fishingWarning = null;
+                        gp.ui.guessString.setLength(0);
+                        gp.ui.fishingAttempts = 1;
+                        gp.ui.guess = 0;
                     }
                 }
             } else if (code == KeyEvent.VK_ESCAPE) {
@@ -266,15 +270,11 @@ public class KeyHandler implements KeyListener{
         else if (gp.gameState == gp.fishingSucceeded) {
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
-                gp.ui.guessString.setLength(0);
-                gp.ui.fishingAttempts = 0;
             }
         }
         else if (gp.gameState == gp.fishingFailed) {
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
-                gp.ui.guessString.setLength(0); 
-                gp.ui.fishingAttempts = 0;
             }
         }
         else if(gp.gameState == gp.binInteractState) {
