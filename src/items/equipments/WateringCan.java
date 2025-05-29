@@ -4,7 +4,8 @@ import entity.Player;
 
 public class WateringCan extends Equipments {
     public WateringCan() {
-        super("Watering Can", "");
+        super("Watering Can", "/items/Equipments/Watering Can.png");
+        super.setDescription("A watering can used to water crops and plants.");
     }
 
     @Override
