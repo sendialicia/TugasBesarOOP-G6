@@ -178,10 +178,9 @@ public class KeyHandler implements KeyListener{
                     System.out.println("Tile " + tileLocation.worldX + "," + tileLocation.worldY);
                 }
                 else if (existing.type.equals("Tilled")) {
-                    ItemFactory itemFactory = new ItemFactory();
-                    itemFactory.loadSeeds();
+                    ItemFactory.loadSeeds();
 
-                    Items seedItems = itemFactory.get("Parsnip Seeds");
+                    Items seedItems = ItemFactory.get("Parsnip Seeds");
                     Seeds seed = (Seeds) seedItems;
 
                     PlantedTile plantedTile = new PlantedTile(seed, gp.gameClock.getDate().getOriginDay());

@@ -14,10 +14,9 @@ public class Inventory {
 
     public Inventory() {
         items = new HashMap<>();
-        ItemFactory itemFactory = new ItemFactory();
-        itemFactory.loadSeeds();
+        ItemFactory.loadSeeds();
 
-        Seeds seed = (Seeds) itemFactory.get("Cooked Pig's Head");
+        Seeds seed = (Seeds) ItemFactory.get("Parsnip Seeds");
 
         items.put(new Hoe(), 1);
         items.put(new FishingRod(), 1);

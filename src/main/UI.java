@@ -461,7 +461,6 @@ public class UI {
         // DRAW PLAYER'S ITEMS
         for (Map.Entry<Items, Integer> entry : gp.player.getInventory().getItems().entrySet()) {
             Items item = entry.getKey();
-            int quantity = entry.getValue();
             
             int col = (slotX - slotXstart) / slotSize;
             int row = (slotY - slotYstart) / slotSize;

@@ -264,8 +264,7 @@ public class Player extends Entity{
     public void interactFishing(){
         gp.gameState = gp.fishingInteractState;
 
-        ItemFactory itemFactory = new ItemFactory();
-        itemFactory.loadFish();
+        ItemFactory.loadFish();
 
         List<Fish> availableFish = new ArrayList<>();
 

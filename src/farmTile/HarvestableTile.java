@@ -14,13 +14,12 @@ public class HarvestableTile extends TileObject {
     
     public HarvestableTile(PlantedTile plantedTile){
         super("Harvestable");
-        ItemFactory cropsFactory = new ItemFactory();
-        cropsFactory.loadCrops();
+        ItemFactory.loadCrops();
 
         String seedName = plantedTile.getSeed().getName();
         String cropName = seedName.substring(0, seedName.length() - " Seeds".length());
 
-        Items cropItem = cropsFactory.get(cropName);
+        Items cropItem = ItemFactory.get(cropName);
         this.crop = (Crops) cropItem;
 
         this.location = plantedTile.location;
