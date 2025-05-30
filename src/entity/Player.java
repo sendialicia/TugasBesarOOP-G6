@@ -76,7 +76,7 @@ public class Player extends Entity{
         if (gp.tileM.mapName == "farm") {
             worldX = gp.tileSize * 26;
             worldY = gp.tileSize * 15;
-        } else {
+        } else if(gp.tileM.mapName == "world") {
             worldX = gp.tileSize * 10;
             worldY = gp.tileSize * 10;
         }
