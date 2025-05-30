@@ -34,7 +34,6 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
     // WORLD SETTINGS
-
     public final int maxWorldCol = 32;
     public final int maxWorldRow = 32;
 
@@ -43,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // SYSTEM
     GameClock gameClock = GameClock.getInstance();
-    TileManager tileM = new TileManager(this);
+    TileManager tileM = new TileManager(this, "farm", maxWorldCol, maxWorldRow);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
