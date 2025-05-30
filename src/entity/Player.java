@@ -216,12 +216,7 @@ public class Player extends Entity{
 
             int toleranceX = 48;
             int toleranceY = 48;
-
-            System.out.println("Feet: " + playerFeetX + "," + playerFeetY);
-            System.out.println("Target center: " + (targetBinX1 + tileSize/2) + "," + (targetBinY + tileSize/2));
-            System.out.println("Distance: " + Math.abs(playerFeetX - (targetBinX1 + tileSize / 2)) + "," + Math.abs(playerFeetY - (targetBinY + tileSize / 2)));
-
-
+            
             if (Math.abs(playerFeetX - (targetHouseX + tileSize / 2)) <= toleranceX &&
                 Math.abs(playerFeetY - (targetHouseY + tileSize / 2)) <= toleranceY && 
                 keyH.enterPressed && direction.equals("up")) 
@@ -324,84 +319,20 @@ public class Player extends Entity{
         g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 
-    // Actions
-    // public void tilling(Tile tile) {
-    //     if (tile.isTillable()) {
-    //         Equipments hoe = (Equipments) (inventory.get("Hoe"));
-    //         hoe.onUse(this);
-    //         tile.setDeployedObjectChar('t');
-    //         System.out.println("You have tilled the land.");
-    //         this.energy -= 5;
-    //         gameClock.advanceTime(5);
-    //         System.out.println("Time skips five minutes.");
-    //     } else {
-    //         System.out.println("This land is not tillable.");
-    //     }
-    // }
+    public void tilling() {
+        this.energy -= 5;
+        gameClock.advanceTime(5);
+    }
 
-    // public void recoverLand(Tile tile) {
-    //     if (tile.isTilled()) {
-    //         Equipments pickaxe = (Equipments) (inventory.get("Hoe"));
-    //         pickaxe.onUse(this);
-    //         tile.setDeployedObjectChar('.');
-    //         System.out.println("You have recovered the land.");
-    //         this.energy -= 5;
-    //         gameClock.advanceTime(5);
-    //         System.out.println("Time skips five minutes.");
-    //     } else {
-    //         System.out.println("This land is not recoverable.");
-    //     }
-    // }
+    public void recoverLand() {
+        this.energy -= 5;
+        gameClock.advanceTime(5);
+    }
 
-    // public Tile planting(Tile tile) {
-    //     if (!tile.isTilled()) {
-    //         System.out.println("This land is not tillable or the seed is invalid.");
-    //         return tile;
-    //     }
-
-    //     List<Seeds> seedsList = new ArrayList<>();
-    //     List<Integer> amounts = new ArrayList<>();
-    //     for (Items item : inventory.getItems().keySet()) {
-    //         if (item instanceof Seeds) {
-    //             seedsList.add((Seeds) item);
-    //             amounts.add(getItemQuantity(item));
-    //         }
-    //     }
-
-    //     if (seedsList.isEmpty()) {
-    //         System.out.println("You have no seeds to plant.");
-    //         return tile;
-    //     }
-
-    //     System.out.println("Available seeds:");
-    //     for (int i = 0; i < seedsList.size(); i++) {
-    //         System.out.println((i + 1) + ". " + seedsList.get(i).getName() + " (x" + amounts.get(i) + ")");
-    //     }
-
-    //     System.out.print("Enter the number of the seed you want to plant: ");
-    //     int choice;
-    //     try {
-    //         choice = Integer.parseInt(scanner.nextLine());
-    //     } catch (NumberFormatException e) {
-    //         System.out.println("Invalid input.");
-    //         return tile;
-    //     }
-
-    //     if (choice < 1 || choice > seedsList.size()) {
-    //         System.out.println("Invalid choice.");
-    //         return tile;
-    //     }
-
-    //     Seeds selectedSeed = seedsList.get(choice - 1);
-
-    //     tile = new PlantedTile(selectedSeed, gameClock.getDate().getDay());
-    //     removeItemFromInventory(selectedSeed, 1);
-    //     System.out.println("You have planted " + selectedSeed.getName() + ".");
-    //     this.energy -= 5;
-    //     gameClock.advanceTime(5);
-    //     System.out.println("Time skips five minutes.");
-    //     return tile;
-    // }
+    public void planting() {
+        this.energy -= 5;
+        gameClock.advanceTime(5);
+    }
 
     // public void watering(Tile tile) {
     //     if (tile.isPlanted()){

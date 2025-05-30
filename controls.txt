@@ -1,0 +1,7 @@
+wasd or arrkeys -> movements
+p pause
+z interact tile (tilling, planting, harvesting)
+x recover tile
+c watering tile
+e inventory
+q eating

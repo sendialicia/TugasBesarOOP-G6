@@ -21,10 +21,6 @@ public class PlantedTile extends TileObject {
     public void update(int currentDay, boolean isRaining){
         if (!isNeglected(currentDay, isRaining)){
             int daysPassed = currentDay - plantedDay;
-            System.out.println("C: " + currentDay);
-            System.out.println("P: " + plantedDay);
-            System.out.println("HD: " + seed.getHarvestDays());
-            System.out.println(daysPassed);
             if (daysPassed >= seed.getHarvestDays()) readyToHarvest = true;
             else readyToHarvest = false;
         }

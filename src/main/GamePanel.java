@@ -12,7 +12,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
 import object.SuperObject;
@@ -208,23 +210,29 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void refreshLand() {
         Map<TileLocation, TileObject> updatedTiles = new HashMap<>();
+        List<TileLocation> tilesToRemove = new ArrayList<>();
+
+        int currentDay = gameClock.getDate().getOriginDay();
+        boolean isRainy = gameClock.getWeather().getWeatherToday().equals("Rainy");
 
         for (Map.Entry<TileLocation, TileObject> entry : tiles.entrySet()) {
             TileLocation location = entry.getKey();
             TileObject tileObject = entry.getValue();
 
             if (tileObject instanceof PlantedTile plantedTile) {
-                plantedTile.update(gameClock.getDate().getOriginDay(),gameClock.getWeather().getWeatherToday().equals("Rainy"));
+                plantedTile.update(currentDay, isRainy);
 
-                if (plantedTile.isReadyToHarvest()) {
-                    updatedTiles.put(location, new HarvestableTile(plantedTile));
+                if (plantedTile.isNeglected(currentDay, isRainy)) {
+                    tilesToRemove.add(location);
+                    continue;
                 }
+
+                if (plantedTile.isReadyToHarvest()) updatedTiles.put(location, new HarvestableTile(plantedTile));
             }
         }
 
-        for (Map.Entry<TileLocation, TileObject> entry : updatedTiles.entrySet()) {
-            tiles.put(entry.getKey(), entry.getValue());
-        }
+        for (TileLocation location : tilesToRemove) tiles.remove(location);
+        for (Map.Entry<TileLocation, TileObject> entry : updatedTiles.entrySet()) tiles.put(entry.getKey(), entry.getValue());
     }
 
 
