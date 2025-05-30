@@ -285,13 +285,13 @@ public class KeyHandler implements KeyListener{
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNum--;
                 if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 2;
+                    gp.ui.commandNum = 3;
                 }
             }
     
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
                 gp.ui.commandNum++;
-                if(gp.ui.commandNum > 2) {
+                if(gp.ui.commandNum > 3) {
                     gp.ui.commandNum = 0;
                 }
             }
@@ -299,17 +299,26 @@ public class KeyHandler implements KeyListener{
              if(code == KeyEvent.VK_ENTER) {
                 if(gp.ui.commandNum == 0) {
                     gp.player.sleeping();
-                    //ui
                     gp.gameState = gp.playState;
                 }
                 if(gp.ui.commandNum == 1) {
-                    gp.player.cooking();
+                    gp.player.watching();
+                    gp.gameState = gp.watchingState;
                 }
                 if(gp.ui.commandNum == 2) {
+                    gp.player.cooking();
+                }
+                if(gp.ui.commandNum == 3) {
                     gp.gameState = gp.playState;
                 }
             }
         }
+        else if (gp.gameState == gp.watchingState){
+            if (code == KeyEvent.VK_ESCAPE){
+                gp.gameState = gp.playState;
+            }
+        }
+
         else if (gp.gameState == gp.fishingInteractState) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 if (gp.ui.guessString.length() > 0) {

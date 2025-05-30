@@ -78,6 +78,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int fishingFailed = 23;
     public final int binInteractState = 24;
 
+    public final int watchingState = 25;
+
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set the size of this class (JPanel)
@@ -166,7 +168,8 @@ public class GamePanel extends JPanel implements Runnable{
             ui.draw(g2);
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
-            gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || gameState == binInteractState) { 
+            gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
+            gameState == binInteractState || gameState == watchingState) { 
                 
                 // TILE
                 tileM.draw(g2);
