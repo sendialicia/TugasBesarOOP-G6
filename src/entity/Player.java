@@ -203,7 +203,7 @@ public class Player extends Entity{
                 case "right": interactX += tileSize; break;
             }
             
-            int targetHouseX =  gp.obj[0].worldX + 5 * tileSize;
+            int targetHouseX =  gp.obj[0].worldX + tileSize;
             int targetHouseY = gp.obj[0].worldY + 7 * tileSize;
 
             int targetPondX1 =  gp.obj[2].worldX + tileSize;

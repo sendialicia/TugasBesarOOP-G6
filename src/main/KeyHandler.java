@@ -180,7 +180,7 @@ public class KeyHandler implements KeyListener{
                 else if (existing.type.equals("Tilled")) {
                     ItemFactory.loadSeeds();
 
-                    Items seedItems = ItemFactory.get("Cauliflower Seeds");
+                    Items seedItems = ItemFactory.get("Parsnip Seeds");
                     Seeds seed = (Seeds) seedItems;
 
                     PlantedTile plantedTile = new PlantedTile(seed, gp.gameClock.getDate().getOriginDay());
@@ -194,7 +194,7 @@ public class KeyHandler implements KeyListener{
                     if (!plantedTile.isReadyToHarvest()) return;
                 }
                 else {
-                    HarvestableTile harvestableTile = new HarvestableTile((PlantedTile) existing);
+                    HarvestableTile harvestableTile = (HarvestableTile) existing;
                     Crops crop = harvestableTile.getCrops();
 
                     gp.player.addItemToInventory(crop, crop.getHarvestedAmount());
