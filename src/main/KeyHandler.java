@@ -194,7 +194,7 @@ public class KeyHandler implements KeyListener{
                     if (!plantedTile.isReadyToHarvest()) return;
                 }
                 else {
-                    HarvestableTile harvestableTile = new HarvestableTile((PlantedTile) existing);
+                    HarvestableTile harvestableTile = (HarvestableTile) existing;
                     Crops crop = harvestableTile.getCrops();
 
                     gp.player.addItemToInventory(crop, crop.getHarvestedAmount());
