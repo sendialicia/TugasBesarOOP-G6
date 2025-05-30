@@ -1,5 +1,14 @@
 package entity;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import entity.npc.NPC;
 import items.Edible;
 import items.Inventory;
@@ -11,14 +20,6 @@ import items.fish.Fish;
 import items.food.Food;
 import items.miscellaneous.Miscellaneous;
 import items.seeds.Seeds;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import main.GamePanel;
 import main.KeyHandler;
 import time.GameClock;
@@ -73,13 +74,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        if (gp.tileM.mapName == "farm") {
-            worldX = gp.tileSize * 26;
-            worldY = gp.tileSize * 15;
-        } else if(gp.tileM.mapName == "world") {
-            worldX = gp.tileSize * 10;
-            worldY = gp.tileSize * 10;
-        }
+        worldX = gp.tileSize * 26;
+        worldY = gp.tileSize * 15;
         speed = 4;
         direction = "down";
         energy = 100;
@@ -208,17 +204,17 @@ public class Player extends Entity{
                 case "right": interactX += tileSize; break;
             }
             
-            int targetHouseX =  gp.obj[0].worldX + tileSize;
-            int targetHouseY = gp.obj[0].worldY + 7 * tileSize;
+            int targetHouseX =  gp.obj[gp.currentMap][0].worldX + tileSize;
+            int targetHouseY = gp.obj[gp.currentMap][0].worldY + 7 * tileSize;
 
-            int targetPondX1 =  gp.obj[2].worldX + tileSize;
+            int targetPondX1 =  gp.obj[gp.currentMap][2].worldX + tileSize;
             int targetPondX2 =  targetPondX1 + tileSize;
-            int targetPondY = gp.obj[2].worldY;
+            int targetPondY = gp.obj[gp.currentMap][2].worldY;
 
-            int targetBinX1 = gp.obj[1].worldX;
+            int targetBinX1 = gp.obj[gp.currentMap][1].worldX;
             int targetBinX2 = targetBinX1 + tileSize;
             int targetBinX3 = targetBinX2 + tileSize;
-            int targetBinY = gp.obj[1].worldY + tileSize + tileSize/2;
+            int targetBinY = gp.obj[gp.currentMap][1].worldY + tileSize + tileSize/2;
 
             int playerFeetX = worldX + tileSize / 2;
             int playerFeetY = worldY + tileSize;
@@ -260,7 +256,7 @@ public class Player extends Entity{
         if(i != 999) {
             if(gp.keyH.enterPressed == true) {
                 gp.gameState = gp.dialogueState;
-                gp.npc[i].speak();
+                gp.npc[gp.currentMap][i].speak();
             }
         }
     }

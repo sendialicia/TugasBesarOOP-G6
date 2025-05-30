@@ -46,7 +46,7 @@ public class CollisionChecker {
             for (int row = topRow; row <= bottomRow; row++) {
                 if (col < 0 || row < 0 || col >= gp.maxWorldCol || row >= gp.maxWorldRow) continue;
 
-                int tileNum = gp.tileM.mapTileNum[col][row];
+                int tileNum = gp.tileM.mapTileNum[gp.currentMap][col][row];
                 Tile tile = gp.tileM.tile[tileNum];
 
                 if (tile.collision) {
@@ -85,13 +85,13 @@ public class CollisionChecker {
             entity.solidArea.height
         );
 
-        for (int i = 0; i < gp.obj.length; i++) {
-            if (gp.obj[i] != null) {
-                if (gp.obj[i].collision && gp.obj[i].solidAreas != null) { 
-                    for (Rectangle objectSolidRect : gp.obj[i].solidAreas) {
+        for (int i = 0; i < gp.obj[1].length; i++) {
+            if (gp.obj[gp.currentMap][i] != null) {
+                if (gp.obj[gp.currentMap][i].collision && gp.obj[gp.currentMap][i].solidAreas != null) { 
+                    for (Rectangle objectSolidRect : gp.obj[gp.currentMap][i].solidAreas) {
                         Rectangle objectArea = new Rectangle(
-                            gp.obj[i].worldX + objectSolidRect.x,
-                            gp.obj[i].worldY + objectSolidRect.y,
+                            gp.obj[gp.currentMap][i].worldX + objectSolidRect.x,
+                            gp.obj[gp.currentMap][i].worldY + objectSolidRect.y,
                             objectSolidRect.width,
                             objectSolidRect.height
                         );
@@ -110,7 +110,7 @@ public class CollisionChecker {
         return index;
     }
 
-    public int checkEntity(Entity entity, Entity[] target) {
+    public int checkEntity(Entity entity, Entity[][] target) {
         int index = 999;
 
         Rectangle entityArea = new Rectangle(
@@ -120,13 +120,13 @@ public class CollisionChecker {
             entity.solidArea.height
         );
 
-        for (int i = 0; i < target.length; i++) {
-            if (target[i] != null) {
+        for (int i = 0; i < target[1].length; i++) {
+            if (target[gp.currentMap][i] != null) {
                 Rectangle targetArea = new Rectangle(
-                    target[i].worldX + target[i].solidArea.x,
-                    target[i].worldY + target[i].solidArea.y,
-                    target[i].solidArea.width,
-                    target[i].solidArea.height
+                    target[gp.currentMap][i].worldX + target[gp.currentMap][i].solidArea.x,
+                    target[gp.currentMap][i].worldY + target[gp.currentMap][i].solidArea.y,
+                    target[gp.currentMap][i].solidArea.width,
+                    target[gp.currentMap][i].solidArea.height
                 );
 
                 switch (entity.direction) {
