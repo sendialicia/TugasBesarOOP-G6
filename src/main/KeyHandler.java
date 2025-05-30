@@ -360,6 +360,12 @@ public class KeyHandler implements KeyListener{
                     gp.ui.guessString.setLength(0);
                 }
             } else if (code == KeyEvent.VK_ESCAPE) {
+                gp.fished = null;
+                gp.luckyNumber = null;
+                gp.ui.fishingWarning = null;
+                gp.ui.guessString.setLength(0);
+                gp.ui.fishingAttempts = 1;
+                gp.ui.guess = 0;
                 gp.gameState = gp.playState;
             } else {
                 char c = e.getKeyChar();
