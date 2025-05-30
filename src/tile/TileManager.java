@@ -123,7 +123,9 @@ public class TileManager {
             }
             br.close();
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void draw(Graphics2D g2) {
