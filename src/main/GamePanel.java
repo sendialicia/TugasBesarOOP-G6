@@ -197,7 +197,7 @@ public class GamePanel extends JPanel implements Runnable{
                 // HOUSE FRONT LAYER
                 for(int i = 0; i < obj.length; i++) {
                     if(obj[i] != null && obj[i].name.equals("House")) {
-                        obj[i].draw(g2, this, 0, 0, this.tileSize * 6, this.tileSize * 3);
+                        obj[i].draw(g2, this, 0, 0, 96, this.tileSize, this.tileSize * 6, this.tileSize * 3);
                     }
                 }
             }
