@@ -164,6 +164,8 @@ public class KeyHandler implements KeyListener{
                 int tileX = pixelX / gp.tileSize;
                 int tileY = pixelY / gp.tileSize;
 
+                if (gp.tileM.mapTileNum[tileX][tileY] != 908) return;
+
                 int worldX = tileX * gp.tileSize;
                 int worldY = tileY * gp.tileSize;
                 
@@ -186,6 +188,10 @@ public class KeyHandler implements KeyListener{
                     plantedTile.location.worldY = worldY;
                     gp.tiles.put(tileLocation, plantedTile);
                     gp.player.planting();
+                }
+                else if (existing.type.equals("Planted")){
+                    PlantedTile plantedTile = (PlantedTile) existing;
+                    if (!plantedTile.isReadyToHarvest()) return;
                 }
                 else {
                     HarvestableTile harvestableTile = new HarvestableTile((PlantedTile) existing);
