@@ -1,5 +1,5 @@
 @echo off
-echo Compiling Java files...
+echo Compiling Java files...sd
 
 REM Define classpath (Gson JAR and res folder)
 set CLASSPATH=lib/gson-2.10.1.jar;res

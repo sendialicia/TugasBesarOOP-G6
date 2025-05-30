@@ -16,7 +16,7 @@
     "timeRanges": [["Any"]],
     "weathers": ["Any"],
     "locations": ["Mountain Lake", "Pond"],
-    "description": "A hardy bottom-feeder\nfound in lakes & ponds.",
+    "description": "A hardy bottom-feeder.",
     "imagePath": "/items/Fish/Carp.png"
   },
   {
@@ -56,7 +56,7 @@
     "timeRanges": [["06:00", "18:00"]],
     "weathers": ["Any"],
     "locations": ["Mountain Lake"],
-    "description": "An ancient large fish\nfrom deep lake waters.",
+    "description": "An ancient large fish.",
     "imagePath": "/items/Fish/Sturgeon.png"
   },
   {
@@ -86,7 +86,7 @@
     "timeRanges": [["06:00", "11:00"], ["19:00", "23:59"], ["00:00", "02:00"]],
     "weathers": ["Any"],
     "locations": ["Ocean"],
-    "description": "A large flatfish often\nfound in oceans.",
+    "description": "A large flatfish.",
     "imagePath": "/items/Fish/Halibut.png"
   },
   {
@@ -136,7 +136,7 @@
     "timeRanges": [["06:00", "22:00"]],
     "weathers": ["Rainy"],
     "locations": ["Forest River", "Pond"],
-    "description": "A whiskered fish that\nloves rainy days.",
+    "description": "A whiskered fish.",
     "imagePath": "/items/Fish/Catfish.png"
   },
   {
@@ -166,7 +166,7 @@
     "timeRanges": [["08:00", "20:00"]],
     "weathers": ["Any"],
     "locations": ["Ocean"],
-    "description": "A bright red fish of\nlegend, found in summer.",
+    "description": "A bright red fish of\nlegend.",
     "imagePath": "/items/Fish/Crimsonfish.png"
   },
   {
@@ -176,7 +176,7 @@
     "timeRanges": [["08:00", "20:00"]],
     "weathers": ["Any"],
     "locations": ["Forest River"],
-    "description": "A winter fish of myth\nfound in icy waters.",
+    "description": "A winter fish of myth.",
     "imagePath": "/items/Fish/Glacierfish.png"
   },
   {

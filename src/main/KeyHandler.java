@@ -312,6 +312,7 @@ public class KeyHandler implements KeyListener{
                         gp.ui.fishingAttempts = 1;
                         gp.ui.guess = 0;
                     }
+                    gp.ui.guessString.setLength(0);
                 }
             } else if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;

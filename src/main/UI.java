@@ -530,8 +530,12 @@ public class UI {
             if(item instanceof Crops) {
                 Crops crop = (Crops)item;
                 g2.setColor(Color.yellow);
-                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
-                g2.drawString("Amount/Harvest: " + crop.getHarvestedAmount() + "crops", dX, dY);
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 26F));
+                if(crop.getHarvestedAmount() > 1) {
+                    g2.drawString("Crops/Harvest: " + crop.getHarvestedAmount() + " crops", dX, dY);
+                } else {
+                    g2.drawString("Crops/Harvest: " + crop.getHarvestedAmount() + " crop", dX, dY);
+                }
                 dY += 40;
             } 
             if(item instanceof Fish) {
