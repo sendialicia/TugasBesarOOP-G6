@@ -22,15 +22,15 @@ public class TileObjectManager {
     public void getTileObjectImages(){
         UtilityTool uTool = new UtilityTool();
         try {
-            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/tiles/Tilled.png"));
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/Tilled.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
             images.put("Tilled", image);
 
-            image = ImageIO.read(getClass().getResourceAsStream("/tiles/Planted.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/Planted.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
             images.put("Planted", image);
     
-            image = ImageIO.read(getClass().getResourceAsStream("/tiles/Harvestable.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/Harvestable.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
             images.put("Harvestable", image);
             

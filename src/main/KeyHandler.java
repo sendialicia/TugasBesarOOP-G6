@@ -141,7 +141,7 @@ public class KeyHandler implements KeyListener{
             }
     
             if(code == KeyEvent.VK_R) {
-                gp.tileM.loadMap("/maps/farmMap.txt");
+                gp.tileM.loadMap("/maps/farm.txt");
             }
 
             if(code == KeyEvent.VK_ESCAPE) {
@@ -180,7 +180,7 @@ public class KeyHandler implements KeyListener{
                 else if (existing.type.equals("Tilled")) {
                     ItemFactory.loadSeeds();
 
-                    Items seedItems = ItemFactory.get("Cauliflower Seeds");
+                    Items seedItems = ItemFactory.get("Parsnip Seeds");
                     Seeds seed = (Seeds) seedItems;
 
                     PlantedTile plantedTile = new PlantedTile(seed, gp.gameClock.getDate().getOriginDay());

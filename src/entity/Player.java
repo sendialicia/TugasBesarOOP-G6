@@ -73,8 +73,13 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 15;
-        worldY = gp.tileSize * 5;
+        if (gp.tileM.mapName == "farm") {
+            worldX = gp.tileSize * 26;
+            worldY = gp.tileSize * 15;
+        } else {
+            worldX = gp.tileSize * 10;
+            worldY = gp.tileSize * 10;
+        }
         speed = 4;
         direction = "down";
         energy = 100;

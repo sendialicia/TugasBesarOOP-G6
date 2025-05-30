@@ -17,10 +17,10 @@ public class TileManager {
     public int mapTileNum[][];
     public String mapName;
 
-    public TileManager(GamePanel gp, String mapName, int worldCol, int worldRow) {
+    public TileManager(GamePanel gp, int worldCol, int worldRow) {
 
         this.gp = gp;
-        this.mapName = mapName;
+        this.mapName = "farm";
     
         tile = new Tile[1000];
         mapTileNum = new int[worldCol][worldRow];
@@ -32,11 +32,14 @@ public class TileManager {
     public void getTileImage() {
 
         // MAP TILES
-        if(mapName.equals("farmMap")) {
+        if(mapName.equals("farm")) {
+            setup(101, mapName, "#101", true);
+            setup(102, mapName, "#102", true);
+            setup(103, mapName, "#103", true);
             setup(287, mapName, "#287", true);
             setup(293, mapName, "#293", false);
             setup(294, mapName, "#294", false);
-            setup(333, mapName, "#333", true);
+            setup(333, mapName, "#333", false);
             setup(370, mapName, "#370", false);
             setup(375, mapName, "#375", false);
             setup(433, mapName, "#433", false);
@@ -45,10 +48,16 @@ public class TileManager {
             setup(465, mapName, "#465", false);
             setup(466, mapName, "#466", false);
             setup(467, mapName, "#467", false);
+            setup(533, mapName, "#533", false);
+            setup(534, mapName, "#534", false);
+            setup(535, mapName, "#535", false);
             setup(574, mapName, "#574", true);
+            setup(575, mapName, "#575", true);
+            setup(576, mapName, "#576", true);
             setup(615, mapName, "#615", true);
             setup(616, mapName, "#616", true);
             setup(617, mapName, "#617", true);
+            setup(671, mapName, "#671", true);
             setup(738, mapName, "#738", true);
             setup(739, mapName, "#739", true);
             setup(740, mapName, "#740", true);
@@ -80,7 +89,8 @@ public class TileManager {
             setup(948, mapName, "#948", false);
             setup(949, mapName, "#949", false);
             setup(950, mapName, "#950", false);
-        } else if(mapName.equals("worldMap")) {
+            setup(951, mapName, "#951", false);
+        } else if(mapName.equals("world")) {
             setup(1, mapName, "#1", false);
             setup(2, mapName, "#2", false);
             setup(3, mapName, "#3", false);
