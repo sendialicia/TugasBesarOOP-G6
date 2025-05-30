@@ -97,7 +97,7 @@ public void setObject() {
                 if (gp.tileM.mapTileNum[i][j] != 293 && gp.tileM.mapTileNum[i][j] != 294 &&
                     gp.tileM.mapTileNum[i][j] != 370 && gp.tileM.mapTileNum[i][j] != 375 ) return false;
 
-                if (i == 5) return false;
+                if (i == 6) return false;
             }
         }
         return true;
