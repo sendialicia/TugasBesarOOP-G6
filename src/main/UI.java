@@ -1,6 +1,11 @@
 package main;
 
 import items.Items;
+import items.crops.Crops;
+import items.fish.Fish;
+import items.food.Food;
+import items.seeds.Seeds;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -360,16 +365,16 @@ public class UI {
 
         if ("Male".equals(gp.player.getGender())) {
             playerAvatarImage = gp.player.def_avatar; 
-            avatarWidth = gp.tileSize * 3 - 35;
+            avatarWidth = gp.tileSize * 3 - 25;
             avatarHeight = gp.tileSize * 3 - 35;
+            g2.drawImage(playerAvatarImage, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/3, avatarWidth, avatarHeight, null);
             
         } else { // Female
             playerAvatarImage = gp.player.def_avatar_female; 
-            avatarWidth = gp.tileSize * 3 + 30; 
-            avatarHeight = gp.tileSize * 3 + 30;
+            avatarWidth = gp.tileSize * 3 - 20; 
+            avatarHeight = gp.tileSize * 3 - 20;
+            g2.drawImage(playerAvatarImage, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/6, avatarWidth, avatarHeight, null);
         }
-
-        g2.drawImage(playerAvatarImage, gp.screenWidth - gp.tileSize * 3 - gp.tileSize/5, frameY + gp.tileSize/3, avatarWidth, avatarHeight, null);
         
         // PLAYER ATTRIBUTES
         {
@@ -501,24 +506,70 @@ public class UI {
             int dY = dFrameY + 40;
 
             g2.setColor(Color.cyan);
+            if(item.getName().equals("The Legends of Spakbor")) {
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 26F));
+            }
             g2.drawString(item.getName(), dX, dY);
             dY += 40;
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
             g2.setColor(Color.white);
-            g2.drawString(description, dX, dY);
-            dY += 40;
-
+            for(String line : description.split("\n")) {
+                g2.drawString(line, dX, dY);
+                dY += 40;
+            }
             if(item.getSellPrice() != null) {
                 g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
                 g2.setColor(Color.red);
-                g2.drawString("Sell Price: " + item.getSellPrice(), dX, dY);
+                g2.drawString("Sell Price: " + item.getSellPrice() + "g", dX, dY);
                 dY += 40;
             }
             if(item.getBuyPrice() != null) {
                 g2.setColor(Color.green);
-                g2.drawString("Buy Price: " + item.getBuyPrice(), dX, dY);
+                g2.drawString("Buy Price: " + item.getBuyPrice() + "g", dX, dY);
                 dY += 40;
             }
+            if(item instanceof Crops) {
+                Crops crop = (Crops)item;
+                g2.setColor(Color.yellow);
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+                g2.drawString("Amount/Harvest: " + crop.getHarvestedAmount() + "crops", dX, dY);
+                dY += 40;
+            } 
+            if(item instanceof Fish) {
+                Fish fish = (Fish)item;
+                g2.setColor(Color.yellow);
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+                g2.drawString("Rarity: " + fish.getRarity(), dX, dY);
+                dY += 40;
+                g2.drawString("Location: ", dX, dY);
+                dY += 40;
+                for (String location : fish.getLocations()) {
+                    g2.drawString("- " + location, dX + 20, dY);
+                    dY += 30;
+                }
+            }
+            if(item instanceof Seeds) {
+                Seeds seed = (Seeds)item;
+                g2.setColor(Color.yellow);
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+                if (seed.getHarvestDays() > 1) {
+                    g2.drawString("Harvest Days: " + seed.getHarvestDays() + " days", dX, dY);
+                } else {
+                    g2.drawString("Harvest Days: " + seed.getHarvestDays() + " day", dX, dY);
+                }
+                dY += 40;
+            }
+
+            if(item instanceof Food) {
+                Food food = (Food)item;
+                g2.setColor(Color.yellow);
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+                g2.drawString("+" + food.getEnergy() + " Energy", dX, dY);
+                dY += 40;
+            }
+            
+
+
         } else {
             g2.drawString("No item selected", dFrameX + 20, dFrameY + 60);
         }

@@ -25,7 +25,7 @@ if %ERRORLEVEL% neq 0 (
     exit /b
 )
 
-echo Running the program..  .
+echo Running the program...
 java -cp "out;lib/gson-2.10.1.jar;res" main.Main
 
 pause

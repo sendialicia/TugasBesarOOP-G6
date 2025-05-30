@@ -17,13 +17,13 @@ public class Inventory {
         ItemFactory itemFactory = new ItemFactory();
         itemFactory.loadSeeds();
 
-        Seeds seed = (Seeds) itemFactory.get("Parsnip Seeds");
+        Seeds seed = (Seeds) itemFactory.get("Cooked Pig's Head");
 
         items.put(new Hoe(), 1);
         items.put(new FishingRod(), 1);
         items.put(new Pickaxe(), 1);
         items.put(new WateringCan(), 1);
-        items.put(seed, 15); // Example seed item
+        items.put(seed, 15);
     }
 
     public Inventory(Map<Items, Integer> items) {

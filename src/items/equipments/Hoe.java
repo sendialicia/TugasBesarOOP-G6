@@ -5,7 +5,7 @@ import entity.Player;
 public class Hoe extends Equipments {
     public Hoe() { 
         super("Hoe", "/items/Equipments/Hoe.png"); 
-        super.setDescription("A tool used for tilling soil and preparing it for planting crops.");
+        super.setDescription("A tool used for tilling \nsoil and preparing it \nfor planting crops.");
     }
 
     @Override

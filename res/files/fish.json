@@ -6,7 +6,7 @@
     "timeRanges": [["Any"]],
     "weathers": ["Any"],
     "locations": ["Mountain Lake"],
-    "description": "A common freshwater fish known for its broad head.",
+    "description": "A common freshwater\nfish with a broad head.",
     "imagePath": "/items/Fish/Bullhead.png"
   },
   {
@@ -16,7 +16,7 @@
     "timeRanges": [["Any"]],
     "weathers": ["Any"],
     "locations": ["Mountain Lake", "Pond"],
-    "description": "A hardy bottom-feeder, often found in lakes and ponds.",
+    "description": "A hardy bottom-feeder\nfound in lakes & ponds.",
     "imagePath": "/items/Fish/Carp.png"
   },
   {
@@ -26,7 +26,7 @@
     "timeRanges": [["Any"]],
     "weathers": ["Any"],
     "locations": ["Forest River", "Mountain Lake"],
-    "description": "A small, stream-dwelling fish with a plump body.",
+    "description": "A small stream fish\nwith a plump body.",
     "imagePath": "/items/Fish/Chub.png"
   },
   {
@@ -36,7 +36,7 @@
     "timeRanges": [["06:00", "18:00"]],
     "weathers": ["Any"],
     "locations": ["Mountain Lake"],
-    "description": "A popular game fish, recognized by its large mouth and aggressive nature.",
+    "description": "A game fish known for\nits large, wide mouth.",
     "imagePath": "/items/Fish/Largemouth Bass.png"
   },
   {
@@ -46,7 +46,7 @@
     "timeRanges": [["06:00", "18:00"]],
     "weathers": ["Sunny"],
     "locations": ["Forest River", "Mountain Lake"],
-    "description": "A beautiful freshwater fish with a distinctive rainbow stripe.",
+    "description": "A colorful fish with\na rainbow stripe.",
     "imagePath": "/items/Fish/Rainbow Trout.png"
   },
   {
@@ -56,7 +56,7 @@
     "timeRanges": [["06:00", "18:00"]],
     "weathers": ["Any"],
     "locations": ["Mountain Lake"],
-    "description": "An ancient and large fish, often found in deeper lake waters.",
+    "description": "An ancient large fish\nfrom deep lake waters.",
     "imagePath": "/items/Fish/Sturgeon.png"
   },
   {
@@ -66,7 +66,7 @@
     "timeRanges": [["20:00", "23:59"], ["00:00", "02:00"]],
     "weathers": ["Any"],
     "locations": ["Mountain Lake", "Pond"],
-    "description": "A nocturnal carp that only appears late at night.",
+    "description": "A night-dwelling carp\nseen very late.",
     "imagePath": "/items/Fish/Midgnight Carp.png"
   },
   {
@@ -76,7 +76,7 @@
     "timeRanges": [["06:00", "22:00"]],
     "weathers": ["Any"],
     "locations": ["Ocean"],
-    "description": "A flatfish that blends in with the seabed, found in coastal waters.",
+    "description": "A flatfish that hides\nalong the seabed.",
     "imagePath": "/items/Fish/Flounder.png"
   },
   {
@@ -86,7 +86,7 @@
     "timeRanges": [["06:00", "11:00"], ["19:00", "23:59"], ["00:00", "02:00"]],
     "weathers": ["Any"],
     "locations": ["Ocean"],
-    "description": "A large and delicious flatfish, often caught in the ocean.",
+    "description": "A large flatfish often\nfound in oceans.",
     "imagePath": "/items/Fish/Halibut.png"
   },
   {
@@ -96,7 +96,7 @@
     "timeRanges": [["06:00", "22:00"]],
     "weathers": ["Any"],
     "locations": ["Ocean"],
-    "description": "An intelligent cephalopod that can be challenging to catch.",
+    "description": "An intelligent sea\ncreature and challenge.",
     "imagePath": "/items/Fish/Octopus.png"
   },
   {
@@ -106,7 +106,7 @@
     "timeRanges": [["00:00", "16:00"]],
     "weathers": ["Sunny"],
     "locations": ["Ocean"],
-    "description": "A peculiar fish that inflates itself when threatened. Be careful!",
+    "description": "Inflates when scared.\nHandle with care!",
     "imagePath": "/items/Fish/Pufferfish.png"
   },
   {
@@ -116,7 +116,7 @@
     "timeRanges": [["06:00", "18:00"]],
     "weathers": ["Any"],
     "locations": ["Ocean"],
-    "description": "A small, silvery fish often found in large schools near the coast.",
+    "description": "A tiny, silvery fish\nfound in large schools.",
     "imagePath": "/items/Fish/Sardine.png"
   },
   {
@@ -126,7 +126,7 @@
     "timeRanges": [["18:00", "23:59"], ["00:00", "02:00"]],
     "weathers": ["Any"],
     "locations": ["Ocean"],
-    "description": "A rare and elongated sea creature with a distinctive appearance.",
+    "description": "A rare, glowing sea\ncreature of the night.",
     "imagePath": "/items/Fish/Super Cucumber.png"
   },
   {
@@ -136,7 +136,7 @@
     "timeRanges": [["06:00", "22:00"]],
     "weathers": ["Rainy"],
     "locations": ["Forest River", "Pond"],
-    "description": "A whiskered bottom-dweller, often sought after during rainy weather.",
+    "description": "A whiskered fish that\nloves rainy days.",
     "imagePath": "/items/Fish/Catfish.png"
   },
   {
@@ -146,7 +146,7 @@
     "timeRanges": [["06:00", "18:00"]],
     "weathers": ["Any"],
     "locations": ["Forest River"],
-    "description": "A prized fish that migrates upstream in the fall.",
+    "description": "Migrates upstream in\nfall. A strong swimmer.",
     "imagePath": "/items/Fish/Salmon.png"
   },
   {
@@ -156,7 +156,7 @@
     "timeRanges": [["08:00", "20:00"]],
     "weathers": ["Any"],
     "locations": ["Pond"],
-    "description": "One of the legendary fish, known for its elusive nature and unique lure.",
+    "description": "A legendary fish with\na glowing lure.",
     "imagePath": "/items/Fish/Angler.png"
   },
   {
@@ -166,7 +166,7 @@
     "timeRanges": [["08:00", "20:00"]],
     "weathers": ["Any"],
     "locations": ["Ocean"],
-    "description": "A vibrant red legendary fish found in the ocean during summer.",
+    "description": "A bright red fish of\nlegend, found in summer.",
     "imagePath": "/items/Fish/Crimsonfish.png"
   },
   {
@@ -176,7 +176,7 @@
     "timeRanges": [["08:00", "20:00"]],
     "weathers": ["Any"],
     "locations": ["Forest River"],
-    "description": "A formidable legendary fish that thrives in icy winter waters.",
+    "description": "A winter fish of myth\nfound in icy waters.",
     "imagePath": "/items/Fish/Glacierfish.png"
   },
   {
@@ -186,7 +186,7 @@
     "timeRanges": [["08:00", "20:00"]],
     "weathers": ["Rainy"],
     "locations": ["Mountain Lake"],
-    "description": "The most elusive of all fish, said to only appear during rainy springs in the mountain lake.",
+    "description": "Said to be the rarest\nfish in the world.",
     "imagePath": "/items/Fish/Legend.png"
   }
 ]
