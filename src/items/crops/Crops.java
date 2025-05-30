@@ -16,7 +16,7 @@ public class Crops extends Items implements Edible {
     }
 
     public int getEnergy(){ return ENERGY; }
-    public int harvestedAmount(){ return harvestedAmount; }
+    public int getHarvestedAmount(){ return harvestedAmount; }
 
     public void setHarvestedAmount(int harvestedAmount){ this.harvestedAmount = harvestedAmount; }
 

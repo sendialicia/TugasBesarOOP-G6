@@ -2,14 +2,22 @@ package main;
 
 import entity.Entity;
 import entity.Player;
+import farmTile.HarvestableTile;
+import farmTile.PlantedTile;
+import farmTile.TileLocation;
+import farmTile.TileObject;
+import farmTile.TileObjectManager;
 import items.fish.Fish;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JPanel;
 import object.SuperObject;
 import tile.TileManager;
+import time.GameClock;
 
 public class GamePanel extends JPanel implements Runnable{
     
@@ -24,13 +32,14 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
     // WORLD SETTINGS
-    public final int maxWorldCol = 32;
-    public final int maxWorldRow = 32;
+    public final int maxWorldCol = 44;
+    public final int maxWorldRow = 37;
 
     // FPS
     int FPS = 60;
 
     // SYSTEM
+    GameClock gameClock = GameClock.getInstance();
     TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
@@ -38,12 +47,14 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
-    Thread gameThread; // to run something that never stops even when the apps is close
+    Thread gameThread;
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10];
     public Entity npc[] = new Entity[10];
+    public TileObjectManager tileOM = new TileObjectManager(this);
+    public Map<TileLocation, TileObject> tiles = new HashMap<>();
     public Fish fished = null;
     public Integer luckyNumber = null;
 
@@ -92,7 +103,6 @@ public class GamePanel extends JPanel implements Runnable{
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
-        int drawCount = 0;
 
         while(gameThread != null) {
             currentTime = System.nanoTime();
@@ -105,11 +115,9 @@ public class GamePanel extends JPanel implements Runnable{
                 update();
                 repaint();
                 delta--;
-                drawCount++;
             }
 
             if(timer >= 1000000000) {
-                drawCount = 0;
                 timer = 0;
             }
 
@@ -167,6 +175,9 @@ public class GamePanel extends JPanel implements Runnable{
                         obj[i].draw(g2, this);
                     }
                 }
+
+                refreshLand();
+                tileOM.draw(g2);
         
                 // NPC
                 for(int i = 0; i < npc.length; i++) {
@@ -194,6 +205,28 @@ public class GamePanel extends JPanel implements Runnable{
 
         g2.dispose();
     }
+
+    public void refreshLand() {
+        Map<TileLocation, TileObject> updatedTiles = new HashMap<>();
+
+        for (Map.Entry<TileLocation, TileObject> entry : tiles.entrySet()) {
+            TileLocation location = entry.getKey();
+            TileObject tileObject = entry.getValue();
+
+            if (tileObject instanceof PlantedTile plantedTile) {
+                plantedTile.update(gameClock.getDate().getOriginDay(),gameClock.getWeather().getWeatherToday().equals("Rainy"));
+
+                if (plantedTile.isReadyToHarvest()) {
+                    updatedTiles.put(location, new HarvestableTile(plantedTile));
+                }
+            }
+        }
+
+        for (Map.Entry<TileLocation, TileObject> entry : updatedTiles.entrySet()) {
+            tiles.put(entry.getKey(), entry.getValue());
+        }
+    }
+
 
     public void playMusic(int i) {
         

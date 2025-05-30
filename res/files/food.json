@@ -4,7 +4,7 @@
     "energyGained": 50,
     "buyPrice": 150,
     "sellPrice": 135,
-    "description": "A classic deep-fried dish, combining crispy fish with hearty potato fries.",
+    "description": "Crispy fish with \nhearty fries.",
     "imagePath": "/items/Food/Fish n' Chips.png"
   },
   {
@@ -12,7 +12,7 @@
     "energyGained": 25,
     "buyPrice": 100,
     "sellPrice": 80,
-    "description": "A long, crusty loaf of French bread, perfect for a quick snack.",
+    "description": "A crusty French bread.",
     "imagePath": "/items/Food/Baguette.png"
   },
   {
@@ -20,7 +20,7 @@
     "energyGained": 70,
     "buyPrice": 300,
     "sellPrice": 275,
-    "description": "Delicate slices of fresh, raw fish, a true culinary delight.",
+    "description": "Slices of fresh, \nraw fish.",
     "imagePath": "/items/Food/Sashimi.png"
   },
   {
@@ -28,7 +28,7 @@
     "energyGained": 50,
     "buyPrice": null,
     "sellPrice": 135,
-    "description": "A notorious delicacy, prepared with extreme care due to its poisonous nature.",
+    "description": "A poisonous delicacy.",
     "imagePath": "/items/Food/Fugu.png"
   },
   {
@@ -36,7 +36,7 @@
     "energyGained": 20,
     "buyPrice": 100,
     "sellPrice": 90,
-    "description": "A fermented grape beverage, known for its relaxing properties.",
+    "description": "A relaxing grape \nbeverage.",
     "imagePath": "/items/Food/Wine.png"
   },
   {
@@ -44,7 +44,7 @@
     "energyGained": 35,
     "buyPrice": 120,
     "sellPrice": 100,
-    "description": "A sweet and spiced dessert made from autumn pumpkins, a comforting treat.",
+    "description": "Sweet spiced autumn \ndessert.",
     "imagePath": "/items/Food/Pumpkin Pie.png"
   },
   {
@@ -52,7 +52,7 @@
     "energyGained": 40,
     "buyPrice": 140,
     "sellPrice": 120,
-    "description": "A light and healthy soup packed with fresh garden vegetables.",
+    "description": "Healthy soup with \nfresh vegetables.",
     "imagePath": "/items/Food/Veggie Soup.png"
   },
   {
@@ -60,7 +60,7 @@
     "energyGained": 70,
     "buyPrice": 280,
     "sellPrice": 260,
-    "description": "A hearty and flavorful stew, brimming with tender fish and vegetables.",
+    "description": "Hearty stew with \nfish and veggies.",
     "imagePath": "/items/Food/Fish Stew.png"
   },
   {
@@ -68,7 +68,7 @@
     "energyGained": 70,
     "buyPrice": null,
     "sellPrice": 250,
-    "description": "A unique and refreshing salad, made with exotic Spakbor ingredients.",
+    "description": "Refreshing salad with \nSpakbor special \ningredients.",
     "imagePath": "/items/Food/Spakbor Salad.png"
   },
   {
@@ -76,7 +76,7 @@
     "energyGained": 50,
     "buyPrice": 200,
     "sellPrice": 180,
-    "description": "A simple yet satisfying sandwich, featuring a fillet of fish between two slices of bread.",
+    "description": "Simple fish fillet \nsandwich.",
     "imagePath": "/items/Food/Fish Sandwich.png"
   },
   {
@@ -84,7 +84,7 @@
     "energyGained": 100,
     "buyPrice": null,
     "sellPrice": 2000,
-    "description": "A legendary dish, rumored to grant immense energy and knowledge. A true masterpiece.",
+    "description": "Legendary dish, grants \nimmense energy.",
     "imagePath": "/items/Food/The Legends of Spakbor.png"
   },
   {
@@ -92,7 +92,7 @@
     "energyGained": 100,
     "buyPrice": 1000,
     "sellPrice": null,
-    "description": "A substantial and unconventional meal, providing a significant energy boost.",
+    "description": "Unconventional meal, \nhigh energy.",
     "imagePath": "/items/Food/Cooked Pig's Head.png"
   }
 ]

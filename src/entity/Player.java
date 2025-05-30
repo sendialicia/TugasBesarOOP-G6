@@ -73,8 +73,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 3 + gp.tileSize;
-        worldY = gp.tileSize * 4 - gp.tileSize;
+        worldX = gp.tileSize * 10;
+        worldY = gp.tileSize * 7;
         speed = 4;
         direction = "down";
         energy = 100;
@@ -264,8 +264,7 @@ public class Player extends Entity{
     public void interactFishing(){
         gp.gameState = gp.fishingInteractState;
 
-        ItemFactory itemFactory = new ItemFactory();
-        itemFactory.loadFish();
+        ItemFactory.loadFish();
 
         List<Fish> availableFish = new ArrayList<>();
 

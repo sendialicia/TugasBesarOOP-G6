@@ -1,5 +1,13 @@
 package main;
 
+import farmTile.HarvestableTile;
+import farmTile.PlantedTile;
+import farmTile.TileLocation;
+import farmTile.TileObject;
+import items.ItemFactory;
+import items.Items;
+import items.crops.Crops;
+import items.seeds.Seeds;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -109,6 +117,7 @@ public class KeyHandler implements KeyListener{
                 }
 
                 gp.gameState = gp.playState;
+                gp.playMusic(0);
             }
         }
 
@@ -146,6 +155,47 @@ public class KeyHandler implements KeyListener{
 
             if(code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
+            }
+
+            if(code == KeyEvent.VK_E){
+                int pixelX = gp.player.worldX + gp.player.solidArea.x;
+                int pixelY = gp.player.worldY + gp.player.solidArea.y;
+
+                int tileX = pixelX / gp.tileSize;
+                int tileY = pixelY / gp.tileSize;
+
+                int worldX = tileX * gp.tileSize;
+                int worldY = tileY * gp.tileSize;
+                
+                TileLocation tileLocation = new TileLocation(worldX, worldY);
+                TileObject existing = gp.tiles.get(tileLocation);
+
+                if (existing == null) {
+                    TileObject tileObject = new TileObject("Tilled", worldX, worldY);
+                    gp.tiles.put(tileLocation, tileObject);
+                    System.out.println("Added new tile");
+                    System.out.println("Player " + gp.player.worldX + "," + gp.player.worldY);
+                    System.out.println("Tile " + tileLocation.worldX + "," + tileLocation.worldY);
+                }
+                else if (existing.type.equals("Tilled")) {
+                    ItemFactory.loadSeeds();
+
+                    Items seedItems = ItemFactory.get("Parsnip Seeds");
+                    Seeds seed = (Seeds) seedItems;
+
+                    PlantedTile plantedTile = new PlantedTile(seed, gp.gameClock.getDate().getOriginDay());
+                    plantedTile.location.worldX = worldX;
+                    plantedTile.location.worldY = worldY;
+                    gp.tiles.put(tileLocation, plantedTile);
+                    System.out.println("Planted " + seed.getName() + " on tile " + tileLocation.worldX + "," + tileLocation.worldY);
+                }
+                else {
+                    HarvestableTile harvestableTile = (HarvestableTile) existing;
+                    Crops crop = harvestableTile.getCrops();
+
+                    gp.player.addItemToInventory(crop, crop.getHarvestedAmount());
+                    gp.tiles.remove(tileLocation);
+                }
             }
         }
 
@@ -245,6 +295,12 @@ public class KeyHandler implements KeyListener{
                             gp.ui.fishingAttempts++;
                         } else {
                             gp.gameState = gp.fishingFailed;
+                            gp.fished = null;
+                            gp.luckyNumber = null;
+                            gp.ui.fishingWarning = null;
+                            gp.ui.guessString.setLength(0);
+                            gp.ui.fishingAttempts = 1;
+                            gp.ui.guess = 0;
                         }
                     } else {
                         gp.gameState = gp.fishingSucceeded;
@@ -252,10 +308,14 @@ public class KeyHandler implements KeyListener{
                         gp.fished = null;
                         gp.luckyNumber = null;
                         gp.ui.fishingWarning = null;
+                        gp.ui.guessString.setLength(0);
+                        gp.ui.fishingAttempts = 1;
+                        gp.ui.guess = 0;
                     }
+                    gp.ui.guessString.setLength(0);
                 }
             } else if (code == KeyEvent.VK_ESCAPE) {
-                gp.gameState = gp.fishingFailed;
+                gp.gameState = gp.playState;
             } else {
                 char c = e.getKeyChar();
                 if (Character.isLetterOrDigit(c) && gp.ui.guessString.length() < 9) {
@@ -266,15 +326,11 @@ public class KeyHandler implements KeyListener{
         else if (gp.gameState == gp.fishingSucceeded) {
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
-                gp.ui.guessString.setLength(0);
-                gp.ui.fishingAttempts = 0;
             }
         }
         else if (gp.gameState == gp.fishingFailed) {
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
-                gp.ui.guessString.setLength(0); 
-                gp.ui.fishingAttempts = 0;
             }
         }
         else if(gp.gameState == gp.binInteractState) {
