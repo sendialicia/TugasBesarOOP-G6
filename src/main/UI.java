@@ -5,7 +5,6 @@ import items.crops.Crops;
 import items.fish.Fish;
 import items.food.Food;
 import items.seeds.Seeds;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -17,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import time.GameClock;
 
 
@@ -36,6 +36,8 @@ public class UI {
     public BufferedImage titleBackground;
     public int slotCol = 0;
     public int slotRow = 0;
+
+    private JLabel gifLabel = null;
 
     public int fishingAttempts = 1;
     public int guess = 0;
@@ -131,6 +133,8 @@ public class UI {
         if (gp.gameState == gp.fishingFailed) drawFailedScreen();
 
         if (gp.gameState == gp.binInteractState) drawBinScreen();
+        
+        if (gp.gameState == gp.watchingState) drawWatchScreen();
     }
 
     public void drawTitleScreen() {
@@ -598,10 +602,11 @@ public class UI {
 
         // MENU OPTIONS
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
-        y += gp.tileSize * 2;
+        y += gp.tileSize;
 
         String[] options = {
             "SLEEPING",
+            "WATCHING",
             "COOKING",
             "EXIT"
         };
@@ -616,6 +621,31 @@ public class UI {
                 g2.drawString(">", textX - gp.tileSize, y);
             }
         }
+    }
+
+    public void drawWatchScreen() {
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 6;
+
+        drawSubWindow(x, y, width, height);
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = "Inside Your House";
+        int titleX = getXforCenteredText(title);
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        // MENU OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        y += gp.tileSize;
+
+        String text = "WATCHING (NOT IMPLEMENTED YET)";
+        int textX = getXforCenteredText(text);
+        g2.drawString(text, textX, y + gp.tileSize);
     }
 
     public void drawFishingScreen(){

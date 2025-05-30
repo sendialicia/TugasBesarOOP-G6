@@ -144,11 +144,11 @@ public class KeyHandler implements KeyListener{
                 gp.tileM.loadMap("/maps/farmMap.txt");
             }
 
-            if(code == KeyEvent.VK_P) {
+            if(code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.pauseState;
             }
 
-            if(code == KeyEvent.VK_V) {
+            if(code == KeyEvent.VK_E) {
                 gp.gameState = gp.viewAttributeState;
                 e.consume();
             }
@@ -157,7 +157,7 @@ public class KeyHandler implements KeyListener{
                 enterPressed = true;
             }
 
-            if(code == KeyEvent.VK_E){
+            if(code == KeyEvent.VK_Z){
                 int pixelX = gp.player.worldX + gp.player.solidArea.x;
                 int pixelY = gp.player.worldY + gp.player.solidArea.y;
 
@@ -173,21 +173,19 @@ public class KeyHandler implements KeyListener{
                 if (existing == null) {
                     TileObject tileObject = new TileObject("Tilled", worldX, worldY);
                     gp.tiles.put(tileLocation, tileObject);
-                    System.out.println("Added new tile");
-                    System.out.println("Player " + gp.player.worldX + "," + gp.player.worldY);
-                    System.out.println("Tile " + tileLocation.worldX + "," + tileLocation.worldY);
+                    gp.player.tilling();
                 }
                 else if (existing.type.equals("Tilled")) {
                     ItemFactory.loadSeeds();
 
-                    Items seedItems = ItemFactory.get("Parsnip Seeds");
+                    Items seedItems = ItemFactory.get("Cauliflower Seeds");
                     Seeds seed = (Seeds) seedItems;
 
                     PlantedTile plantedTile = new PlantedTile(seed, gp.gameClock.getDate().getOriginDay());
                     plantedTile.location.worldX = worldX;
                     plantedTile.location.worldY = worldY;
                     gp.tiles.put(tileLocation, plantedTile);
-                    System.out.println("Planted " + seed.getName() + " on tile " + tileLocation.worldX + "," + tileLocation.worldY);
+                    gp.player.planting();
                 }
                 else {
                     HarvestableTile harvestableTile = (HarvestableTile) existing;
@@ -197,11 +195,49 @@ public class KeyHandler implements KeyListener{
                     gp.tiles.remove(tileLocation);
                 }
             }
+
+            if (code == KeyEvent.VK_X){
+                int pixelX = gp.player.worldX + gp.player.solidArea.x;
+                int pixelY = gp.player.worldY + gp.player.solidArea.y;
+
+                int tileX = pixelX / gp.tileSize;
+                int tileY = pixelY / gp.tileSize;
+
+                int worldX = tileX * gp.tileSize;
+                int worldY = tileY * gp.tileSize;
+                
+                TileLocation tileLocation = new TileLocation(worldX, worldY);
+                TileObject existing = gp.tiles.get(tileLocation);
+
+                if (existing != null && existing.type.equals("Tilled")){
+                    gp.tiles.remove(tileLocation);
+                    gp.player.recoverLand();
+                }
+            }
+
+            if (code == KeyEvent.VK_C){
+                int pixelX = gp.player.worldX + gp.player.solidArea.x;
+                int pixelY = gp.player.worldY + gp.player.solidArea.y;
+
+                int tileX = pixelX / gp.tileSize;
+                int tileY = pixelY / gp.tileSize;
+
+                int worldX = tileX * gp.tileSize;
+                int worldY = tileY * gp.tileSize;
+                
+                TileLocation tileLocation = new TileLocation(worldX, worldY);
+                TileObject existing = gp.tiles.get(tileLocation);
+
+                if (existing != null && existing.type.equals("Planted")){
+                    PlantedTile plantedTile = (PlantedTile) existing;
+                    plantedTile.water(gp.gameClock.getDate().getOriginDay());
+                }
+            }
         }
 
         // PAUSE STATE
         else if(gp.gameState == gp.pauseState) {
-            if(code == KeyEvent.VK_P) {
+            if(code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
             }
         }
@@ -215,7 +251,7 @@ public class KeyHandler implements KeyListener{
 
         // VIEW ATTRIBUTE STATE
         else if(gp.gameState == gp.viewAttributeState) {
-            if(code == KeyEvent.VK_V) {
+            if(code == KeyEvent.VK_E) {
                 gp.gameState = gp.playState;
             }
 
@@ -249,13 +285,13 @@ public class KeyHandler implements KeyListener{
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNum--;
                 if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 2;
+                    gp.ui.commandNum = 3;
                 }
             }
     
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
                 gp.ui.commandNum++;
-                if(gp.ui.commandNum > 2) {
+                if(gp.ui.commandNum > 3) {
                     gp.ui.commandNum = 0;
                 }
             }
@@ -263,17 +299,26 @@ public class KeyHandler implements KeyListener{
              if(code == KeyEvent.VK_ENTER) {
                 if(gp.ui.commandNum == 0) {
                     gp.player.sleeping();
-                    //ui
                     gp.gameState = gp.playState;
                 }
                 if(gp.ui.commandNum == 1) {
-                    gp.player.cooking();
+                    gp.player.watching();
+                    gp.gameState = gp.watchingState;
                 }
                 if(gp.ui.commandNum == 2) {
+                    gp.player.cooking();
+                }
+                if(gp.ui.commandNum == 3) {
                     gp.gameState = gp.playState;
                 }
             }
         }
+        else if (gp.gameState == gp.watchingState){
+            if (code == KeyEvent.VK_ESCAPE){
+                gp.gameState = gp.playState;
+            }
+        }
+
         else if (gp.gameState == gp.fishingInteractState) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 if (gp.ui.guessString.length() > 0) {
