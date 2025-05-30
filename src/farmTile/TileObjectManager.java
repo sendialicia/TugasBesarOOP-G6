@@ -49,7 +49,7 @@ public class TileObjectManager {
             if (tileObject instanceof PlantedTile plantedTile){
                 if (plantedTile.isWateredToday(gp.gameClock.getDate().getOriginDay(), gp.gameClock.getWeather().getWeatherToday().equals("Rainy"))){
                     try {
-                        image = ImageIO.read(getClass().getResourceAsStream("/tiles/Watered.png"));
+                        image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/Watered.png"));
                         image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
                     } catch (Exception e) {
                         e.printStackTrace();
