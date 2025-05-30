@@ -16,15 +16,26 @@ public class NPC_OldMan extends Entity{
         setDialogue();
     }
 
-    public void getImage() {
-        up1 = setup("/npc/WALIDDD/oldman_up_left");
-        up2 = setup("/npc/WALIDDD/oldman_up_right");
-        down1 = setup("/npc/WALIDDD/oldman_down_left");
-        down2 = setup("/npc/WALIDDD/oldman_down_right");
-        left1 = setup("/npc/WALIDDD/oldman_left");
-        left2 = setup("/npc/WALIDDD/oldman_walk_left");
-        right1 = setup("/npc/WALIDDD/oldman_right");
-        right2 = setup("/npc/WALIDDD/oldman_walk_right");
+    // public void getImage() {
+    //     up1 = setup("/npc/WALIDDD/oldman_up_left");
+    //     up2 = setup("/npc/WALIDDD/oldman_up_right");
+    //     down1 = setup("/npc/WALIDDD/oldman_down_left");
+    //     down2 = setup("/npc/WALIDDD/oldman_down_right");
+    //     left1 = setup("/npc/WALIDDD/oldman_left");
+    //     left2 = setup("/npc/WALIDDD/oldman_walk_left");
+    //     right1 = setup("/npc/WALIDDD/oldman_right");
+    //     right2 = setup("/npc/WALIDDD/oldman_walk_right");
+    // }
+
+    public void getImage(){
+        up1 = setup("/npc/Mayted/images/mayted_6");
+        up2 = setup("/npc/Mayted/images/mayted_7");
+        down1 = setup("/npc/Mayted/images/mayted_0");
+        down2 = setup("/npc/Mayted/images/mayted_1");
+        left1 = setup("/npc/Mayted/images/mayted_4");
+        left2 = setup("/npc/Mayted/images/mayted_5");
+        right1 = setup("/npc/Mayted/images/mayted_2");
+        right2 = setup("/npc/Mayted/images/mayted_3");
     }
 
     public void setDialogue() {
