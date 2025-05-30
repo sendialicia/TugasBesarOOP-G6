@@ -16,74 +16,70 @@ public class AssetSetter {
     }
 
     public void setObject() {
-        int houseTileWidth = 6;
-        int houseTileHeight = 8;
+        OBJ_House house = new OBJ_House(gp, 0, 0);
+        OBJ_Bin bin = new OBJ_Bin(gp, 0, 0);
+        OBJ_Pond pond = new OBJ_Pond(gp, 0, 0);
 
-        int houseCandidateX = 1 + random.nextInt(25 - houseTileHeight);
-        int houseCandidateY = 2 + random.nextInt(27 - houseTileHeight);
+        do { 
+            int houseX = random.nextInt(32);
+            int houseY = random.nextInt(32);
 
+            house.worldX = houseX * gp.tileSize;
+            house.worldY = houseY * gp.tileSize;
 
-        gp.obj[0] = new OBJ_House(gp, houseCandidateX * gp.tileSize, houseCandidateY * gp.tileSize);
+            int binX = houseX + 7;
+            int binY = random.nextInt(houseY, houseY + 7);
 
-        int binTileWidth = 3;
-        int binTileHeight = 2;
+            bin.worldX = binX * gp.tileSize;
+            bin.worldY = binY * gp.tileSize;
+        } while (!checkFitInMap(house) || !checkFitInMap(bin));
 
-        int binCandidateX = houseCandidateX + houseTileWidth + 1;
-        if (binCandidateX + binTileWidth > 30) {
-            binCandidateX = 30 - binTileWidth;
-            if (binCandidateX <= 0) binCandidateX = 2;
-        }
-
-        int binMinY = houseCandidateY;
-        int binMaxY = houseCandidateY + houseTileHeight - binTileHeight;
-
-        binMinY = Math.max(binMinY, 2);
-        binMaxY = Math.min(binMaxY, 27 - binTileHeight);
-
-        int binCandidateY;
-        if (binMaxY < binMinY) binCandidateY = binMinY;
-        else binCandidateY = binMinY + random.nextInt(binMaxY - binMinY + 1);
-
-        gp.obj[1] = new OBJ_Bin(gp, binCandidateX * gp.tileSize, binCandidateY * gp.tileSize);
-
-        int pondTileWidth = 4;
-        int pondTileHeight = 4;
-        int pondCandidateX, pondCandidateY;
-        boolean pondCanBePlaced;
-        int attempts = 0;
+        gp.obj[0] = house;
+        gp.obj[1] = bin;
 
         do {
-            pondCandidateX = 2 + random.nextInt(28 - pondTileWidth);
-            pondCandidateY = 2 + random.nextInt(28 - pondTileHeight);
+            int pondX = random.nextInt(50);
+            int pondY = random.nextInt(50);
 
-            pondCanBePlaced = true;
+            pond.worldX = pondX * gp.tileSize;
+            pond.worldY = pondY * gp.tileSize;
+        } while (!(checkFitInMap(pond) || checkOverlap(pond, house) || checkOverlap(pond, bin)));
 
-            if (checkOverlap(pondCandidateX, pondCandidateY, pondTileWidth, pondTileHeight, gp.obj[0])) pondCanBePlaced = false;
-            if (pondCanBePlaced && checkOverlap(pondCandidateX, pondCandidateY, pondTileWidth, pondTileHeight, gp.obj[1])) pondCanBePlaced = false;
+        gp.obj[2] = pond;
+    }
 
-            attempts++;
-        } while (!pondCanBePlaced && attempts < 100);
+    private boolean checkOverlap(SuperObject object, SuperObject other) {
+        if (object == null || other == null) return false;
 
-        if (pondCanBePlaced) gp.obj[2] = new OBJ_Pond(gp, pondCandidateX * gp.tileSize, pondCandidateY * gp.tileSize);
-        else System.out.println("Could not place pond without overlap after " + attempts + " attempts.");
+        int objLeft = object.worldX;
+        int objRight = object.worldX + object.width * gp.tileSize;
+        int objTop = object.worldY;
+        int objBottom = object.worldY + object.height * gp.tileSize;
+
+        int otherLeft = other.worldX;
+        int otherRight = other.worldX + other.width * gp.tileSize;
+        int otherTop = other.worldY;
+        int otherBottom = other.worldY + other.height * gp.tileSize;
+
+        return !(objRight <= otherLeft || objLeft >= otherRight || objBottom <= otherTop || objTop >= otherBottom);
     }
 
 
-    private boolean checkOverlap(int newObjTileX, int newObjTileY, int newObjTileWidth, int newObjTileHeight, SuperObject existingObj) {
-        if (existingObj == null) return false;
+    public boolean checkFitInMap(SuperObject object){
+        int x = object.worldX / gp.tileSize;
+        int y = object.worldY / gp.tileSize;
 
-        int existingObjTileX = existingObj.worldX / gp.tileSize;
-        int existingObjTileY = existingObj.worldY / gp.tileSize;
+        int width = x + object.width;
+        int height = y + object.height;
 
-        int existingObjTileWidth = existingObj.width / gp.tileSize;
-        int existingObjTileHeight = existingObj.height / gp.tileSize;
-
-        boolean overlapX = newObjTileX < existingObjTileX + existingObjTileWidth &&
-                           newObjTileX + newObjTileWidth > existingObjTileX;
-        boolean overlapY = newObjTileY < existingObjTileY + existingObjTileHeight &&
-                           newObjTileY + newObjTileHeight > existingObjTileY;
-
-        return overlapX && overlapY;
+        for (int i = x; i < width; i++){
+            for (int j = y; j < height; j++){
+                if (i < 0 || i >= gp.maxWorldCol || j < 0 || j >= gp.maxWorldRow) return false;
+                if (gp.tileM.mapTileNum[i][j] != 293 && gp.tileM.mapTileNum[i][j] != 294 &&
+                    gp.tileM.mapTileNum[i][j] != 370 && gp.tileM.mapTileNum[i][j] != 375 ) return false;
+            }
+        }
+        return true;
     }
 
     public void setNPC() {
