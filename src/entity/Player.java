@@ -122,6 +122,10 @@ public class Player extends Entity{
     public Items getItemFromInventory(String itemName) { return inventory.get(itemName); }
 
     public void getPlayerImage() {
+
+        if ("Female".equals(getGender())) this.useDefault = false; 
+        else this.useDefault = true;
+
         up1 = setup("/player/" + getGender() + "/mc_up_left");
         up2 = setup("/player/" + getGender() + "/mc_up_right");
         down1 = setup("/player/" + getGender() + "/mc_down_left");
@@ -308,7 +312,12 @@ public class Player extends Entity{
             case "right": image = (spriteNum == 1) ? right1 : right2; break;
         }
         
-        g2.drawImage(image, screenX, screenY, null);
+        if (useDefault) {
+            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+        } else {
+            g2.drawImage(image, screenX, screenY, gp.tileSize + 20, gp.tileSize + 20, null);
+        }
 
         // FOR DEBUGGING
         g2.setColor(Color.RED);

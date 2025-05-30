@@ -113,6 +113,7 @@ public class UI {
         // VIEW ATTRIBUTE STATE
         if(gp.gameState == gp.viewAttributeState) {
             drawAttributeScreen();
+            drawPlayerInventory();
         }
 
         // HOUSE INTERACT STATE
@@ -193,7 +194,6 @@ public class UI {
     }
 
     public void drawFarmNameScreen() {
-
         g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
 
         g2.setColor(new Color(0,0,0, 170));
@@ -319,11 +319,14 @@ public class UI {
     }
 
     public void drawPauseScreen() {
-
+        g2.setColor(new Color(0,0,0, 170));
+        g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
+        
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
         String text = "PAUSED";
         int x = getXforCenteredText(text);
         int y = gp.screenHeight/2;
+        g2.setColor(Color.WHITE);
         g2.drawString(text, x, y);
     }
 
@@ -439,13 +442,14 @@ public class UI {
             }
             g2.drawString(text, x + 27, y);
         }
+    }
      
-
-        // WINDOW PLAYER INVENTORY
-        frameX = 0;
-        frameY = 0;
-        frameWidth = gp.screenWidth - (gp.tileSize-3)*6;
-        frameHeight = gp.screenHeight/2 + (gp.tileSize+3)*2;
+    // WINDOW PLAYER INVENTORY
+    public void drawPlayerInventory(){
+        int frameX = 0;
+        int frameY = 0;
+        int frameWidth = gp.screenWidth - (gp.tileSize-3)*6;
+        int frameHeight = gp.screenHeight/2 + (gp.tileSize+3)*2;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
         
         // PLAYER INVENTORY
@@ -570,9 +574,7 @@ public class UI {
                 g2.drawString("+" + food.getEnergy() + " Energy", dX, dY);
                 dY += 40;
             }
-            
-
-
+        
         } else {
             g2.drawString("No item selected", dFrameX + 20, dFrameY + 60);
         }
