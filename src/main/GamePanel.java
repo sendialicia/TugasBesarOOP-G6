@@ -1,13 +1,5 @@
 package main;
 
-import entity.Entity;
-import entity.Player;
-import farmTile.HarvestableTile;
-import farmTile.PlantedTile;
-import farmTile.TileLocation;
-import farmTile.TileObject;
-import farmTile.TileObjectManager;
-import items.fish.Fish;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -16,7 +8,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.JPanel;
+
+import entity.Entity;
+import entity.Player;
+import farmTile.HarvestableTile;
+import farmTile.PlantedTile;
+import farmTile.TileLocation;
+import farmTile.TileObject;
+import farmTile.TileObjectManager;
+import items.fish.Fish;
 import object.SuperObject;
 import tile.TileManager;
 import time.GameClock;
@@ -34,8 +36,11 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
     // WORLD SETTINGS
-    public final int maxWorldCol = 51;
-    public final int maxWorldRow = 51;
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 75;
+    public final int maxMap = 10;
+    public int currentMap = 1;
+
 
     // FPS
     int FPS = 60;
@@ -53,8 +58,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
-    public SuperObject obj[] = new SuperObject[10];
-    public Entity npc[] = new Entity[10];
+    public SuperObject obj[][] = new SuperObject[maxMap][10];
+    public Entity npc[][] = new Entity[maxMap][10];
     public TileObjectManager tileOM = new TileObjectManager(this);
     public Map<TileLocation, TileObject> tiles = new HashMap<>();
     public Fish fished = null;
@@ -135,9 +140,9 @@ public class GamePanel extends JPanel implements Runnable{
             player.update();
 
             // NPC
-            for(int i = 0; i < npc.length; i++) {
-                if(npc[i] != null) {
-                    npc[i].update();
+            for(int i = 0; i < npc[1].length; i++) {
+                if(npc[currentMap][i] != null) {
+                    npc[currentMap] [i].update();
                 }
             }
 
@@ -178,16 +183,16 @@ public class GamePanel extends JPanel implements Runnable{
                 tileOM.draw(g2);
 
                 // OBJECT
-                for(int i = 0; i < obj.length; i++) {
-                    if(obj[i] != null) {
-                        obj[i].draw(g2, this);
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null) {
+                        obj[currentMap][i].draw(g2, this);
                     }
                 }
         
                 // NPC
-                for(int i = 0; i < npc.length; i++) {
-                    if(npc[i] != null) {
-                        npc[i].draw(g2);
+                for(int i = 0; i < npc[1].length; i++) {
+                    if(npc[currentMap][i] != null) {
+                        npc[currentMap][i].draw(g2);
                     }
                 }
 
@@ -195,9 +200,9 @@ public class GamePanel extends JPanel implements Runnable{
                 player.draw(g2);
 
                 // HOUSE FRONT LAYER
-                for(int i = 0; i < obj.length; i++) {
-                    if(obj[i] != null && obj[i].name.equals("House")) {
-                        obj[i].draw(g2, this, 0, 0, 96, this.tileSize, this.tileSize * 6, this.tileSize * 3);
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House")) {
+                        obj[currentMap][i].draw(g2, this, 0, 0, 96, this.tileSize, this.tileSize * 6, this.tileSize * 3);
                     }
                 }
             }

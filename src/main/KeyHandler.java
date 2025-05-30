@@ -141,7 +141,15 @@ public class KeyHandler implements KeyListener{
             }
     
             if(code == KeyEvent.VK_R) {
-                gp.tileM.loadMap("/maps/farm.txt");
+
+                switch(gp.currentMap) {
+                    case 0: // Farm
+                        gp.tileM.loadMap("/maps/farm.txt", 0);
+                        break;
+                    case 1: // World
+                        gp.tileM.loadMap("/maps/world.txt", 1);
+                        break;
+                }
             }
 
             if(code == KeyEvent.VK_ESCAPE) {
@@ -164,7 +172,7 @@ public class KeyHandler implements KeyListener{
                 int tileX = pixelX / gp.tileSize;
                 int tileY = pixelY / gp.tileSize;
 
-                if (gp.tileM.mapTileNum[tileX][tileY] != 908) return;
+                if (gp.tileM.mapTileNum[gp.currentMap][tileX][tileY] != 908) return;
 
                 int worldX = tileX * gp.tileSize;
                 int worldY = tileY * gp.tileSize;
