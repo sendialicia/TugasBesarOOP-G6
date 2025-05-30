@@ -180,7 +180,7 @@ public class KeyHandler implements KeyListener{
                 else if (existing.type.equals("Tilled")) {
                     ItemFactory.loadSeeds();
 
-                    Items seedItems = ItemFactory.get("Parsnip Seeds");
+                    Items seedItems = ItemFactory.get("Cauliflower Seeds");
                     Seeds seed = (Seeds) seedItems;
 
                     PlantedTile plantedTile = new PlantedTile(seed, gp.gameClock.getDate().getOriginDay());

@@ -5,7 +5,7 @@ import items.seeds.Seeds;
 public class PlantedTile extends TileObject {
     private Seeds seed;
     private int plantedDay;
-    private int lastWatered = -2;
+    private int lastWatered = 0;
     private boolean readyToHarvest = false;
 
     public PlantedTile(Seeds seed, int plantedDay){
@@ -27,12 +27,16 @@ public class PlantedTile extends TileObject {
     }
 
     public boolean isWateredToday(int currentDay, boolean isRaining){
-        return isRaining || lastWatered == currentDay;
+        if (isRaining) water(currentDay);
+        return lastWatered == currentDay;
     }
 
-    public boolean isNeglected(int currentDay, boolean isRaining){ 
-        if (isRaining) return false;
-        return currentDay - plantedDay > 1 && currentDay - lastWatered > 1;
+    public boolean isNeglected(int currentDay, boolean isRaining){
+        if (isRaining){
+            water(currentDay);
+            return false;
+        } 
+        return currentDay - plantedDay > 1  && currentDay - lastWatered > 2;
     }
 
     public boolean isReadyToHarvest(){ return readyToHarvest; }
