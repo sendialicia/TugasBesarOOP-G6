@@ -86,6 +86,10 @@ public class Player extends Entity{
     public void setName(String name) { this.name = name; }
     public void setGender(String gender) { 
         this.gender = gender; 
+        if (gender.equals("Female")) {
+            solidArea.x = 15;
+            solidArea.y = 24;
+        } 
         getPlayerImage();
     }
     public void setFarmName(String farmName) { this.farmName = farmName; }

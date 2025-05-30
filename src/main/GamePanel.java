@@ -32,8 +32,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
     // WORLD SETTINGS
-    public final int maxWorldCol = 44;
-    public final int maxWorldRow = 37;
+    public final int maxWorldCol = 32;
+    public final int maxWorldRow = 32;
 
     // FPS
     int FPS = 60;
@@ -168,16 +168,16 @@ public class GamePanel extends JPanel implements Runnable{
                 
                 // TILE
                 tileM.draw(g2);
-        
+
+                refreshLand();
+                tileOM.draw(g2);
+
                 // OBJECT
                 for(int i = 0; i < obj.length; i++) {
                     if(obj[i] != null) {
                         obj[i].draw(g2, this);
                     }
                 }
-
-                refreshLand();
-                tileOM.draw(g2);
         
                 // NPC
                 for(int i = 0; i < npc.length; i++) {
@@ -188,6 +188,13 @@ public class GamePanel extends JPanel implements Runnable{
 
                 // PLAYER
                 player.draw(g2);
+
+                // HOUSE FRONT LAYER
+                for(int i = 0; i < obj.length; i++) {
+                    if(obj[i] != null && obj[i].name.equals("House")) {
+                        obj[i].draw(g2, this, 0, 0, this.tileSize * 6, this.tileSize * 3);
+                    }
+                }
             }
 
             ui.draw(g2); 

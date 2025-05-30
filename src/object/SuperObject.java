@@ -40,4 +40,25 @@ public class SuperObject {
             }
         }
     }
+
+    public void draw(Graphics2D g2, GamePanel gp, int sx1, int sy1, int cropWidth, int cropHeight) {
+        int screenX = worldX - gp.player.worldX + gp.player.screenX;
+        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+        if (worldX + width > gp.player.worldX - gp.player.screenX - gp.tileSize && 
+            worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+            worldY + height > gp.player.worldY - gp.player.screenY - gp.tileSize && 
+            worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
+
+            int sx2 = sx1 + cropWidth;
+            int sy2 = sy1 + cropHeight;
+
+            g2.drawImage(image,
+                        screenX, screenY, screenX + cropWidth, screenY + cropHeight, // destination
+                        sx1, sy1, sx2, sy2, // source (cropped)
+                        null);
+        }
+    }
+
+
 }

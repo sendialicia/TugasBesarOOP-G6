@@ -20,7 +20,7 @@ public class TileManager {
 
         this.gp = gp;
 
-        tile = new Tile[50];
+        tile = new Tile[1000];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
@@ -30,22 +30,55 @@ public class TileManager {
     public void getTileImage() {
 
         // MAP TILES
-        setup(10, "Tillable", false);
-        setup(11, "DeepWater", true);
-        setup(12, "Water", true);
-        setup(13, "Brick", false);
-        setup(14, "BridgeCoverBrick", true);
-        setup(15, "RightEdgeWater", true);
-        setup(16, "FrontEdge", false);
-        setup(17, "Ground", true);
-        setup(18, "Bridge", false);
-        setup(19, "LeftEdgeWater", true);
-        setup(20, "RightEdgeDeepWater", true);
-        setup(21, "LeftEdgeDeepWater", true);
-        setup(22, "RightEdgeGround", true);
-        setup(23, "LeftEdgeGround", true);
+        setup(287, "#287", false);
+        setup(293, "#293", false);
+        setup(294, "#294", false);
+        setup(333, "#333", false);
+        setup(370, "#370", false);
+        setup(375, "#375", false);
+        setup(433, "#433", false);
+        setup(434, "#434", false);
+        setup(435, "#435", false);
+        setup(465, "#465", false);
+        setup(466, "#466", false);
+        setup(467, "#467", false);
+        setup(574, "#574", false);
+        setup(615, "#615", false);
+        setup(616, "#616", false);
+        setup(617, "#617", false);
+        setup(738, "#738", false);
+        setup(739, "#739", false);
+        setup(740, "#740", false);
+        setup(741, "#741", false);
+        setup(742, "#742", false);
+        setup(743, "#743", false);
+        setup(744, "#744", false);
+        setup(745, "#745", false);
+        setup(746, "#746", false);
+        setup(747, "#747", false);
+        setup(748, "#748", false);
+        setup(749, "#749", false);
+        setup(750, "#750", false);
+        setup(751, "#751", false);
+        setup(752, "#752", false);
+        setup(754, "#754", false);
+        setup(755, "#755", false);
+        setup(756, "#756", false);
+        setup(796, "#796", false);
+        setup(797, "#797", false);
+        setup(837, "#837", false);
+        setup(838, "#838", false);
+        setup(866, "#866", false);
+        setup(867, "#867", false);
+        setup(868, "#868", false);
+        setup(907, "#907", false);
+        setup(908, "#908", false);
+        setup(909, "#909", false);
+        setup(948, "#948", false);
+        setup(949, "#949", false);
+        setup(950, "#950", false);
     }
-
+    
     public void setup(int index, String imageName, boolean collision) {
         UtilityTool uTool = new UtilityTool();
 
