@@ -8,6 +8,8 @@ import items.ItemFactory;
 import items.Items;
 import items.crops.Crops;
 import items.seeds.Seeds;
+import tile.TileManager;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -142,15 +144,20 @@ public class KeyHandler implements KeyListener{
     
             if(code == KeyEvent.VK_R) {
 
-                gp.tileM.loadMap("/maps/world.txt", 1);
-                // switch(gp.currentMap) {
-                //     case 0: // Farm
-                //         gp.tileM.loadMap("/maps/farm.txt", 0);
-                //         break;
-                //     case 1: // World
-                //         gp.tileM.loadMap("/maps/world.txt", 1);
-                //         break;
-                // }
+                if (gp.currentMap == 0) {
+                    gp.currentMap = 1;
+                    gp.maxWorldCol = 50;
+                    gp.maxWorldRow = 75;
+                    gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
+                    gp.tileM.loadMap("/maps/world.txt", 1);
+                } else if (gp.currentMap == 1) {
+                    gp.currentMap = 0;
+                    gp.maxWorldCol = 51;
+                    gp.maxWorldRow = 51;
+                    gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
+                    gp.tileM.loadMap("/maps/farm.txt", 0);
+                }
+                e.consume();
             }
 
             if(code == KeyEvent.VK_ESCAPE) {
