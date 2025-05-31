@@ -142,14 +142,15 @@ public class KeyHandler implements KeyListener{
     
             if(code == KeyEvent.VK_R) {
 
-                switch(gp.currentMap) {
-                    case 0: // Farm
-                        gp.tileM.loadMap("/maps/farm.txt", 0);
-                        break;
-                    case 1: // World
-                        gp.tileM.loadMap("/maps/world.txt", 1);
-                        break;
-                }
+                gp.tileM.loadMap("/maps/world.txt", 1);
+                // switch(gp.currentMap) {
+                //     case 0: // Farm
+                //         gp.tileM.loadMap("/maps/farm.txt", 0);
+                //         break;
+                //     case 1: // World
+                //         gp.tileM.loadMap("/maps/world.txt", 1);
+                //         break;
+                // }
             }
 
             if(code == KeyEvent.VK_ESCAPE) {
