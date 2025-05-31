@@ -236,6 +236,12 @@ public class Player extends Entity{
                 case "left": interactX -= tileSize; break;
                 case "right": interactX += tileSize; break;
             }
+
+            int playerFeetX = worldX + tileSize / 2;
+            int playerFeetY = worldY + tileSize;
+
+            int toleranceX = 48;
+            int toleranceY = 48;
             
             if (gp.currentMap == 0){
                 int moveMapToWorldX1 =  25 * gp.tileSize;
@@ -243,23 +249,17 @@ public class Player extends Entity{
                 int moveMapToWorldX3 = 27 * gp.tileSize;
                 int moveMapToWorldY =  6 * gp.tileSize;
 
-                int targetHouseX =  gp.obj[gp.currentMap][0].worldX + tileSize;
-                int targetHouseY = gp.obj[gp.currentMap][0].worldY + 7 * tileSize;
+                int targetHouseX =  gp.obj[0][0].worldX + tileSize;
+                int targetHouseY = gp.obj[0][0].worldY + 7 * tileSize;
 
-                int targetPondX1 =  gp.obj[gp.currentMap][2].worldX + tileSize;
+                int targetPondX1 =  gp.obj[0][2].worldX + tileSize;
                 int targetPondX2 =  targetPondX1 + tileSize;
-                int targetPondY = gp.obj[gp.currentMap][2].worldY;
+                int targetPondY = gp.obj[0][2].worldY;
 
-                int targetBinX1 = gp.obj[gp.currentMap][1].worldX;
+                int targetBinX1 = gp.obj[0][1].worldX;
                 int targetBinX2 = targetBinX1 + tileSize;
                 int targetBinX3 = targetBinX2 + tileSize;
-                int targetBinY = gp.obj[gp.currentMap][1].worldY + tileSize + tileSize/2;
-
-                int playerFeetX = worldX + tileSize / 2;
-                int playerFeetY = worldY + tileSize;
-
-                int toleranceX = 48;
-                int toleranceY = 48;
+                int targetBinY = gp.obj[0][1].worldY + tileSize + tileSize/2;
                 
                 if (Math.abs(playerFeetX - (targetHouseX + tileSize / 2)) <= toleranceX &&
                     Math.abs(playerFeetY - (targetHouseY + tileSize / 2)) <= toleranceY && 
@@ -289,7 +289,63 @@ public class Player extends Entity{
                     interactMoveMap();
                 }
             } 
+            else {
+                int targetXHouse1 = gp.obj[1][4].worldX + 3 * gp.tileSize;
+                int targetYHouse1 = gp.obj[1][4].worldY + 11 * gp.tileSize;
 
+                int targetXHouse2 = gp.obj[1][5].worldX + 5 * gp.tileSize;
+                int target2House2 = gp.obj[1][5].worldY + 9 * gp.tileSize;
+
+                int targetXHouse3 = gp.obj[1][6].worldX + 3 * gp.tileSize;
+                int targetYHouse3 = gp.obj[1][6].worldY + 7 * gp.tileSize;
+
+                int targetXHouse4 = gp.obj[1][7].worldX + 2 * gp.tileSize;
+                int targetYHouse4 = gp.obj[1][7].worldY + 8 * gp.tileSize;
+                
+                int targetXHouse5 = gp.obj[1][8].worldX + 3 * gp.tileSize;
+                int targetYHouse5 = gp.obj[1][8].worldY + 8 * gp.tileSize;
+
+                int targetXShop1 = gp.obj[1][0].worldX + 5 * gp.tileSize;
+                int targetXShop2 = gp.obj[1][0].worldX + 6 * gp.tileSize;
+                int targetYShop = gp.obj[1][0].worldY + 9 * gp.tileSize;
+
+                if ((Math.abs(playerFeetX - (targetXHouse1 + tileSize / 2)) <= toleranceX) &&
+                    Math.abs(playerFeetY - (targetYHouse1 + tileSize / 2)) <= toleranceY &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactHouseNPC(0);
+                }
+
+                if ((Math.abs(playerFeetX - (targetXHouse2 + tileSize / 2)) <= toleranceX) &&
+                    Math.abs(playerFeetY - (target2House2 + tileSize / 2)) <= toleranceY &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactHouseNPC(1);
+                }
+
+                if ((Math.abs(playerFeetX - (targetXHouse3 + tileSize / 2)) <= toleranceX) &&
+                    Math.abs(playerFeetY - (targetYHouse3 + tileSize / 2)) <= toleranceY &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactHouseNPC(2);
+                }
+
+                if ((Math.abs(playerFeetX - (targetXHouse4 + tileSize / 2)) <= toleranceX) &&
+                    Math.abs(playerFeetY - (targetYHouse4 + tileSize / 2)) <= toleranceY &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactHouseNPC(3);
+                }
+
+                if ((Math.abs(playerFeetX - (targetXHouse5 + tileSize / 2)) <= toleranceX) &&
+                    Math.abs(playerFeetY - (targetYHouse5 + tileSize / 2)) <= toleranceY &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactHouseNPC(4);
+                }
+
+                if ((Math.abs(playerFeetX - (targetXShop1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetXShop2 + tileSize / 2)) <= toleranceX) &&
+                    Math.abs(playerFeetY - (targetYShop + tileSize / 2)) <= toleranceY &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactStore();
+                }
+            }
             keyH.enterPressed = false;
         }
 
@@ -303,10 +359,7 @@ public class Player extends Entity{
         }
     }
 
-
-    public void pickUpObject(int i) {
-        if(i != 999) {}
-    }
+    public void pickUpObject(int i) { if(i != 999) {} }
 
     public void chatNPC(int i) {
         if(i != 999) {
@@ -319,9 +372,14 @@ public class Player extends Entity{
         }
     }
 
-    public void interactHouse(){
-        gp.gameState = gp.houseInteractState;
+    public void interactHouse(){ gp.gameState = gp.houseInteractState; }
+
+    public void interactHouseNPC(int i){ 
+        gp.gameState = gp.houseNPCInteractState;
+        gp.ui.visitedNPC = i;
     }
+
+    public void interactStore(){ gp.gameState = gp.storeInteractState; }
 
     public void interactFishing(){
         gp.gameState = gp.fishingInteractState;
@@ -360,9 +418,8 @@ public class Player extends Entity{
         gp.gameState = gp.binInteractState;
     }
 
-    public void interactMoveMap() {
-        gp.gameState = gp.moveMapState;
-    }
+    public void interactMoveMap() { gp.gameState = gp.moveMapState; }
+    
 
     public void draw(Graphics2D g2) {
         BufferedImage image = null;

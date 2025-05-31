@@ -45,6 +45,8 @@ public class UI {
     Items selectedItem = null;
     int sellAmount = 0;
 
+    public int visitedNPC = 0;
+
     // double playTime;
     // DecimalFormat dFormat = new DecimalFormat("#0.00");
 
@@ -140,12 +142,14 @@ public class UI {
         if (gp.gameState == gp.sleepingState) drawSleepScreen();
 
         if (gp.gameState == gp.interactNPCState) drawNPCScreen();
-        
         if (gp.gameState == gp.rejectedState) drawRejectedScreen();
         if (gp.gameState == gp.tooSoonState) drawTooSoonScreen();
         if (gp.gameState == gp.havePartnerState) drawHavePartnerScreen();
         if (gp.gameState == gp.yourPartnerState) drawYourPartnerScreen();
         if (gp.gameState == gp.acceptedState) drawAcceptedScreen();
+
+        if (gp.gameState == gp.houseNPCInteractState) drawHouseNPCScreen();
+        if (gp.gameState == gp.storeInteractState) drawStoreScreen();
     }
 
     public void drawTitleScreen() {
@@ -944,7 +948,6 @@ public class UI {
     }
 
     public void drawBinAmountScreen() {
-        
         drawBinShopScreen();
 
         int frameY = gp.screenHeight/2 + (gp.tileSize+3)*2;
@@ -1040,14 +1043,14 @@ public class UI {
         int x = gp.tileSize * 2;
         int y = gp.tileSize / 2; 
         int width = gp.screenWidth - (gp.tileSize * 4);
-        int height = gp.tileSize * 6;
+        int height = gp.tileSize * 7;
 
         drawSubWindow(x, y, width, height);
 
         // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
         g2.setColor(Color.white);
-        String title = "Interacting with" + gp.npc[gp.currentMap][gp.interactedNPC].getName();
+        String title = "Interacting with " + gp.npc[gp.currentMap][gp.interactedNPC].getName();
         int titleX = getXforCenteredText(title);
         g2.drawString(title, titleX, y + gp.tileSize);
 
@@ -1113,13 +1116,87 @@ public class UI {
         int y = gp.screenHeight/2;
         g2.drawString(text, x, y);
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40F));
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
         text = "Increase their heartpoints and relationship with you!";
         x = getXforCenteredText(text);
-        y = y + 10;
+        y = y + gp.tileSize;
         g2.drawString(text, x, y);
     }
 
+    public void drawHouseNPCScreen() {
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 6;
+
+        drawSubWindow(x, y, width, height);
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = gp.npc[1][visitedNPC].getName() + "\'s House";
+        int titleX = getXforCenteredText(title);
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        // MENU OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        y += gp.tileSize * 2;
+
+        String[] options = {
+            "Call " + gp.npc[1][visitedNPC].getName(),
+            "Exit"
+        };
+
+        for (int i = 0; i < options.length; i++) {
+            String text = options[i];
+            int textX = getXforCenteredText(text);
+            y += gp.tileSize;
+
+            g2.drawString(text, textX, y);
+            if (commandNum == i) {
+                g2.drawString(">", textX - gp.tileSize, y);
+            }
+        }
+    }
+
+    public void drawStoreScreen() {
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 6;
+
+        drawSubWindow(x, y, width, height);
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = "STORE";
+        int titleX = getXforCenteredText(title);
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        // MENU OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        y += gp.tileSize * 2;
+
+        String[] options = {
+            "View Store",
+            "Call Emily",            
+            "Exit"
+        };
+
+        for (int i = 0; i < options.length; i++) {
+            String text = options[i];
+            int textX = getXforCenteredText(text);
+            y += gp.tileSize;
+
+            g2.drawString(text, textX, y);
+            if (commandNum == i) {
+                g2.drawString(">", textX - gp.tileSize, y);
+            }
+        }
+    }
 
     public void drawSubWindow(int x, int y, int width, int height) {
         

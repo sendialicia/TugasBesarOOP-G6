@@ -160,6 +160,7 @@ public class AssetSetter {
         } while (!checkFitInMap(pond) || checkOverlap(pond, gp.obj[mapNum], 2));
         gp.obj[mapNum][2] = pond;
         mapNum = 1;
+
         OBJ_Store store = new OBJ_Store(gp, 46 * gp.tileSize, 6 * gp.tileSize);
         gp.obj[mapNum][0] = store;
         OBJ_Playground playground = new OBJ_Playground(gp, 31 * gp.tileSize, 8 * gp.tileSize);
@@ -235,7 +236,7 @@ public class AssetSetter {
                 if (gp.tileM.mapTileNum[gp.currentMap][i][j] != 293 && gp.tileM.mapTileNum[gp.currentMap][i][j] != 294 &&
                     gp.tileM.mapTileNum[gp.currentMap][i][j] != 370 && gp.tileM.mapTileNum[gp.currentMap][i][j] != 375 ) return false;
 
-                if (i >= 5 && i <=8) return false;
+                if (j >= 5 && j <= 8) return false;
             }
         }
         return true;
@@ -254,18 +255,17 @@ public class AssetSetter {
         gp.npc[mapNum][2] = new Dasco(gp);
         gp.npc[mapNum][2].worldX = gp.tileSize * 32;
         gp.npc[mapNum][2].worldY = gp.tileSize * 21;
-
-        gp.npc[mapNum][3] = new Emily(gp);
-        gp.npc[mapNum][3].worldX = gp.tileSize * 33;
+        
+        gp.npc[mapNum][3] = new MayorTadi(gp);
+        gp.npc[mapNum][3].worldX = gp.tileSize * 34;
         gp.npc[mapNum][3].worldY = gp.tileSize * 21;
 
-        gp.npc[mapNum][4] = new MayorTadi(gp);
-        gp.npc[mapNum][4].worldX = gp.tileSize * 34;
+        gp.npc[mapNum][4] = new Perry(gp);
+        gp.npc[mapNum][4].worldX = gp.tileSize * 35;
         gp.npc[mapNum][4].worldY = gp.tileSize * 21;
-
-        gp.npc[mapNum][5] = new Perry(gp);
-        gp.npc[mapNum][5].worldX = gp.tileSize * 35;
+        
+        gp.npc[mapNum][5] = new Emily(gp);
+        gp.npc[mapNum][5].worldX = gp.tileSize * 33;
         gp.npc[mapNum][5].worldY = gp.tileSize * 21;
-
     }
 }

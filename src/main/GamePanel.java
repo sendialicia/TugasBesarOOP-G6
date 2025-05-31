@@ -7,6 +7,7 @@ import farmTile.PlantedTile;
 import farmTile.TileLocation;
 import farmTile.TileObject;
 import farmTile.TileObjectManager;
+import items.Inventory;
 import items.fish.Fish;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,16 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
-
-import entity.Entity;
-import entity.Player;
-import farmTile.HarvestableTile;
-import farmTile.PlantedTile;
-import farmTile.TileLocation;
-import farmTile.TileObject;
-import farmTile.TileObjectManager;
-import items.Inventory;
-import items.fish.Fish;
 import object.SuperObject;
 import tile.TileManager;
 import time.GameClock;
@@ -109,6 +100,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int havePartnerState = 32;
     public final int yourPartnerState = 33;
     public final int acceptedState = 34;
+
+    public final int houseNPCInteractState = 40;
+    public final int storeInteractState = 41;
 
 
     public GamePanel(){
@@ -200,9 +194,9 @@ public class GamePanel extends JPanel implements Runnable{
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
                 gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
                 gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
-            gameState == binAmountState || gameState == interactNPCState ||
-                gameState == rejectedState || gameState == tooSoonState || gameState == havePartnerState || gameState == yourPartnerState ||
-                gameState == acceptedState ) { 
+                gameState == binAmountState || gameState == interactNPCState || gameState == rejectedState || gameState == tooSoonState || 
+                gameState == havePartnerState || gameState == yourPartnerState || gameState == acceptedState || 
+                gameState == houseNPCInteractState || gameState == storeInteractState) { 
                 
                 // TILE
                 tileM.draw(g2);

@@ -1,8 +1,5 @@
 package main;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import farmTile.HarvestableTile;
 import farmTile.PlantedTile;
 import farmTile.TileLocation;
@@ -523,7 +520,7 @@ public class KeyHandler implements KeyListener{
     
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
                 gp.ui.commandNum++;
-                if(gp.ui.commandNum > 2) {
+                if(gp.ui.commandNum > 1) {
                     gp.ui.commandNum = 0;
                 }
             }
@@ -629,7 +626,7 @@ public class KeyHandler implements KeyListener{
     
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
                 gp.ui.commandNum++;
-                if(gp.ui.commandNum > 2) {
+                if(gp.ui.commandNum > 1) {
                     gp.ui.commandNum = 0;
                 }
             }
@@ -665,6 +662,54 @@ public class KeyHandler implements KeyListener{
 
         else if (gp.gameState == gp.sleepingState){
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
+        }
+
+        else if (gp.gameState == gp.houseNPCInteractState) {
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 1;
+                }
+            }
+    
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 1) {
+                    gp.ui.commandNum = 0;
+                }
+            }
+
+             if(code == KeyEvent.VK_ENTER) {
+                if(gp.ui.commandNum == 0) {
+                    gp.npc[1][gp.ui.visitedNPC].teleport(gp.player.worldX + gp.tileSize, gp.player.worldY + 10);
+                    gp.gameState = gp.worldMapState;
+                } else if (gp.ui.commandNum == 1) gp.gameState = gp.worldMapState;
+            }
+        }
+
+        else if (gp.gameState == gp.storeInteractState) {
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 2;
+                }
+            }
+    
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 2) {
+                    gp.ui.commandNum = 0;
+                }
+            }
+
+             if(code == KeyEvent.VK_ENTER) {
+                if(gp.ui.commandNum == 0) {
+                } else if (gp.ui.commandNum == 1) {
+                    gp.npc[1][gp.ui.visitedNPC].teleport(gp.player.worldX + 2 * gp.tileSize, gp.player.worldY);
+                    gp.gameState = gp.worldMapState;
+                }
+                else gp.gameState = gp.worldMapState;
+            }
         }
 
         // DEBUG

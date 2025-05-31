@@ -50,6 +50,13 @@ public class SuperObject {
                         screenX, screenY, screenX + displayWidth, screenY + displayHeight, 
                         sx1, sy1, sx2, sy2,                                          
                         null);
+
+            g2.setColor(java.awt.Color.RED);
+            if (solidAreas != null) {
+                for (Rectangle rect : solidAreas) {
+                    g2.drawRect(screenX + rect.x, screenY + rect.y, rect.width, rect.height);
+                }
+            }
         }
     }
 

@@ -109,6 +109,11 @@ public abstract class NPC extends Entity {
         dialogues[3] = "Well, good luck on you.";
     }
 
+    public void teleport(int x, int y){
+        super.worldX = x;
+        super.worldY = y;
+    }
+
     protected abstract Items[] mapLovedItems(Map<String, Items> itemsMap);
     protected abstract Items[] mapLikedItems(Map<String, Items> itemsMap);
     protected abstract Items[] mapHatedItems(Map<String, Items> itemsMap);
