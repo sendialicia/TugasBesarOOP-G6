@@ -13,10 +13,21 @@ import object.OBJ_Bush;
 import object.OBJ_Clock;
 import object.OBJ_Fence;
 import object.OBJ_GreenTree1;
+import object.OBJ_GreenTree2;
 import object.OBJ_House;
+import object.OBJ_House1;
+import object.OBJ_House2;
+import object.OBJ_House3;
+import object.OBJ_House4;
+import object.OBJ_House5;
+import object.OBJ_PineTree;
 import object.OBJ_PinkTree;
+import object.OBJ_Playground;
 import object.OBJ_Pond;
 import object.OBJ_Sign;
+import object.OBJ_Store;
+import object.OBJ_WaterFountain;
+import object.OBJ_Waterfall;
 import object.OBJ_Well;
 import object.SuperObject;
 
@@ -148,9 +159,39 @@ public class AssetSetter {
             }
         } while (!checkFitInMap(pond) || checkOverlap(pond, gp.obj[mapNum], 2));
         gp.obj[mapNum][2] = pond;
-        mapNum++;
-        
-
+        mapNum = 1;
+        OBJ_Store store = new OBJ_Store(gp, 46 * gp.tileSize, 6 * gp.tileSize);
+        gp.obj[mapNum][0] = store;
+        OBJ_Playground playground = new OBJ_Playground(gp, 31 * gp.tileSize, 8 * gp.tileSize);
+        gp.obj[mapNum][1] = playground;
+        OBJ_WaterFountain waterFountain = new OBJ_WaterFountain(gp, 29 * gp.tileSize, 29 * gp.tileSize);
+        gp.obj[mapNum][2] = waterFountain;
+        OBJ_GreenTree2 gd1 = new OBJ_GreenTree2(gp, 24 * gp.tileSize, 21 * gp.tileSize);
+        gp.obj[mapNum][3] = gd1;
+        OBJ_House1 h1 = new OBJ_House1(gp, 13 * gp.tileSize, 28 * gp.tileSize);
+        gp.obj[mapNum][4] = h1;
+        OBJ_House2 h2 = new OBJ_House2(gp, 34 * gp.tileSize, 36 * gp.tileSize);
+        gp.obj[mapNum][5] = h2;
+        OBJ_House3 h3 = new OBJ_House3(gp, 35 * gp.tileSize, 47 * gp.tileSize);
+        gp.obj[mapNum][6] = h3;
+        OBJ_House4 h4 = new OBJ_House4(gp, 19 * gp.tileSize, 55 * gp.tileSize);
+        gp.obj[mapNum][7] = h4;
+        OBJ_House5 h5 = new OBJ_House5(gp, 54 * gp.tileSize, 47 * gp.tileSize);
+        gp.obj[mapNum][8] = h5;
+        OBJ_PinkTree pt9 = new OBJ_PinkTree(gp, 21 * gp.tileSize, 27 * gp.tileSize);
+        gp.obj[mapNum][9] = pt9;
+        OBJ_PineTree ptr1 = new OBJ_PineTree(gp, 28 * gp.tileSize, 43 * gp.tileSize);
+        gp.obj[mapNum][10] = ptr1;
+        OBJ_Bush bush16 = new OBJ_Bush(gp, 21 * gp.tileSize, 23 * gp.tileSize);
+        gp.obj[mapNum][11] = bush16;
+        OBJ_Bush bush17 = new OBJ_Bush(gp, 18 * gp.tileSize, 23 * gp.tileSize);
+        gp.obj[mapNum][12] = bush17;
+        OBJ_Bush bush18 = new OBJ_Bush(gp, 15 * gp.tileSize, 23 * gp.tileSize);
+        gp.obj[mapNum][13] = bush18;
+        OBJ_PinkTree pt11 = new OBJ_PinkTree(gp, 19 * gp.tileSize, 45 * gp.tileSize);
+        gp.obj[mapNum][14] = pt11;
+        OBJ_Waterfall waterfall = new OBJ_Waterfall(gp, 44 * gp.tileSize, 35 * gp.tileSize);
+        gp.obj[mapNum][15] = waterfall;
     }
 
     private boolean checkOverlap(SuperObject object, SuperObject[] others, int index) {

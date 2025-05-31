@@ -145,7 +145,7 @@ public class KeyHandler implements KeyListener{
             if(code == KeyEvent.VK_R) {
                 if (gp.currentMap == 0) {
                     gp.currentMap = 1;
-                    gp.maxWorldCol = 50;
+                    gp.maxWorldCol = 70;
                     gp.maxWorldRow = 75;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/world.txt", 1);
@@ -279,7 +279,7 @@ public class KeyHandler implements KeyListener{
             if(code == KeyEvent.VK_R) {
                 if (gp.currentMap == 0) {
                     gp.currentMap = 1;
-                    gp.maxWorldCol = 50;
+                    gp.maxWorldCol = 70;
                     gp.maxWorldRow = 75;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/world.txt", 1);
@@ -539,7 +539,7 @@ public class KeyHandler implements KeyListener{
                 if (gp.currentMap == 0) {
                     if(gp.ui.commandNum == 0) {
                         gp.currentMap = 1;
-                        gp.maxWorldCol = 50;
+                        gp.maxWorldCol = 70;
                         gp.maxWorldRow = 75;
                         gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                         gp.gameState = gp.worldMapState;
