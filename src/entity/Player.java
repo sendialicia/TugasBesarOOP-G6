@@ -86,8 +86,8 @@ public class Player extends Entity{
     }
 
     public void teleport(){
-        worldX =  gp.obj[gp.currentMap][0].worldX + 96;
-        worldY = gp.obj[gp.currentMap][0].worldY + 8 * 48;
+        worldX =  gp.obj[gp.currentMap][0].worldX + 38;
+        worldY = gp.obj[gp.currentMap][0].worldY + 7 * 48 - 8;
 
         direction = "down";
     }
@@ -154,6 +154,10 @@ public class Player extends Entity{
     public BufferedImage def_avatar_female = setup("/player/Female/mc_down_left");
 
     public void update() {
+        if (energy <= -20){
+            sleeping();
+            teleport();
+        }
         collisionOn = false;
 
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
@@ -385,6 +389,7 @@ public class Player extends Entity{
     }
 
     public void sleeping() {
+        gp.gameState = gp.sleepingState;
         synchronized (gameClock) {
             int currentHour = gameClock.getTime().getHour();
             int currentMinute = gameClock.getTime().getMinute();
@@ -458,46 +463,20 @@ public class Player extends Entity{
     }
 
     public void watching() {
-        System.out.println("You are now watching television.");
         this.energy -= 5;
         gameClock.advanceTime(15);
-        System.out.println("Time skips fifteen minutes.");
     }
 
-    // public void visiting() {
-    //     System.out.println("----" + "VISITING" + "----");
-    //     System.out.println("Where do you want to visit?");
-
-    //     worldMap.showLocations();
-
-    //     System.out.print("Enter your choice : ");
-
-    //     int choice;
-    //     try {
-    //         choice = Integer.parseInt(scanner.nextLine());
-    //     } catch (NumberFormatException e) {
-    //         System.out.println("Invalid number. Going back to farm...");
-            
-    //         return;
-    //     }
-
-    //     if (choice >= 1 && choice <= 9) worldMap.visitLocation(choice, this);
-    //     else {
-    //         System.out.println("Invalid number. Going back to farm...");
-    //         return;  
-    //     }
-
-    //     this.energy -= 10;
-    //     gameClock.advanceTime(15);
-    //     System.out.println("Time skips fifteen minutes.");
-    // }
+    public void visiting() {
+        this.energy -= 10;
+        gameClock.advanceTime(15);
+    }
 
     public void chatting(NPC npc) {
         npc.setHeartPoints(npc.getHeartPoints() + 10);
         this.energy -= 10;
         System.out.println("You chatted with " + npc.getName() + ". (+10 heart points)");
         gameClock.advanceTime(10);
-        System.out.println("Time skips ten minutes.");
     }
 
     // public void gifting(NPC npc) {

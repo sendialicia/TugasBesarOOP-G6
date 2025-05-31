@@ -20,7 +20,6 @@ src\object\*.java ^
 src\time\*.java ^
 src\farmTile\*.java
 
-
 if %ERRORLEVEL% neq 0 (
     echo Compilation failed.
     pause

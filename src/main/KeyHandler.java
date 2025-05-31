@@ -8,10 +8,9 @@ import items.ItemFactory;
 import items.Items;
 import items.crops.Crops;
 import items.seeds.Seeds;
-import tile.TileManager;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import tile.TileManager;
 
 
 public class KeyHandler implements KeyListener{
@@ -33,6 +32,7 @@ public class KeyHandler implements KeyListener{
     public void keyPressed(KeyEvent e) {
 
         int code = e.getKeyCode();
+        System.out.println(code);
 
         // TITLE STATE
         if(gp.gameState == gp.titleState) {
@@ -143,13 +143,13 @@ public class KeyHandler implements KeyListener{
             }
     
             if(code == KeyEvent.VK_R) {
-
                 if (gp.currentMap == 0) {
                     gp.currentMap = 1;
                     gp.maxWorldCol = 50;
                     gp.maxWorldRow = 75;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/world.txt", 1);
+                    gp.gameState = gp.worldMapState;
                 } else if (gp.currentMap == 1) {
                     gp.currentMap = 0;
                     gp.maxWorldCol = 51;
@@ -259,7 +259,6 @@ public class KeyHandler implements KeyListener{
 
          // WORLD MAP STATE
         else if(gp.gameState == gp.worldMapState) {
-
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 upPressed = true;
             }
@@ -277,13 +276,14 @@ public class KeyHandler implements KeyListener{
             }
     
             if(code == KeyEvent.VK_R) {
-
+                System.out.println(gp.gameState);
                 if (gp.currentMap == 0) {
                     gp.currentMap = 1;
                     gp.maxWorldCol = 50;
                     gp.maxWorldRow = 75;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/world.txt", 1);
+                    gp.gameState = gp.playState;
                 } else if (gp.currentMap == 1) {
                     gp.currentMap = 0;
                     gp.maxWorldCol = 51;
@@ -311,7 +311,8 @@ public class KeyHandler implements KeyListener{
         // PAUSE STATE
         else if(gp.gameState == gp.pauseState) {
             if(code == KeyEvent.VK_ESCAPE) {
-                gp.gameState = gp.playState;
+                if (gp.currentMap == 0) gp.gameState = gp.playState;
+                else gp.gameState = gp.worldMapState;
             }
         }
 
@@ -555,6 +556,10 @@ public class KeyHandler implements KeyListener{
                 }
                 e.consume();
             }
+        }
+
+        else if (gp.gameState == gp.sleepingState){
+            if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
         }
 
         // DEBUG

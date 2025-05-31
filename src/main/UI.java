@@ -1,5 +1,10 @@
 package main;
 
+import items.Items;
+import items.crops.Crops;
+import items.fish.Fish;
+import items.food.Food;
+import items.seeds.Seeds;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,15 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
-
-import items.Items;
-import items.crops.Crops;
-import items.fish.Fish;
-import items.food.Food;
-import items.seeds.Seeds;
 import time.GameClock;
 
 
@@ -100,7 +98,7 @@ public class UI {
         }
 
         // PLAY STATE
-        if(gp.gameState == gp.playState) {
+        if(gp.gameState == gp.playState || gp.gameState == gp.worldMapState) {
             drawGameTime();
             // Do playState stuff later
         } 
@@ -137,6 +135,8 @@ public class UI {
         if(gp.gameState == gp.moveMapState) {
             drawMoveMapScreen();
         }
+
+        if (gp.gameState == gp.sleepingState) drawSleepScreen();
     }
 
     public void drawTitleScreen() {
@@ -645,6 +645,18 @@ public class UI {
                 g2.drawString(">", textX - gp.tileSize, y);
             }
         }
+    }
+
+    public void drawSleepScreen() {
+        g2.setColor(new Color(0,0,0, 170));
+        g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
+        
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
+        String text = "SLEPT";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
     }
 
     public void drawWatchScreen() {

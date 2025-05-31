@@ -1,16 +1,5 @@
 package main;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JPanel;
-
 import entity.Entity;
 import entity.Player;
 import farmTile.HarvestableTile;
@@ -19,6 +8,15 @@ import farmTile.TileLocation;
 import farmTile.TileObject;
 import farmTile.TileObjectManager;
 import items.fish.Fish;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JPanel;
 import object.SuperObject;
 import tile.TileManager;
 import time.GameClock;
@@ -80,6 +78,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int moveMapState = 10;
 
     public final int worldMapState = 11;
+    
 
     public final int houseInteractState = 20;
     public final int fishingInteractState = 21;
@@ -88,6 +87,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int binInteractState = 24;
 
     public final int watchingState = 25;
+    public final int sleepingState = 26;
 
 
     public GamePanel(){
@@ -138,7 +138,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        if(gameState == playState) {
+        if(gameState == playState || gameState == worldMapState) {
 
             // PLAYER
             player.update();
@@ -180,7 +180,7 @@ public class GamePanel extends JPanel implements Runnable{
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
             gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-            gameState == binInteractState || gameState == watchingState || gameState == worldMapState) { 
+            gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == sleepingState) { 
                 
                 // TILE
                 tileM.draw(g2);
