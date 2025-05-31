@@ -135,6 +135,8 @@ public class Player extends Entity{
 
     public void addEnergy(int energy) { setEnergy(this.energy + energy); }
     public void subtractEnergy(int energy) { setEnergy(this.energy - energy); }
+
+    public void addGold(int gold) { setGold(this.gold + gold); }
     
     public String getName() { return name; }
     public String getGender() { 
@@ -254,10 +256,13 @@ public class Player extends Entity{
                 int targetHouseX =  gp.obj[0][0].worldX + tileSize;
                 int targetHouseY = gp.obj[0][0].worldY + 7 * tileSize;
 
-                int targetPondX1 =  gp.obj[0][2].worldX + tileSize;
+                int targetPondX1 =  gp.obj[0][2].worldX;
                 int targetPondX2 =  targetPondX1 + tileSize;
-                int targetPondY = gp.obj[0][2].worldY;
-
+                int targetPondX3 = targetPondX2 + tileSize;
+                int targetPondX4 = targetPondX3 + tileSize;
+                int targetPondY1 = gp.obj[0][2].worldY - tileSize;
+                int targetPondY2 = targetPondY1 + 4 * tileSize;
+                
                 int targetBinX1 = gp.obj[0][1].worldX;
                 int targetBinX2 = targetBinX1 + tileSize;
                 int targetBinX3 = targetBinX2 + tileSize;
@@ -269,8 +274,11 @@ public class Player extends Entity{
                     interactHouse();
 
                 if ((Math.abs(playerFeetX - (targetPondX1 + tileSize / 2)) <= toleranceX ||
-                    Math.abs(playerFeetX - (targetPondX2 + tileSize / 2)) <= toleranceX) && 
-                    Math.abs(playerFeetY - (targetPondY + tileSize / 2)) <= toleranceY && 
+                    Math.abs(playerFeetX - (targetPondX2 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetPondX3 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetPondX4 + tileSize / 2)) <= toleranceX) && 
+                    (Math.abs(playerFeetX - (targetPondY1 + tileSize / 2)) <= toleranceY ||
+                    Math.abs(playerFeetX - (targetPondY2 + tileSize / 2)) <= toleranceY) && 
                     keyH.enterPressed && direction.equals("down")) {
                     fishingLocation = "Pond";
                     interactFishing();
@@ -509,14 +517,9 @@ public class Player extends Entity{
     }
 
     public void eating(Items item) {
-        if (item != null && getItemQuantity(item) > 0) {
-            if (item instanceof Edible edibleItem) {
-                edibleItem.onEat(this);
-                gameClock.advanceTime(5);
-                System.out.println("Time skips five minutes.");
-                removeItemFromInventory(item, 1);
-            } else System.out.println("This item is not edible.");
-        } else System.out.println("You do not have this item in your inventory.");
+        gameClock.advanceTime(5);
+        Edible edible = (Edible) item;
+        edible.onEat(this);
     }
 
     public void sleeping() {
@@ -538,11 +541,14 @@ public class Player extends Entity{
         else if (energy > MAX_ENERGY / 10) energy = MAX_ENERGY;
     }
 
-    public void cooking() {}
+    public void cooking() {
+        this.energy -= 5;
+        gameClock.advanceTime(60);
+    }
 
     public void fishing() {
         gameClock.stopClock();
-        this.energy -= 5;
+        this.energy -= 10;
         gameClock.advanceTime(15);
     }
 
@@ -699,13 +705,4 @@ public class Player extends Entity{
     public void showPosition() { 
         System.out.println("You are at " + worldX + ", " + worldY); 
     }
-
-    // public void selling(OBJ_Bin shippingBin, boolean isAround) {
-    //     if (isAround){
-    //         shippingBin.interact(this);    
-    //     }
-    //     System.out.println("You must be near Shipping Bin to perform this action!");
-
-    
-    // }
 }

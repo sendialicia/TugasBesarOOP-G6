@@ -4,11 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import items.crops.Crops;
-import items.equipments.Equipments;
 import items.equipments.FishingRod;
-    import items.equipments.Hoe;
-    import items.equipments.Pickaxe;
-    import items.equipments.WateringCan;
+import items.equipments.Hoe;
+import items.equipments.Pickaxe;
+import items.equipments.WateringCan;
 import items.food.Food;
 import items.miscellaneous.Miscellaneous;
 import items.seeds.Seeds;

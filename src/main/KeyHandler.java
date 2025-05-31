@@ -1,12 +1,14 @@
 package main;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import farmTile.HarvestableTile;
 import farmTile.PlantedTile;
 import farmTile.TileLocation;
 import farmTile.TileObject;
+import items.Items;
 import items.crops.Crops;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import tile.TileManager;
 
 
@@ -168,6 +170,10 @@ public class KeyHandler implements KeyListener{
             
             if (code == KeyEvent.VK_I){
                 iPressed = true;
+            }
+
+            if (code == KeyEvent.VK_Q){
+                gp.gameState = gp.eatingState;
             }
 
             if(code == KeyEvent.VK_Z){
@@ -391,7 +397,6 @@ public class KeyHandler implements KeyListener{
         }
 
         else if(gp.gameState == gp.plantSeedState) {
-
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 if(gp.ui.slotInventoryRow != 0) {
                     gp.ui.slotInventoryRow--;
@@ -549,7 +554,11 @@ public class KeyHandler implements KeyListener{
 
              if(code == KeyEvent.VK_ENTER) {
                 if(gp.ui.commandNum == 0) {
-                    gp.gameState = gp.binShopState;
+                    if (!gp.shippingBinOff && gp.gameClock.getDate().getOriginDay() != gp.shippingBinDay){
+                        gp.gameState = gp.binShopState;
+                        gp.shippingBinDay = gp.gameClock.getDate().getOriginDay();
+                        gp.shippingBinOff = false;
+                    } else gp.gameState = gp.binFailed;
                 }
                 if(gp.ui.commandNum == 1) {
                     gp.gameState = gp.playState;
@@ -682,7 +691,7 @@ public class KeyHandler implements KeyListener{
             }
         }
 
-        else if (gp.gameState == gp.sleepingState){
+        else if (gp.gameState == gp.sleepingState || gp.gameState == gp.binFailed){
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) gp.gameState = gp.playState;
         }
 
@@ -821,7 +830,45 @@ public class KeyHandler implements KeyListener{
             }
         }
 
+        
+        else if (gp.gameState == gp.eatingState){
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                if(gp.ui.slotInventoryRow != 0) {
+                    gp.ui.slotInventoryRow--;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+                if(gp.ui.slotInventoryCol != 0) {
+                    gp.ui.slotInventoryCol--;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                if(gp.ui.slotInventoryRow < 3) {
+                    gp.ui.slotInventoryRow++;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+                if(gp.ui.slotInventoryCol < 3) {
+                    gp.ui.slotInventoryCol++;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_ENTER) {
+                gp.keyH.enterPressed = true;
+                if (gp.ui.edible != null) {
+                    gp.player.eating((Items) gp.ui.edible);
+                    gp.gameState = gp.playState;
+                    gp.keyH.enterPressed = false;
+                }
+            }
 
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.playState;
+            }
+        }
         // DEBUG
         if(code == KeyEvent.VK_F12) {
             if(checkDrawTime == false) {

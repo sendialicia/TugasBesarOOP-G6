@@ -2,6 +2,9 @@ package main;
 
 import items.Inventory;
 import items.ItemFactory;
+import farmTile.PlantedTile;
+import farmTile.TileLocation;
+import items.Edible;
 import items.Items;
 import items.crops.Crops;
 import items.fish.Fish;
@@ -18,9 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import javax.imageio.ImageIO;
-
-import farmTile.PlantedTile;
-import farmTile.TileLocation;
 import time.GameClock;
 
 
@@ -49,6 +49,7 @@ public class UI {
     public StringBuilder guessString = new StringBuilder();
     Items selectedItem = null;
     Seeds selectedSeed = null;
+    Edible edible = null;
     int sellAmount = 0;
     int buyAmount = 0;
     int tempWorldX, tempWorldY;
@@ -56,8 +57,6 @@ public class UI {
 
     public int visitedNPC = 0;
 
-    // double playTime;
-    // DecimalFormat dFormat = new DecimalFormat("#0.00");
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -163,6 +162,9 @@ public class UI {
         if (gp.gameState == gp.storeInteractState) drawStoreScreen();
         if (gp.gameState == gp.storeShopState) drawStoreShopScreen();
         if (gp.gameState == gp.storeAmountState) drawStoreAmountScreen();
+
+        if (gp.gameState == gp.binFailed) drawBinFailed();
+        if (gp.gameState == gp.eatingState) drawEatingScreen();
     }
 
     public void drawTitleScreen() {
@@ -860,14 +862,6 @@ public class UI {
         String title = "Inside Your House";
         int titleX = getXforCenteredText(title);
         g2.drawString(title, titleX, y + gp.tileSize);
-
-        // MENU OPTIONS
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
-        y += gp.tileSize;
-
-        String text = "WATCHING (NOT IMPLEMENTED YET)";
-        int textX = getXforCenteredText(text);
-        g2.drawString(text, textX, y + gp.tileSize);
     }
 
     public void drawFishingScreen(){
@@ -1680,6 +1674,146 @@ public class UI {
             }
         }
     }
+
+    public void drawBinFailed() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60F));
+        String text = "YOU ALREADY OPENED THE BIN";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+    }
+
+    public void drawEatingScreen() {
+        int x = gp.tileSize / 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.tileSize * 5;
+        int height = gp.tileSize * 5;
+        drawSubWindow(x, y, width, height);
+
+        // SLOT
+        final int slotXstart = x + 20;
+        final int slotYstart = y + 20;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+        int slotSize = gp.tileSize + 3;
+        Items[][] slotFilled = new Items[4][4];
+
+        for (Map.Entry<Items, Integer> entry : gp.player.getInventory().getItems().entrySet()) {
+            Items item = entry.getKey();
+
+            if (!(item instanceof Edible)) continue;
+
+            int col = (slotX - slotXstart) / slotSize;
+            int row = (slotY - slotYstart) / slotSize;
+
+            boolean found = false;
+            for (int colIndex = 0; colIndex < slotFilled.length; colIndex++) {
+                for (int rowIndex = 0; rowIndex < slotFilled[0].length; rowIndex++) {
+                    if (slotFilled[colIndex][rowIndex] != null && item != null &&
+                        slotFilled[colIndex][rowIndex].equals(item)) {
+                        col = colIndex;
+                        row = rowIndex;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+
+            if (!found && item != null) {
+                slotFilled[col][row] = item;
+                g2.drawImage(item.getItemImage(), slotX, slotY, null);
+
+                int quantity = gp.player.getInventory().getItemQuantity(item);
+                if (quantity > 1) {
+                    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
+                    g2.setColor(Color.WHITE);
+                    String quantityText = String.valueOf(quantity);
+
+                    FontMetrics fm = g2.getFontMetrics();
+                    int textWidth = fm.stringWidth(quantityText);
+
+                    g2.drawString(quantityText,
+                        slotX + slotSize - textWidth - 4,
+                        slotY + slotSize - 4);
+                }
+
+                slotX += slotSize;
+                if (slotX >= x + width - gp.tileSize) {
+                    slotX = slotXstart;
+                    slotY += slotSize;
+                }
+            }
+        }
+
+        // HANDLE EATING
+        if (gp.keyH.enterPressed) {
+            if (edible == null) {
+                if (slotInventoryCol >= 0 && slotInventoryCol < slotFilled.length &&
+                    slotInventoryRow >= 0 && slotInventoryRow < slotFilled[0].length) {
+
+                    Items selected = slotFilled[slotInventoryCol][slotInventoryRow];
+                    if (selected instanceof Edible) {
+                        edible = (Edible) selected;
+                        gp.player.removeItemFromInventory(selected, 1);
+                        if (gp.player.getInventory().getItemQuantity(selected) == 0) {
+                            slotFilled[slotInventoryCol][slotInventoryRow] = null;
+                        }
+                    }
+                }
+            }
+            gp.keyH.enterPressed = false;
+        }
+
+        // DRAW CURSOR
+        int cursorX = slotXstart + (slotSize * slotInventoryCol);
+        int cursorY = slotYstart + (slotSize * slotInventoryRow);
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+
+        g2.setColor(Color.yellow);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+
+        // DESCRIPTION WINDOW
+        int dFrameX = gp.screenWidth - (gp.tileSize) * 6;
+        int dFrameY = gp.tileSize / 2;
+        int dFrameWidth = (gp.tileSize - 3) * 6;
+        int dFrameHeight = gp.screenHeight / 2 + (gp.tileSize + 3) * 2;
+
+        drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
+        // ITEM DESCRIPTION
+        Items item = null;
+        if (slotInventoryCol >= 0 && slotInventoryCol < slotFilled.length &&
+            slotInventoryRow >= 0 && slotInventoryRow < slotFilled[0].length) {
+            item = slotFilled[slotInventoryCol][slotInventoryRow];
+        }
+
+        if (item != null) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+            int dX = dFrameX + 20;
+            int dY = dFrameY + 40;
+
+            g2.drawString(item.getName(), dX, dY);
+            dY += 40;
+
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+            g2.setColor(Color.white);
+            String description = item.getDescription() == null ? "No description" : item.getDescription();
+            for (String line : description.split("\n")) {
+                g2.drawString(line, dX, dY);
+                dY += 40;
+            }
+
+            if (item instanceof Edible) {
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+                g2.setColor(Color.red);
+                g2.drawString("Energy: " + ((Edible) item).getEnergy(), dX, dY);
+            }
+        }
+    }
+
 
     public void drawSubWindow(int x, int y, int width, int height) {
         
