@@ -18,7 +18,8 @@ src\items\seeds\*.java ^
 src\tile\*.java ^
 src\object\*.java ^
 src\time\*.java ^
-src\farmTile\*.java
+src\farmTile\*.java ^
+src\recipe\*.java 
 
 if %ERRORLEVEL% neq 0 (
     echo Compilation failed.
