@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import farmTile.HarvestableTile;
 import farmTile.PlantedTile;
 import farmTile.TileLocation;
@@ -10,14 +13,11 @@ import items.crops.Crops;
 import items.seeds.Seeds;
 import tile.TileManager;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 
 public class KeyHandler implements KeyListener{
 
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, minusPressed, plusPressed;
     
     // DEBUG
     boolean checkDrawTime = false;
@@ -330,28 +330,32 @@ public class KeyHandler implements KeyListener{
             }
 
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
-                if(gp.ui.slotRow != 0) {
-                    gp.ui.slotRow--;
+                if(gp.ui.slotInventoryRow != 0) {
+                    gp.ui.slotInventoryRow--;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
-                if(gp.ui.slotCol != 0) {
-                    gp.ui.slotCol--;
+                if(gp.ui.slotInventoryCol != 0) {
+                    gp.ui.slotInventoryCol--;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
-                if(gp.ui.slotRow < 6) {
-                    gp.ui.slotRow++;
+                if(gp.ui.slotInventoryRow < 6) {
+                    gp.ui.slotInventoryRow++;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
-                if(gp.ui.slotCol < 8) {
-                    gp.ui.slotCol++;
+                if(gp.ui.slotInventoryCol < 8) {
+                    gp.ui.slotInventoryCol++;
                     gp.playSE(5);
                 }
+            }
+
+            if(code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
             }
         }
 
@@ -488,31 +492,83 @@ public class KeyHandler implements KeyListener{
         }
         
         else if(gp.gameState == gp.binShopState) {
+
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
-                if(gp.ui.slotRow != 0) {
-                    gp.ui.slotRow--;
+                if(gp.ui.slotInventoryRow != 0) {
+                    gp.ui.slotInventoryRow--;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
-                if(gp.ui.slotCol != 0) {
-                    gp.ui.slotCol--;
+                if(gp.ui.slotInventoryCol != 0) {
+                    gp.ui.slotInventoryCol--;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
-                if(gp.ui.slotRow < 6) {
-                    gp.ui.slotRow++;
+                if(gp.ui.slotInventoryRow < 6) {
+                    gp.ui.slotInventoryRow++;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
-                if(gp.ui.slotCol < 8) {
-                    gp.ui.slotCol++;
+                if(gp.ui.slotInventoryCol < 8) {
+                    gp.ui.slotInventoryCol++;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+                gp.ui.sellAmount = 1;
+                if (gp.ui.selectedItem != null) gp.gameState = gp.binAmountState;
+            }
+
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.playState;
+                gp.ui.sellAmount = 0;
+            }
+        }
+
+        else if (gp.gameState == gp.binAmountState) {
+
+            boolean canSell = gp.ui.selectedItem != null && gp.ui.selectedItem.getSellPrice() != null;
+
+            if (canSell && (code == KeyEvent.VK_PLUS || code == KeyEvent.VK_EQUALS)) {
+                if(gp.ui.sellAmount < gp.player.getInventory().getItemQuantity(gp.ui.selectedItem)) {
+                    gp.ui.sellAmount++;
+                    gp.playSE(5);
+                }
+            }
+
+            if (canSell && (code == KeyEvent.VK_MINUS || code == KeyEvent.VK_UNDERSCORE)) {
+                if(gp.ui.sellAmount > 1) {
+                    gp.ui.sellAmount--;
+                    gp.playSE(5);
+                }
+            }
+
+            if (canSell && code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+                int currentQty = gp.player.getInventory().getItemQuantity(gp.ui.selectedItem);
+                if (gp.ui.sellAmount > 0 && gp.ui.sellAmount <= currentQty) {
+                    if ((gp.binShopInventory.count() < 16 || gp.binShopInventory.getItems().containsKey(gp.ui.selectedItem))) {
+                        gp.player.getInventory().removeItem(gp.ui.selectedItem, gp.ui.sellAmount);
+                        gp.binShopInventory.addItem(gp.ui.selectedItem, gp.ui.sellAmount);
+                    } 
+                    gp.ui.showMessage("Sold " + gp.ui.sellAmount + " " + gp.ui.selectedItem.getName() + "!");
+                    gp.ui.sellAmount = 1;
+                    gp.keyH.enterPressed = false;
+                    gp.gameState = gp.binShopState;
+                    gp.playSE(3);
+                } else {
+                    gp.ui.showMessage("Not enough items to sell!");
+                    gp.keyH.enterPressed = false;
+                }
+            }
+
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.binShopState;
+                gp.ui.sellAmount = 1;
             }
         }
 

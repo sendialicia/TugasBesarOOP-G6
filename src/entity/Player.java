@@ -81,7 +81,7 @@ public class Player extends Entity{
         direction = "down";
         energy = 100;
         gold = 10000;
-        inventory = new Inventory();
+        inventory = new Inventory(true);
         gender = "Female";
     }
 

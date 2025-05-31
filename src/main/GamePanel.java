@@ -18,6 +18,7 @@ import farmTile.PlantedTile;
 import farmTile.TileLocation;
 import farmTile.TileObject;
 import farmTile.TileObjectManager;
+import items.Inventory;
 import items.fish.Fish;
 import object.SuperObject;
 import tile.TileManager;
@@ -64,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Map<TileLocation, TileObject> tiles = new HashMap<>();
     public Fish fished = null;
     public Integer luckyNumber = null;
+    public Inventory binShopInventory = new Inventory(false);
 
     // GAME STATE
     public int gameState;
@@ -80,6 +82,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int moveMapState = 10;
 
     public final int worldMapState = 11;
+    
+    public final int binAmountState = 12;
 
     public final int houseInteractState = 20;
     public final int fishingInteractState = 21;
@@ -180,7 +184,8 @@ public class GamePanel extends JPanel implements Runnable{
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
             gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-            gameState == binInteractState || gameState == watchingState || gameState == worldMapState) { 
+            gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
+            gameState == binAmountState) { 
                 
                 // TILE
                 tileM.draw(g2);
