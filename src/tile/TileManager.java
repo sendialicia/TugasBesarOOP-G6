@@ -34,9 +34,9 @@ public class TileManager {
     public void getTileImage() {
 
         // MAP TILES
-        setup(101, "#101", false);
-        setup(102, "#102", false);
-        setup(103, "#103", false);
+        setup(101, "#101", true);
+        setup(102, "#102", true);
+        setup(103, "#103", true);
         setup(287, "#287", false);
         setup(293, "#293", false);
         setup(294, "#294", false);
@@ -246,7 +246,7 @@ public class TileManager {
 
                 if (numbers.length != gp.maxWorldCol) {
                     System.err.println("Invalid column count at row " + row + ": expected " + gp.maxWorldCol + ", got " + numbers.length);
-                    continue; // skip atau bisa juga throw error
+                    continue;
                 }
 
                 for (int col = 0; col < gp.maxWorldCol; col++) {

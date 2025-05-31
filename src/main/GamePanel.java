@@ -77,6 +77,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int viewAttributeState = 7;
     public final int viewInventoryState = 8;
     public final int binShopState = 9;
+    public final int moveMapState = 10;
+
+    public final int worldMapState = 11;
 
     public final int houseInteractState = 20;
     public final int fishingInteractState = 21;
@@ -172,10 +175,12 @@ public class GamePanel extends JPanel implements Runnable{
             ui.draw(g2);
         } else if (gameState == genderInputState) {
             ui.draw(g2);
+        } else if (gameState == moveMapState) {
+            ui.draw(g2);
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
             gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-            gameState == binInteractState || gameState == watchingState) { 
+            gameState == binInteractState || gameState == watchingState || gameState == worldMapState) { 
                 
                 // TILE
                 tileM.draw(g2);

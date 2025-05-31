@@ -133,6 +133,10 @@ public class UI {
         
         if (gp.gameState == gp.watchingState) drawWatchScreen();
         if (gp.gameState == gp.binShopState) drawBinShopScreen();
+
+        if(gp.gameState == gp.moveMapState) {
+            drawMoveMapScreen();
+        }
     }
 
     public void drawTitleScreen() {
@@ -791,6 +795,43 @@ public class UI {
 
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
     }
+
+    public void drawMoveMapScreen() {
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 6;
+
+        drawSubWindow(x, y, width, height);
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = "Move Map";
+        int titleX = getXforCenteredText(title);
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        // MENU OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        y += gp.tileSize * 2;
+
+        String[] options = {
+            "MOVE",
+            "EXIT"
+        };
+
+        for (int i = 0; i < options.length; i++) {
+            String text = options[i];
+            int textX = getXforCenteredText(text);
+            y += gp.tileSize;
+
+            g2.drawString(text, textX, y);
+            if (commandNum == i) {
+                g2.drawString(">", textX - gp.tileSize, y);
+            }
+        }
+    }   
 
     public void drawSubWindow(int x, int y, int width, int height) {
         

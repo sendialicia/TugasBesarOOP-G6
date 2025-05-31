@@ -204,6 +204,11 @@ public class Player extends Entity{
                 case "right": interactX += tileSize; break;
             }
             
+            int moveMapToWorldX1 =  25 * gp.tileSize;
+            int moveMapToWorldX2 =  26 * gp.tileSize;
+            int moveMapToWorldX3 = 27 * gp.tileSize;
+            int moveMapToWorldY =  6 * gp.tileSize;
+
             int targetHouseX =  gp.obj[gp.currentMap][0].worldX + tileSize;
             int targetHouseY = gp.obj[gp.currentMap][0].worldY + 7 * tileSize;
 
@@ -241,6 +246,13 @@ public class Player extends Entity{
                 Math.abs(playerFeetY - (targetBinY + tileSize / 2)) <= toleranceY && 
                 keyH.enterPressed && direction.equals("up")) {
                 interactBin();
+            }
+
+            if ((Math.abs(playerFeetX - (moveMapToWorldX1 + tileSize / 2)) <= toleranceX ||
+                Math.abs(playerFeetX - (moveMapToWorldX2 + tileSize / 2)) <= toleranceX ||
+                Math.abs(playerFeetX - (moveMapToWorldX3 + tileSize / 2)) <= toleranceX) && 
+                Math.abs(playerFeetY - (moveMapToWorldY + tileSize / 2)) <= toleranceY) {
+                interactMoveMap();
             }
 
             keyH.enterPressed = false;
@@ -300,6 +312,10 @@ public class Player extends Entity{
 
     public void interactBin(){
         gp.gameState = gp.binInteractState;
+    }
+
+    public void interactMoveMap() {
+        gp.gameState = gp.moveMapState;
     }
 
     public void draw(Graphics2D g2) {
