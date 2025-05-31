@@ -33,13 +33,13 @@ public class KeyHandler implements KeyListener{
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNum--;
                 if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 2;
+                    gp.ui.commandNum = 1;
                 }
             }
     
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
                 gp.ui.commandNum++;
-                if(gp.ui.commandNum > 2) {
+                if(gp.ui.commandNum > 1) {
                     gp.ui.commandNum = 0;
                 }
             }
@@ -50,9 +50,6 @@ public class KeyHandler implements KeyListener{
                     gp.gameState = gp.farmNameInputState;
                 }
                 if(gp.ui.commandNum == 1) {
-                    // Add later
-                }
-                if(gp.ui.commandNum == 2) {
                     System.exit(0);
                 }
             }
@@ -209,7 +206,6 @@ public class KeyHandler implements KeyListener{
                     Crops crop = harvestableTile.getCrops();
 
                     gp.player.addItemToInventory(crop, crop.getHarvestedAmount());
-                    gp.player.openInventory();
                     gp.tiles.remove(tileLocation);
                 }
             }
@@ -499,7 +495,6 @@ public class KeyHandler implements KeyListener{
                     } else {
                         gp.gameState = gp.fishingSucceeded;
                         gp.player.addItemToInventory(gp.fished, 1);
-                        gp.player.openInventory();
                         gp.fished = null;
                         gp.luckyNumber = null;
                         gp.ui.fishingWarning = null;
@@ -731,6 +726,7 @@ public class KeyHandler implements KeyListener{
 
              if(code == KeyEvent.VK_ENTER) {
                 if(gp.ui.commandNum == 0) {
+                    gp.gameState = gp.storeShopState;
                 } else if (gp.ui.commandNum == 1) {
                     gp.npc[1][gp.ui.visitedNPC].teleport(gp.player.worldX + 2 * gp.tileSize, gp.player.worldY);
                     gp.gameState = gp.worldMapState;
@@ -738,6 +734,93 @@ public class KeyHandler implements KeyListener{
                 else gp.gameState = gp.worldMapState;
             }
         }
+    
+        else if (gp.gameState == gp.storeShopState) {
+
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                upPressed = true;
+                if(gp.ui.slotInventoryRow != 0) {
+                    gp.ui.slotInventoryRow--;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+                if(gp.ui.slotInventoryCol != 0) {
+                    gp.ui.slotInventoryCol--;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                downPressed = true;
+                if(gp.ui.slotInventoryRow < 6) {
+                    gp.ui.slotInventoryRow++;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+                if(gp.ui.slotInventoryCol < 8) {
+                    gp.ui.slotInventoryCol++;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+                gp.ui.buyAmount = 1;
+                if (gp.ui.selectedItem != null) gp.gameState = gp.storeAmountState;
+            }
+
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.worldMapState;
+                gp.ui.buyAmount = 0;
+            }
+        }
+
+        else if (gp.gameState == gp.storeAmountState) {
+
+            boolean canBuy = gp.ui.selectedItem != null && gp.ui.selectedItem.getBuyPrice() != null;
+
+            if (canBuy && (code == KeyEvent.VK_PLUS || code == KeyEvent.VK_EQUALS)) {
+                if(gp.ui.buyAmount < gp.storeShopInventory.getItemQuantity(gp.ui.selectedItem)) {
+                    gp.ui.buyAmount++;
+                    gp.playSE(5);
+                }
+            }
+
+            if (canBuy && (code == KeyEvent.VK_MINUS || code == KeyEvent.VK_UNDERSCORE)) {
+                if(gp.ui.buyAmount > 1) {
+                    gp.ui.buyAmount--;
+                    gp.playSE(5);
+                }
+            }
+
+            if (canBuy && code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+                int currentQty = gp.storeShopInventory.getItemQuantity(gp.ui.selectedItem);
+                if (gp.ui.buyAmount > 0 && gp.ui.buyAmount <= currentQty && gp.player.getGold() >= gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice()) {
+                    gp.storeShopInventory.removeItem(gp.ui.selectedItem, gp.ui.buyAmount);
+                    gp.player.getInventory().addItem(gp.ui.selectedItem, gp.ui.buyAmount);
+                    gp.ui.showMessage("Buy " + gp.ui.buyAmount + " " + gp.ui.selectedItem.getName() + "!");
+                    gp.keyH.enterPressed = false;
+                    gp.player.removeGold(gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice());
+                    gp.ui.buyAmount = 1;
+                    gp.gameState = gp.storeShopState;
+                    gp.playSE(3);
+                } else if (gp.ui.buyAmount > 0 && gp.ui.buyAmount <= currentQty) {
+                    gp.ui.showMessage("Not enough gold!");
+                    gp.keyH.enterPressed = false;
+                } 
+                else {
+                    gp.ui.showMessage("Nothing to buy!");
+                    gp.keyH.enterPressed = false;
+                }
+            }
+
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.storeShopState;
+                gp.ui.buyAmount = 1;
+            }
+        }
+
 
         // DEBUG
         if(code == KeyEvent.VK_F12) {
@@ -746,8 +829,9 @@ public class KeyHandler implements KeyListener{
             } else if(checkDrawTime == true) {
                 checkDrawTime = false;
             }
-        }
-    }
+
+        }   
+    } 
 
     @Override
     public void keyReleased(KeyEvent e) {

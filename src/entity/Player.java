@@ -154,7 +154,9 @@ public class Player extends Entity{
     public void clearInventory() { inventory.clear(); }
     public boolean isInventoryEmpty() { return inventory.isEmpty(); }
     public Items getItemFromInventory(String itemName) { return inventory.get(itemName); }
-
+    public void removeGold(int amount) {
+        setGold(gold - amount);
+    }
     public void getPlayerImage() {
 
         if ("Female".equals(getGender())) this.useDefault = false; 
@@ -309,6 +311,24 @@ public class Player extends Entity{
                 int targetXShop2 = gp.obj[1][0].worldX + 6 * gp.tileSize;
                 int targetYShop = gp.obj[1][0].worldY + 9 * gp.tileSize;
 
+                int targetForestRiverX1 =  2092 + tileSize;
+                int targetForestRiverX2 =  targetForestRiverX1 + tileSize;
+                int targetForestRiverX3 =  targetForestRiverX2 + tileSize;
+                int targetForestRiverX4 =  targetForestRiverX3 + tileSize;
+                int targetForestRiverX5 =  targetForestRiverX4 + tileSize;
+                int targetForestRiverY = 1192;
+
+                int targetMountainLakeX = 2068 + tileSize;
+                int targetMountainLakeY =  2356 + tileSize;
+                int targetMountainLakeY2 = 2300 + tileSize;
+                int targetMountainLakeY3 = 2250 + tileSize;
+
+                int targetOceanX1 =  640 + tileSize;
+                int targetOceanX2 =  788 + tileSize;
+                int targetOceanX3 =  548 + tileSize;
+                int targetOceanY = 2776;
+
+
                 if ((Math.abs(playerFeetX - (targetXHouse1 + tileSize / 2)) <= toleranceX) &&
                     Math.abs(playerFeetY - (targetYHouse1 + tileSize / 2)) <= toleranceY &&
                     keyH.enterPressed && direction.equals("up")) {
@@ -344,6 +364,30 @@ public class Player extends Entity{
                     Math.abs(playerFeetY - (targetYShop + tileSize / 2)) <= toleranceY &&
                     keyH.enterPressed && direction.equals("up")) {
                     interactStore();
+                }
+
+                if ((Math.abs(playerFeetX - (targetForestRiverX1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetForestRiverX2 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetForestRiverX3 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetForestRiverX4 + tileSize / 2)) <= toleranceX) &&
+                    Math.abs(playerFeetY - (targetForestRiverY + tileSize / 2)) <= toleranceY &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactFishing();
+                }
+
+                if ((Math.abs(playerFeetX - (targetMountainLakeY + tileSize / 2)) <= toleranceY ||
+                    Math.abs(playerFeetX - (targetMountainLakeY2 + tileSize / 2)) <= toleranceY ||
+                    Math.abs(playerFeetX - (targetMountainLakeY3 + tileSize / 2)) <= toleranceY) &&
+                    Math.abs(playerFeetY - (targetMountainLakeX + tileSize / 2)) <= toleranceX &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactFishing();
+                }
+                if ((Math.abs(playerFeetX - (targetOceanX1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetOceanX2 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetOceanX3 + tileSize / 2)) <= toleranceX) &&
+                    Math.abs(playerFeetY - (targetOceanY + tileSize / 2)) <= toleranceY &&
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactFishing();
                 }
             }
             keyH.enterPressed = false;
@@ -644,39 +688,6 @@ public class Player extends Entity{
 
     public void moving(int x, int y) {
         setPosition(x, y);
-    }
-
-    public void openInventory() {
-        System.out.println("Your Inventory:");
-        System.out.println("+----------------------+--------+");
-        System.out.println("| Item                 | Amount |");
-        System.out.println("+----------------------+--------+");
-
-        List<Class<?>> subclasses = Arrays.asList(Equipments.class, Seeds.class, Crops.class, Fish.class, Food.class, Miscellaneous.class);
-
-        for (Class<?> subclass : subclasses) {
-            boolean hasSubclassItems = false;
-            for (Items item : inventory.getItems().keySet()) {
-                if (subclass.isInstance(item)) {
-                    hasSubclassItems = true;
-                    break;
-                }
-            }
-
-            if (!hasSubclassItems) continue;
-            String subclassName = subclass.getSimpleName();
-            System.out.printf("| %-20s |   --   |\n", subclassName + ":");
-            for (Items item : inventory.getItems().keySet()) {
-                if (subclass.isInstance(item)) {
-                    if (item instanceof Equipments) {
-                        System.out.printf("|   %-18s |   --   |\n", item.getName());
-                    } else {
-                        System.out.printf("|   %-18s | %6d |\n", item.getName(), getItemQuantity(item));
-                    }
-                }
-            }
-        }
-        System.out.println("+----------------------+--------+");
     }
 
     public void showTime(GameClock gameClock) {

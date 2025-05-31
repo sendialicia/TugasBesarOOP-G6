@@ -3,15 +3,31 @@ package items;
 import java.util.HashMap;
 import java.util.Map;
 
-    import items.equipments.FishingRod;
+import items.crops.Crops;
+import items.equipments.Equipments;
+import items.equipments.FishingRod;
     import items.equipments.Hoe;
     import items.equipments.Pickaxe;
     import items.equipments.WateringCan;
-    import items.seeds.Seeds;
+import items.food.Food;
+import items.miscellaneous.Miscellaneous;
+import items.seeds.Seeds;
 
     public class Inventory {
         private Map<Items, Integer> items;
 
+
+    public Inventory() {
+        items = new HashMap<>();
+        ItemFactory.loadAll();
+        for (Items item : ItemFactory.getAllItems().values()) {
+            if (item.getBuyPrice() != null && item.getBuyPrice() > 0 &&
+                (item instanceof Seeds || item instanceof Food || 
+                item instanceof Miscellaneous || item instanceof Crops)) {
+                items.put(item, 999);
+            }
+        }
+    }
     public Inventory(Boolean b) {
         items = new HashMap<>();
         ItemFactory.loadSeeds();

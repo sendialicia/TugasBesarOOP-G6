@@ -66,6 +66,8 @@ public class GamePanel extends JPanel implements Runnable{
     public Fish fished = null;
     public Integer luckyNumber = null;
     public Inventory binShopInventory = new Inventory(false);
+    public Inventory storeShopInventory = new Inventory();
+
     public Integer interactedNPC = null;
 
     // GAME STATE
@@ -80,7 +82,6 @@ public class GamePanel extends JPanel implements Runnable{
     public final int viewAttributeState = 7;
     public final int binShopState = 9;
     public final int plantSeedState = 10;
-    
     
     public final int binAmountState = 12;
 
@@ -105,6 +106,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int houseNPCInteractState = 40;
     public final int storeInteractState = 41;
+    public final int storeShopState = 42;
+    public final int storeAmountState = 43;
 
 
     public GamePanel(){
@@ -198,7 +201,8 @@ public class GamePanel extends JPanel implements Runnable{
                 gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
                 gameState == binAmountState || gameState == interactNPCState || gameState == rejectedState || gameState == tooSoonState || 
                 gameState == havePartnerState || gameState == yourPartnerState || gameState == acceptedState || 
-                gameState == houseNPCInteractState || gameState == storeInteractState || gameState == plantSeedState) { 
+                gameState == houseNPCInteractState || gameState == storeInteractState || gameState == plantSeedState || gameState == storeShopState ||
+                gameState == storeAmountState) { 
                 
                 // TILE
                 tileM.draw(g2);
