@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -24,14 +23,14 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
-    String dialogues[] = new String[20];
+    protected String dialogues[] = new String[20];
     int dialougeIndex = 0;
 
-    public boolean useDefault = true;
+    public boolean useDefault = false;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
-        this.useDefault = true;
+        this.useDefault = false;
     }
 
     public void setAction() {}
@@ -147,10 +146,6 @@ public class Entity {
                 drawHeight = gp.tileSize + 20;
             }
             g2.drawImage(image, screenX, screenY, drawWidth, drawHeight, null);
-
-            // FOR DEBUGGING
-            g2.setColor(Color.RED);
-            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
         }
     }
 

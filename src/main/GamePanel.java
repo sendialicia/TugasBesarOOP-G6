@@ -1,7 +1,7 @@
 package main;
 
-import entity.Entity;
 import entity.Player;
+import entity.npc.NPC;
 import farmTile.HarvestableTile;
 import farmTile.PlantedTile;
 import farmTile.TileLocation;
@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
     public SuperObject obj[][] = new SuperObject[maxMap][40];
-    public Entity npc[][] = new Entity[maxMap][10];
+    public NPC npc[][] = new NPC[maxMap][10];
     public TileObjectManager tileOM = new TileObjectManager(this);
     public Map<TileLocation, TileObject> tiles = new HashMap<>();
     public Fish fished = null;

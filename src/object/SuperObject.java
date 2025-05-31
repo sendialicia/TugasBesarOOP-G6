@@ -31,13 +31,6 @@ public class SuperObject {
             worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
 
             g2.drawImage(image, screenX, screenY, width, height, null);
-
-            g2.setColor(java.awt.Color.RED);
-            if (solidAreas != null) {
-                for (Rectangle rect : solidAreas) {
-                    g2.drawRect(screenX + rect.x, screenY + rect.y, rect.width, rect.height);
-                }
-            }
         }
     }
 

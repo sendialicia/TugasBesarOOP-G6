@@ -13,6 +13,7 @@ public class MayorTadi extends NPC {
 
     public MayorTadi(GamePanel gp) {
         super("Mayor Tadi", gp);
+        super.useDefault = true;
     }
 
     @Override

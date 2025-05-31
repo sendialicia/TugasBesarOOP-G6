@@ -13,7 +13,6 @@ import items.fish.Fish;
 import items.food.Food;
 import items.miscellaneous.Miscellaneous;
 import items.seeds.Seeds;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Random;
 import main.GamePanel;
 import main.KeyHandler;
+import tile.TileManager;
 import time.GameClock;
 import time.GameClockSnapshot;
 
@@ -77,6 +77,7 @@ public class Player extends Entity{
     public void setDefaultValues() {
         worldX = gp.tileSize * 26;
         worldY = gp.tileSize * 15;
+
         speed = 4;
         direction = "down";
         energy = 100;
@@ -85,16 +86,30 @@ public class Player extends Entity{
         gender = "Female";
     }
 
-    public void teleportHome(){
-        worldX =  gp.obj[gp.currentMap][0].worldX + 38;
-        worldY = gp.obj[gp.currentMap][0].worldY + 7 * 48 - 8;
+    public void teleportHome() {
+        gp.currentMap = 0;
+        gp.maxWorldCol = 51;
+        gp.maxWorldRow = 51;
 
+        gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
+        gp.tileM.loadMap("/maps/farm.txt", 0);
+        gp.gameState = gp.playState;
+
+        worldX = gp.obj[0][0].worldX + 38;
+        worldY = gp.obj[0][0].worldY + 7 * 48 - 8;
         direction = "down";
     }
 
+
     public void teleport(){
-        worldX =  26 * gp.tileSize;
-        worldY =  7 * gp.tileSize;
+        if (gp.currentMap == gp.playState){
+            worldX = gp.tileSize * 26;
+            worldY = gp.tileSize * 15;
+        }
+        else{
+            worldX =  26 * gp.tileSize;
+            worldY =  9 * gp.tileSize;
+        }
         direction = "down";
     }
 
@@ -289,6 +304,8 @@ public class Player extends Entity{
             if(gp.keyH.enterPressed == true) {
                 gp.gameState = gp.dialogueState;
                 gp.npc[gp.currentMap][i].speak();
+                gp.npc[gp.currentMap][i].addHeartPoints(10);
+                chatting();
             }
         }
     }
@@ -354,10 +371,6 @@ public class Player extends Entity{
         } else {
             g2.drawImage(image, screenX, screenY, gp.tileSize + 20, gp.tileSize + 20, null);
         }
-
-        // FOR DEBUGGING
-        g2.setColor(Color.RED);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 
     public void tilling() {
@@ -480,10 +493,8 @@ public class Player extends Entity{
         gameClock.advanceTime(15);
     }
 
-    public void chatting(NPC npc) {
-        npc.setHeartPoints(npc.getHeartPoints() + 10);
+    public void chatting() {
         this.energy -= 10;
-        System.out.println("You chatted with " + npc.getName() + ". (+10 heart points)");
         gameClock.advanceTime(10);
     }
 
