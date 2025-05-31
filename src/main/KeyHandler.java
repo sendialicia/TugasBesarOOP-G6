@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import farmTile.HarvestableTile;
 import farmTile.PlantedTile;
 import farmTile.TileLocation;
@@ -16,7 +19,7 @@ import tile.TileManager;
 public class KeyHandler implements KeyListener{
 
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, minusPressed, plusPressed, iPressed;
     
     // DEBUG
     boolean checkDrawTime = false;
@@ -30,10 +33,7 @@ public class KeyHandler implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         int code = e.getKeyCode();
-        System.out.println(code);
-
         // TITLE STATE
         if(gp.gameState == gp.titleState) {
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -144,6 +144,7 @@ public class KeyHandler implements KeyListener{
     
             if(code == KeyEvent.VK_R) {
                 if (gp.currentMap == 0) {
+                    gp.player.teleport();
                     gp.currentMap = 1;
                     gp.maxWorldCol = 70;
                     gp.maxWorldRow = 75;
@@ -151,12 +152,12 @@ public class KeyHandler implements KeyListener{
                     gp.tileM.loadMap("/maps/world.txt", 1);
                     gp.gameState = gp.worldMapState;
                 } else if (gp.currentMap == 1) {
+                    gp.player.teleport();
                     gp.currentMap = 0;
                     gp.maxWorldCol = 51;
                     gp.maxWorldRow = 51;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/farm.txt", 0);
-                    gp.player.teleport();
                 }
                 e.consume();
             }
@@ -172,6 +173,10 @@ public class KeyHandler implements KeyListener{
 
             if(code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
+            }
+            
+            if (code == KeyEvent.VK_I){
+                iPressed = true;
             }
 
             if(code == KeyEvent.VK_Z){
@@ -215,6 +220,7 @@ public class KeyHandler implements KeyListener{
                     Crops crop = harvestableTile.getCrops();
 
                     gp.player.addItemToInventory(crop, crop.getHarvestedAmount());
+                    gp.player.openInventory();
                     gp.tiles.remove(tileLocation);
                 }
             }
@@ -278,6 +284,7 @@ public class KeyHandler implements KeyListener{
     
             if(code == KeyEvent.VK_R) {
                 if (gp.currentMap == 0) {
+                    gp.player.teleport();
                     gp.currentMap = 1;
                     gp.maxWorldCol = 70;
                     gp.maxWorldRow = 75;
@@ -285,6 +292,7 @@ public class KeyHandler implements KeyListener{
                     gp.tileM.loadMap("/maps/world.txt", 1);
                     gp.gameState = gp.worldMapState;  
                 } else if (gp.currentMap == 1) {
+                    gp.player.teleport();
                     gp.currentMap = 0;
                     gp.maxWorldCol = 51;
                     gp.maxWorldRow = 51;
@@ -292,7 +300,6 @@ public class KeyHandler implements KeyListener{
                     gp.tileM.loadMap("/maps/farm.txt", 0);
                     gp.gameState = gp.playState;
                 }
-                gp.player.teleport();
                 e.consume();
             }
 
@@ -307,6 +314,10 @@ public class KeyHandler implements KeyListener{
 
             if(code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
+            }
+
+            if (code == KeyEvent.VK_I){
+                iPressed = true;
             }
         }
 
@@ -332,28 +343,32 @@ public class KeyHandler implements KeyListener{
             }
 
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
-                if(gp.ui.slotRow != 0) {
-                    gp.ui.slotRow--;
+                if(gp.ui.slotInventoryRow != 0) {
+                    gp.ui.slotInventoryRow--;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
-                if(gp.ui.slotCol != 0) {
-                    gp.ui.slotCol--;
+                if(gp.ui.slotInventoryCol != 0) {
+                    gp.ui.slotInventoryCol--;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
-                if(gp.ui.slotRow < 6) {
-                    gp.ui.slotRow++;
+                if(gp.ui.slotInventoryRow < 6) {
+                    gp.ui.slotInventoryRow++;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
-                if(gp.ui.slotCol < 8) {
-                    gp.ui.slotCol++;
+                if(gp.ui.slotInventoryCol < 8) {
+                    gp.ui.slotInventoryCol++;
                     gp.playSE(5);
                 }
+            }
+
+            if(code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
             }
         }
 
@@ -389,10 +404,43 @@ public class KeyHandler implements KeyListener{
                 }
             }
         }
+
+        else if(gp.gameState == gp.interactNPCState) {
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) gp.ui.commandNum = 3;
+            }
+    
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 3) gp.ui.commandNum = 0;
+            }
+
+            if(code == KeyEvent.VK_ENTER) {
+                if(gp.ui.commandNum == 0) {
+                }
+                if(gp.ui.commandNum == 1) {
+                    gp.player.proposing();
+                }
+                if(gp.ui.commandNum == 2) {
+                    gp.player.marry();
+                }
+                if(gp.ui.commandNum == 3) {
+                    gp.gameState = gp.worldMapState;
+                }
+            }
+        }
        
         else if (gp.gameState == gp.watchingState){
             if (code == KeyEvent.VK_ESCAPE){
                 gp.gameState = gp.playState;
+            }
+        }
+
+        else if (gp.gameState == gp.watchingState || gp.gameState == gp.rejectedState || gp.gameState == gp.tooSoonState || 
+                gp.gameState == gp.havePartnerState || gp.gameState == gp.yourPartnerState || gp.gameState == gp.acceptedState) {
+            if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
+                gp.gameState = gp.worldMapState;
             }
         }
 
@@ -491,31 +539,83 @@ public class KeyHandler implements KeyListener{
         }
         
         else if(gp.gameState == gp.binShopState) {
+
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
-                if(gp.ui.slotRow != 0) {
-                    gp.ui.slotRow--;
+                if(gp.ui.slotInventoryRow != 0) {
+                    gp.ui.slotInventoryRow--;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
-                if(gp.ui.slotCol != 0) {
-                    gp.ui.slotCol--;
+                if(gp.ui.slotInventoryCol != 0) {
+                    gp.ui.slotInventoryCol--;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
-                if(gp.ui.slotRow < 6) {
-                    gp.ui.slotRow++;
+                if(gp.ui.slotInventoryRow < 6) {
+                    gp.ui.slotInventoryRow++;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
-                if(gp.ui.slotCol < 8) {
-                    gp.ui.slotCol++;
+                if(gp.ui.slotInventoryCol < 8) {
+                    gp.ui.slotInventoryCol++;
                     gp.playSE(5);
                 }
             }
             if(code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+                gp.ui.sellAmount = 1;
+                if (gp.ui.selectedItem != null) gp.gameState = gp.binAmountState;
+            }
+
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.playState;
+                gp.ui.sellAmount = 0;
+            }
+        }
+
+        else if (gp.gameState == gp.binAmountState) {
+
+            boolean canSell = gp.ui.selectedItem != null && gp.ui.selectedItem.getSellPrice() != null;
+
+            if (canSell && (code == KeyEvent.VK_PLUS || code == KeyEvent.VK_EQUALS)) {
+                if(gp.ui.sellAmount < gp.player.getInventory().getItemQuantity(gp.ui.selectedItem)) {
+                    gp.ui.sellAmount++;
+                    gp.playSE(5);
+                }
+            }
+
+            if (canSell && (code == KeyEvent.VK_MINUS || code == KeyEvent.VK_UNDERSCORE)) {
+                if(gp.ui.sellAmount > 1) {
+                    gp.ui.sellAmount--;
+                    gp.playSE(5);
+                }
+            }
+
+            if (canSell && code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+                int currentQty = gp.player.getInventory().getItemQuantity(gp.ui.selectedItem);
+                if (gp.ui.sellAmount > 0 && gp.ui.sellAmount <= currentQty) {
+                    if ((gp.binShopInventory.count() < 16 || gp.binShopInventory.getItems().containsKey(gp.ui.selectedItem))) {
+                        gp.player.getInventory().removeItem(gp.ui.selectedItem, gp.ui.sellAmount);
+                        gp.binShopInventory.addItem(gp.ui.selectedItem, gp.ui.sellAmount);
+                    } 
+                    gp.ui.showMessage("Sold " + gp.ui.sellAmount + " " + gp.ui.selectedItem.getName() + "!");
+                    gp.ui.sellAmount = 1;
+                    gp.keyH.enterPressed = false;
+                    gp.gameState = gp.binShopState;
+                    gp.playSE(3);
+                } else {
+                    gp.ui.showMessage("Not enough items to sell!");
+                    gp.keyH.enterPressed = false;
+                }
+            }
+
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.binShopState;
+                gp.ui.sellAmount = 1;
             }
         }
 
@@ -538,6 +638,7 @@ public class KeyHandler implements KeyListener{
 
                 if (gp.currentMap == 0) {
                     if(gp.ui.commandNum == 0) {
+                        gp.player.teleport();
                         gp.currentMap = 1;
                         gp.maxWorldCol = 70;
                         gp.maxWorldRow = 75;
@@ -548,6 +649,7 @@ public class KeyHandler implements KeyListener{
                     }
                 } else if (gp.currentMap == 1) {
                     if (gp.ui.commandNum == 0) {
+                        gp.player.teleport();
                         gp.currentMap = 0;
                         gp.maxWorldCol = 51;
                         gp.maxWorldRow = 51;
@@ -557,7 +659,6 @@ public class KeyHandler implements KeyListener{
                         gp.gameState = gp.worldMapState;
                     }
                 }
-                gp.player.teleport();
                 e.consume();
             }
         }

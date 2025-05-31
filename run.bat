@@ -1,4 +1,4 @@
-@echo off
+@echo off   
 echo Compiling Java files...
 
 REM Define classpath (Gson JAR and res folder)

@@ -60,9 +60,11 @@ public class GameClock implements Runnable {
         return currentTotalMinutes - snapshotTotalMinutes;
     }
 
-    private int getTotalMinutesSinceOrigin(GameDate date, GameTime time) {
-        return (date.getSeason() * 10 + date.getOriginDay()) * 24 * 60 + time.getHour() * 60 + time.getMinute();
+    public int getTotalMinutesSinceOrigin(GameDate date, GameTime time) {
+        int dayIndex = date.getDay() - 1;
+        return ((dayIndex + date.getSeason() * 10) * 1440) + (time.getHour() * 60 + time.getMinute());
     }
+
 
     public synchronized String getFormattedTime() { return time.toString(); }
     public synchronized String getFormattedDate() { return date.toString(); }

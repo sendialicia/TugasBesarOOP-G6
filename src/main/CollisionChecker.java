@@ -120,7 +120,7 @@ public class CollisionChecker {
             entity.solidArea.height
         );
 
-        for (int i = 0; i < target[1].length; i++) {
+        for (int i = 0; i < target[gp.currentMap].length; i++) {
             if (target[gp.currentMap][i] != null) {
                 Rectangle targetArea = new Rectangle(
                     target[gp.currentMap][i].worldX + target[gp.currentMap][i].solidArea.x,

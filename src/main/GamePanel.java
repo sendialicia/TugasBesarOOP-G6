@@ -17,6 +17,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
+
+import entity.Entity;
+import entity.Player;
+import farmTile.HarvestableTile;
+import farmTile.PlantedTile;
+import farmTile.TileLocation;
+import farmTile.TileObject;
+import farmTile.TileObjectManager;
+import items.Inventory;
+import items.fish.Fish;
 import object.SuperObject;
 import tile.TileManager;
 import time.GameClock;
@@ -62,6 +72,8 @@ public class GamePanel extends JPanel implements Runnable{
     public Map<TileLocation, TileObject> tiles = new HashMap<>();
     public Fish fished = null;
     public Integer luckyNumber = null;
+    public Inventory binShopInventory = new Inventory(false);
+    public Integer interactedNPC = null;
 
     // GAME STATE
     public int gameState;
@@ -75,6 +87,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int viewAttributeState = 7;
     public final int viewInventoryState = 8;
     public final int binShopState = 9;
+    
+    
+    public final int binAmountState = 12;
 
     public final int houseInteractState = 20;
     public final int fishingInteractState = 21;
@@ -87,6 +102,13 @@ public class GamePanel extends JPanel implements Runnable{
     public final int worldMapState = 26;
     public final int sleepingState = 27;
     public final int moveMapState = 28;
+
+    public final int interactNPCState = 29;
+    public final int rejectedState = 30;
+    public final int tooSoonState = 31;
+    public final int havePartnerState = 32;
+    public final int yourPartnerState = 33;
+    public final int acceptedState = 34;
 
 
     public GamePanel(){
@@ -176,8 +198,11 @@ public class GamePanel extends JPanel implements Runnable{
             ui.draw(g2);
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
-            gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-            gameState == binInteractState || gameState == watchingState || gameState == worldMapState) { 
+                gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
+                gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
+            gameState == binAmountState || gameState == interactNPCState ||
+                gameState == rejectedState || gameState == tooSoonState || gameState == havePartnerState || gameState == yourPartnerState ||
+                gameState == acceptedState ) { 
                 
                 // TILE
                 tileM.draw(g2);

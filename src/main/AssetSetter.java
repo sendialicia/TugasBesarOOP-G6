@@ -235,7 +235,7 @@ public class AssetSetter {
                 if (gp.tileM.mapTileNum[gp.currentMap][i][j] != 293 && gp.tileM.mapTileNum[gp.currentMap][i][j] != 294 &&
                     gp.tileM.mapTileNum[gp.currentMap][i][j] != 370 && gp.tileM.mapTileNum[gp.currentMap][i][j] != 375 ) return false;
 
-                if (i >= 5 && i <=7) return false;
+                if (i >= 5 && i <=8) return false;
             }
         }
         return true;
@@ -244,27 +244,27 @@ public class AssetSetter {
     public void setNPC() {
         int mapNum = 1;
         gp.npc[mapNum][0] = new Abigail(gp);
-        gp.npc[mapNum][0].worldX = gp.tileSize * 21;
+        gp.npc[mapNum][0].worldX = gp.tileSize * 30;
         gp.npc[mapNum][0].worldY = gp.tileSize * 21;
 
         gp.npc[mapNum][1] = new Caroline(gp);
-        gp.npc[mapNum][1].worldX = gp.tileSize * 22;
+        gp.npc[mapNum][1].worldX = gp.tileSize * 31;
         gp.npc[mapNum][1].worldY = gp.tileSize * 21;
 
         gp.npc[mapNum][2] = new Dasco(gp);
-        gp.npc[mapNum][2].worldX = gp.tileSize * 23;
+        gp.npc[mapNum][2].worldX = gp.tileSize * 32;
         gp.npc[mapNum][2].worldY = gp.tileSize * 21;
 
         gp.npc[mapNum][3] = new Emily(gp);
-        gp.npc[mapNum][3].worldX = gp.tileSize * 24;
+        gp.npc[mapNum][3].worldX = gp.tileSize * 33;
         gp.npc[mapNum][3].worldY = gp.tileSize * 21;
 
         gp.npc[mapNum][4] = new MayorTadi(gp);
-        gp.npc[mapNum][4].worldX = gp.tileSize * 25;
+        gp.npc[mapNum][4].worldX = gp.tileSize * 34;
         gp.npc[mapNum][4].worldY = gp.tileSize * 21;
 
         gp.npc[mapNum][5] = new Perry(gp);
-        gp.npc[mapNum][5].worldX = gp.tileSize * 26;
+        gp.npc[mapNum][5].worldX = gp.tileSize * 35;
         gp.npc[mapNum][5].worldY = gp.tileSize * 21;
 
     }

@@ -22,8 +22,6 @@ public abstract class NPC extends Entity {
     private static final int MIN_HEART_POINTS = 0;
     private static final int MAX_HEART_POINTS = 150;
 
-    private GameClockSnapshot gameClockSnapshot = new GameClockSnapshot(GameClock.getInstance());
-
     public NPC(String name, GamePanel gp) {
         super(gp);
         this.itemsMap = new HashMap<>();
@@ -33,6 +31,8 @@ public abstract class NPC extends Entity {
         this.lovedItems = mapLovedItems(itemsMap);
         this.likedItems = mapLikedItems(itemsMap);
         this.hatedItems = mapHatedItems(itemsMap);
+
+        GameClockSnapshot gameClockSnapshot = new GameClockSnapshot(GameClock.getInstance());
         this.changeLog.put(relationshipStatus, gameClockSnapshot);
 
         direction = "down";
@@ -53,7 +53,9 @@ public abstract class NPC extends Entity {
     public void setName(String name) { this.name = name; }
     public void setRelationshipStatus(String status) { 
         this.relationshipStatus = status;
+        GameClockSnapshot gameClockSnapshot = new GameClockSnapshot(GameClock.getInstance());
         changeLog.put(status, gameClockSnapshot);
+        System.out.println(gameClockSnapshot.toString());
     }
 
     public void setHeartPoints(int points) {
@@ -110,4 +112,20 @@ public abstract class NPC extends Entity {
     protected abstract Items[] mapLovedItems(Map<String, Items> itemsMap);
     protected abstract Items[] mapLikedItems(Map<String, Items> itemsMap);
     protected abstract Items[] mapHatedItems(Map<String, Items> itemsMap);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NPC npc = (NPC) o;
+
+        return name != null ? name.equals(npc.name) : npc.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
+
 }

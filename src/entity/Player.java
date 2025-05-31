@@ -82,7 +82,7 @@ public class Player extends Entity{
         direction = "down";
         energy = 100;
         gold = 10000;
-        inventory = new Inventory();
+        inventory = new Inventory(true);
         gender = "Female";
     }
 
@@ -103,12 +103,12 @@ public class Player extends Entity{
 
     public void teleport(){
         if (gp.currentMap == gp.playState){
-            worldX = gp.tileSize * 26;
-            worldY = gp.tileSize * 15;
+            worldX = gp.tileSize * 31;
+            worldY = gp.tileSize * 21;
         }
         else{
             worldX =  26 * gp.tileSize;
-            worldY =  9 * gp.tileSize;
+            worldY =  15 * gp.tileSize;
         }
         direction = "down";
     }
@@ -196,7 +196,7 @@ public class Player extends Entity{
 
             // CHECK NPC COLLISION
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-            interactNPC(npcIndex);
+            chatNPC(npcIndex);
 
             if (!collisionOn && !keyH.enterPressed) {
                 switch (direction) {
@@ -223,7 +223,7 @@ public class Player extends Entity{
 
         if (keyH.enterPressed) {
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-            interactNPC(npcIndex);
+            chatNPC(npcIndex);
 
             int tileSize = 48;
 
@@ -292,6 +292,15 @@ public class Player extends Entity{
 
             keyH.enterPressed = false;
         }
+
+        else if (keyH.iPressed){
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            if (npcIndex != 999){
+                gp.interactedNPC = npcIndex;
+                gp.gameState = gp.interactNPCState;
+            }
+            keyH.iPressed = false;
+        }
     }
 
 
@@ -299,7 +308,7 @@ public class Player extends Entity{
         if(i != 999) {}
     }
 
-    public void interactNPC(int i) {
+    public void chatNPC(int i) {
         if(i != 999) {
             if(gp.keyH.enterPressed == true) {
                 gp.gameState = gp.dialogueState;
@@ -436,31 +445,40 @@ public class Player extends Entity{
         gameClock.advanceTime(15);
     }
 
-    public void proposing(NPC npc) {
-        if (npc.getHeartPoints() < 150){
-            System.out.println("You are rejected. You need to increase your heart points.");
-            this.energy -= 20;
-        } else {
-            System.out.println("You are now engaged to " + npc.getName() + ".");
-            this.partner = npc;
-            this.partner.setRelationshipStatus("Fiance");
-            this.energy -= 10;
+    public void proposing() {
+        if (partner == null){
+            if (gp.npc[gp.currentMap][gp.interactedNPC].getHeartPoints() < 150){
+                gp.gameState = gp.rejectedState;
+                energy -= 20;
+            }
+            else {
+                partner = gp.npc[gp.currentMap][gp.interactedNPC];
+                partner.setRelationshipStatus("Fiance");
+                energy -= 10;
+                gp.gameState = gp.acceptedState;
+            }
+            gameClock.advanceTime(60);
         }
-        gameClock.advanceTime(60);
-        System.out.println("Time skips one hour.");
+        else if (partner.equals(gp.npc[gp.currentMap][gp.interactedNPC])) gp.gameState = gp.yourPartnerState;
+        else gp.gameState = gp.havePartnerState;
     }
 
-    public void marry(NPC partner) {
-        if (partner.getRelationshipStatus().equals("Married")) System.out.println("You are already married to " + partner.getName() + ".");
+    public void marry() {
+        if (partner == null) gp.gameState = gp.rejectedState;
+        else if (!partner.equals(gp.npc[gp.currentMap][gp.interactedNPC])) gp.gameState = gp.havePartnerState;
+        else if (partner.getRelationshipStatus().equals("Married")) gp.gameState = gp.yourPartnerState;
         else {
             GameClockSnapshot lastProposalTime = partner.getChangeLog().get("Fiance");
+            System.out.println("Minutes since proposal: " + gameClock.getMinutesSince(lastProposalTime));
+            System.out.println("Proposal snapshot: " + lastProposalTime);
+            System.out.println("Current time: " + gameClock.getTime());
+
             if (lastProposalTime != null) {
-                if (gameClock.getMinutesSince(lastProposalTime) < 1440) System.out.println("You cannot be married so soon.");
+                if (gameClock.getMinutesSince(lastProposalTime) < 1440) gp.gameState = gp.tooSoonState;
                 else {
                     partner.setRelationshipStatus("Spouse");
-                    System.out.println("You are now married to " + partner.getName() + ".");
-                    partner.setRelationshipStatus("Spouse");
                     this.energy -= 80;
+                    gp.gameState = gp.acceptedState;
 
                     synchronized (gameClock) {
                         int currentHour = gameClock.getTime().getHour();
@@ -477,9 +495,8 @@ public class Player extends Entity{
                         gameClock.advanceTime(minutesToAdvance);
                     }
 
-                    System.out.println("Time skips to 22:00.");
                 }
-            } else System.out.println("You must make this NPC a fiance first!");
+            }
         }
     }
 
