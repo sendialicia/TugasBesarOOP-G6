@@ -137,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        if(gameState == playState) {
+        if(gameState == playState || gameState == worldMapState) {
 
             // PLAYER
             player.update();
@@ -177,7 +177,7 @@ public class GamePanel extends JPanel implements Runnable{
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
             gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-            gameState == binInteractState || gameState == watchingState) { 
+            gameState == binInteractState || gameState == watchingState || gameState == worldMapState) { 
                 
                 // TILE
                 tileM.draw(g2);

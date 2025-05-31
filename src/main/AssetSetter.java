@@ -30,48 +30,6 @@ public class AssetSetter {
         OBJ_Pond pond = new OBJ_Pond(gp, 0, 0);
 
         final int MAX_ATTEMPTS = 1000000;
-        int attempt;
-
-        attempt = 0;
-        do {
-            int houseX = random.nextInt(gp.maxWorldCol);
-            int houseY = random.nextInt(gp.maxWorldRow);
-
-            house.worldX = houseX * gp.tileSize;
-            house.worldY = houseY * gp.tileSize;
-
-            int binX = houseX + 7;
-            int binY = houseY + 3 + random.nextInt(3);
-
-            bin.worldX = binX * gp.tileSize;
-            bin.worldY = binY * gp.tileSize;
-
-            attempt++;
-            if (attempt > MAX_ATTEMPTS) {
-                System.out.println("Failed to place house after " + MAX_ATTEMPTS + " attempts.");
-                return;
-            }
-        } while (!checkFitInMap(house) || !checkFitInMap(bin));
-        gp.obj[mapNum][0] = house;
-        gp.obj[mapNum][1] = bin;
-
-        // Place pond (no overlap with house/bin)
-        System.out.println("Placing pond...");
-        attempt = 0;
-        do {
-            int pondX = random.nextInt(gp.maxWorldCol);
-            int pondY = random.nextInt(gp.maxWorldRow);
-
-            pond.worldX = pondX * gp.tileSize;
-            pond.worldY = pondY * gp.tileSize;
-
-            attempt++;
-            if (attempt > MAX_ATTEMPTS) {
-                System.out.println("Failed to place pond after " + MAX_ATTEMPTS + " attempts.");
-                return;
-            }
-        } while (!checkFitInMap(pond) || checkOverlap(pond, house) || checkOverlap(pond, bin));
-        gp.obj[mapNum][2] = pond;
         OBJ_PinkTree pt1 = new OBJ_PinkTree(gp, 11 * gp.tileSize, 17 * gp.tileSize);
         gp.obj[mapNum][30] = pt1;
         OBJ_Well well = new OBJ_Well(gp, 12 * gp.tileSize, 32 * gp.tileSize);
@@ -144,25 +102,77 @@ public class AssetSetter {
         gp.obj[mapNum][28] = pt7;
         OBJ_GreenTree1 gt5 = new OBJ_GreenTree1(gp, 42 * gp.tileSize, 22 * gp.tileSize);
         gp.obj[mapNum][29] = gt5;
+
+        int attempt;
+        attempt = 0;
+        do {
+            int houseX = random.nextInt(gp.maxWorldCol);
+            int houseY = random.nextInt(gp.maxWorldRow);
+
+            house.worldX = houseX * gp.tileSize;
+            house.worldY = houseY * gp.tileSize;
+
+            int binX = houseX + 7;
+            int binY = houseY + 3 + random.nextInt(3);
+
+            bin.worldX = binX * gp.tileSize;
+            bin.worldY = binY * gp.tileSize;
+
+            attempt++;
+            if (attempt > MAX_ATTEMPTS) {
+                System.out.println("Failed to place house after " + MAX_ATTEMPTS + " attempts.");
+                return;
+            }
+        } while (!checkFitInMap(house) || !checkFitInMap(bin) || checkOverlap(house, gp.obj[mapNum], 0));
+        gp.obj[mapNum][0] = house;
+        gp.obj[mapNum][1] = bin;
+
+        System.out.println("Placing pond...");
+        attempt = 0;
+        do {
+            int pondX = random.nextInt(gp.maxWorldCol);
+            int pondY = random.nextInt(gp.maxWorldRow);
+
+            pond.worldX = pondX * gp.tileSize;
+            pond.worldY = pondY * gp.tileSize;
+
+            attempt++;
+            if (attempt > MAX_ATTEMPTS) {
+                System.out.println("Failed to place pond after " + MAX_ATTEMPTS + " attempts.");
+                return;
+            }
+        } while (!checkFitInMap(pond) || checkOverlap(pond, gp.obj[mapNum], 2));
+        gp.obj[mapNum][2] = pond;
         System.out.println("All objects placed successfully.");
     }
 
-    private boolean checkOverlap(SuperObject object, SuperObject other) {
-        if (object == null || other == null) return false;
+    private boolean checkOverlap(SuperObject object, SuperObject[] others, int index) {
+        if (object == null || others == null) return false;
 
         int objLeft = object.worldX;
         int objRight = object.worldX + object.width;
         int objTop = object.worldY;
         int objBottom = object.worldY + object.height;
 
-        int otherLeft = other.worldX;
-        int otherRight = other.worldX + other.width;
-        int otherTop = other.worldY;
-        int otherBottom = other.worldY + other.height;
+        for (int i = 0; i < others.length; i++) {
+            if (i == index) continue;
+            SuperObject other = others[i];
+            if (other == null) continue;
 
-        return !(objRight <= otherLeft || objLeft >= otherRight || objBottom <= otherTop || objTop >= otherBottom);
+            int otherLeft = other.worldX;
+            int otherRight = other.worldX + other.width;
+            int otherTop = other.worldY;
+            int otherBottom = other.worldY + other.height;
+
+            boolean isOverlapping = !(objRight <= otherLeft || objLeft >= otherRight ||
+                                    objBottom <= otherTop || objTop >= otherBottom);
+            if (isOverlapping) {
+                return true;
+            }
+        }
+
+        return false;
     }
-
 
     public boolean checkFitInMap(SuperObject object){
         int x = object.worldX / gp.tileSize;
