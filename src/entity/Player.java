@@ -85,10 +85,16 @@ public class Player extends Entity{
         gender = "Female";
     }
 
-    public void teleport(){
+    public void teleportHome(){
         worldX =  gp.obj[gp.currentMap][0].worldX + 38;
         worldY = gp.obj[gp.currentMap][0].worldY + 7 * 48 - 8;
 
+        direction = "down";
+    }
+
+    public void teleport(){
+        worldX =  26 * gp.tileSize;
+        worldY =  7 * gp.tileSize;
         direction = "down";
     }
 
@@ -156,7 +162,7 @@ public class Player extends Entity{
     public void update() {
         if (energy <= -20){
             sleeping();
-            teleport();
+            teleportHome();
         }
         collisionOn = false;
 
@@ -216,56 +222,58 @@ public class Player extends Entity{
                 case "right": interactX += tileSize; break;
             }
             
-            int moveMapToWorldX1 =  25 * gp.tileSize;
-            int moveMapToWorldX2 =  26 * gp.tileSize;
-            int moveMapToWorldX3 = 27 * gp.tileSize;
-            int moveMapToWorldY =  6 * gp.tileSize;
+            if (gp.currentMap == 0){
+                int moveMapToWorldX1 =  25 * gp.tileSize;
+                int moveMapToWorldX2 =  26 * gp.tileSize;
+                int moveMapToWorldX3 = 27 * gp.tileSize;
+                int moveMapToWorldY =  6 * gp.tileSize;
 
-            int targetHouseX =  gp.obj[gp.currentMap][0].worldX + tileSize;
-            int targetHouseY = gp.obj[gp.currentMap][0].worldY + 7 * tileSize;
+                int targetHouseX =  gp.obj[gp.currentMap][0].worldX + tileSize;
+                int targetHouseY = gp.obj[gp.currentMap][0].worldY + 7 * tileSize;
 
-            int targetPondX1 =  gp.obj[gp.currentMap][2].worldX + tileSize;
-            int targetPondX2 =  targetPondX1 + tileSize;
-            int targetPondY = gp.obj[gp.currentMap][2].worldY;
+                int targetPondX1 =  gp.obj[gp.currentMap][2].worldX + tileSize;
+                int targetPondX2 =  targetPondX1 + tileSize;
+                int targetPondY = gp.obj[gp.currentMap][2].worldY;
 
-            int targetBinX1 = gp.obj[gp.currentMap][1].worldX;
-            int targetBinX2 = targetBinX1 + tileSize;
-            int targetBinX3 = targetBinX2 + tileSize;
-            int targetBinY = gp.obj[gp.currentMap][1].worldY + tileSize + tileSize/2;
+                int targetBinX1 = gp.obj[gp.currentMap][1].worldX;
+                int targetBinX2 = targetBinX1 + tileSize;
+                int targetBinX3 = targetBinX2 + tileSize;
+                int targetBinY = gp.obj[gp.currentMap][1].worldY + tileSize + tileSize/2;
 
-            int playerFeetX = worldX + tileSize / 2;
-            int playerFeetY = worldY + tileSize;
+                int playerFeetX = worldX + tileSize / 2;
+                int playerFeetY = worldY + tileSize;
 
-            int toleranceX = 48;
-            int toleranceY = 48;
-            
-            if (Math.abs(playerFeetX - (targetHouseX + tileSize / 2)) <= toleranceX &&
-                Math.abs(playerFeetY - (targetHouseY + tileSize / 2)) <= toleranceY && 
-                keyH.enterPressed && direction.equals("up")) 
-                interactHouse();
+                int toleranceX = 48;
+                int toleranceY = 48;
+                
+                if (Math.abs(playerFeetX - (targetHouseX + tileSize / 2)) <= toleranceX &&
+                    Math.abs(playerFeetY - (targetHouseY + tileSize / 2)) <= toleranceY && 
+                    keyH.enterPressed && direction.equals("up")) 
+                    interactHouse();
 
-            if ((Math.abs(playerFeetX - (targetPondX1 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (targetPondX2 + tileSize / 2)) <= toleranceX) && 
-                Math.abs(playerFeetY - (targetPondY + tileSize / 2)) <= toleranceY && 
-                keyH.enterPressed && direction.equals("down")) {
-                fishingLocation = "Pond";
-                interactFishing();
-            }
+                if ((Math.abs(playerFeetX - (targetPondX1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetPondX2 + tileSize / 2)) <= toleranceX) && 
+                    Math.abs(playerFeetY - (targetPondY + tileSize / 2)) <= toleranceY && 
+                    keyH.enterPressed && direction.equals("down")) {
+                    fishingLocation = "Pond";
+                    interactFishing();
+                }
 
-            if ((Math.abs(playerFeetX - (targetBinX1 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (targetBinX2 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (targetBinX3 + tileSize / 2)) <= toleranceX) && 
-                Math.abs(playerFeetY - (targetBinY + tileSize / 2)) <= toleranceY && 
-                keyH.enterPressed && direction.equals("up")) {
-                interactBin();
-            }
+                if ((Math.abs(playerFeetX - (targetBinX1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetBinX2 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetBinX3 + tileSize / 2)) <= toleranceX) && 
+                    Math.abs(playerFeetY - (targetBinY + tileSize / 2)) <= toleranceY && 
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactBin();
+                }
 
-            if ((Math.abs(playerFeetX - (moveMapToWorldX1 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (moveMapToWorldX2 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (moveMapToWorldX3 + tileSize / 2)) <= toleranceX) && 
-                Math.abs(playerFeetY - (moveMapToWorldY + tileSize / 2)) <= toleranceY) {
-                interactMoveMap();
-            }
+                if ((Math.abs(playerFeetX - (moveMapToWorldX1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (moveMapToWorldX2 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (moveMapToWorldX3 + tileSize / 2)) <= toleranceX) && 
+                    Math.abs(playerFeetY - (moveMapToWorldY + tileSize / 2)) <= toleranceY) {
+                    interactMoveMap();
+                }
+            } 
 
             keyH.enterPressed = false;
         }

@@ -137,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        if(gameState == playState) {
+        if(gameState == playState || gameState == worldMapState) {
 
             // PLAYER
             player.update();

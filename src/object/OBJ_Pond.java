@@ -23,10 +23,10 @@ public class OBJ_Pond extends SuperObject {
         solidAreas = new Rectangle[1];
 
         solidAreas[0] = new Rectangle();
-        solidAreas[0].x = width;
-        solidAreas[0].y = height;
-        solidAreas[0].width = gp.tileSize;
-        solidAreas[0].height = gp.tileSize;
+        solidAreas[0].x = 0;
+        solidAreas[0].y = 0;
+        solidAreas[0].width = width;
+        solidAreas[0].height = height;
 
         
         solidAreaDefaultX = 0;
