@@ -3,13 +3,14 @@ package object;
 import java.awt.Rectangle;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
 import main.GamePanel;
 
-public class OBJ_Pond extends SuperObject {
-    public OBJ_Pond(GamePanel gp, int x, int y) {
-        name = "Pond";
+public class OBJ_Bush extends SuperObject {
+    public OBJ_Bush(GamePanel gp, int x, int y) {
+        name = "Bush";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/Fishing pond.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/Bush.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -23,12 +24,11 @@ public class OBJ_Pond extends SuperObject {
         solidAreas = new Rectangle[1];
 
         solidAreas[0] = new Rectangle();
-        solidAreas[0].x = width;
-        solidAreas[0].y = height;
-        solidAreas[0].width = gp.tileSize;
-        solidAreas[0].height = gp.tileSize;
+        solidAreas[0].x = 0;
+        solidAreas[0].y = gp.tileSize;
+        solidAreas[0].width = width;
+        solidAreas[0].height = gp.tileSize * 2;
 
-        
         solidAreaDefaultX = 0;
         solidAreaDefaultY = 0;
     }

@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
-    public SuperObject obj[][] = new SuperObject[maxMap][10];
+    public SuperObject obj[][] = new SuperObject[maxMap][40];
     public Entity npc[][] = new Entity[maxMap][10];
     public TileObjectManager tileOM = new TileObjectManager(this);
     public Map<TileLocation, TileObject> tiles = new HashMap<>();
@@ -75,10 +75,6 @@ public class GamePanel extends JPanel implements Runnable{
     public final int viewAttributeState = 7;
     public final int viewInventoryState = 8;
     public final int binShopState = 9;
-    public final int moveMapState = 10;
-
-    public final int worldMapState = 11;
-    
 
     public final int houseInteractState = 20;
     public final int fishingInteractState = 21;
@@ -87,7 +83,6 @@ public class GamePanel extends JPanel implements Runnable{
     public final int binInteractState = 24;
 
     public final int watchingState = 25;
-    public final int sleepingState = 26;
 
 
     public GamePanel(){
@@ -138,7 +133,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        if(gameState == playState || gameState == worldMapState) {
+        if(gameState == playState) {
 
             // PLAYER
             player.update();
@@ -175,12 +170,10 @@ public class GamePanel extends JPanel implements Runnable{
             ui.draw(g2);
         } else if (gameState == genderInputState) {
             ui.draw(g2);
-        } else if (gameState == moveMapState) {
-            ui.draw(g2);
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
             gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-            gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == sleepingState) { 
+            gameState == binInteractState || gameState == watchingState) { 
                 
                 // TILE
                 tileM.draw(g2);
@@ -211,7 +204,33 @@ public class GamePanel extends JPanel implements Runnable{
                         obj[currentMap][i].draw(g2, this, 0, 0, 96, this.tileSize, this.tileSize * 6, this.tileSize * 3);
                     }
                 }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("PinkTree")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Well")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Bush")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("GreenTree1")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Clock")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
             }
+            
 
             ui.draw(g2); 
         }
