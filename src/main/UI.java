@@ -865,14 +865,6 @@ public class UI {
         String title = "Inside Your House";
         int titleX = getXforCenteredText(title);
         g2.drawString(title, titleX, y + gp.tileSize);
-
-        // MENU OPTIONS
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
-        y += gp.tileSize;
-
-        String text = "WATCHING (NOT IMPLEMENTED YET)";
-        int textX = getXforCenteredText(text);
-        g2.drawString(text, textX, y + gp.tileSize);
     }
 
     public void drawFishingScreen(){
