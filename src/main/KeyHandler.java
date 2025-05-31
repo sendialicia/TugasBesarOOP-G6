@@ -327,6 +327,7 @@ public class KeyHandler implements KeyListener{
                 }
             }
         }
+       
         else if (gp.gameState == gp.watchingState){
             if (code == KeyEvent.VK_ESCAPE){
                 gp.gameState = gp.playState;
@@ -388,16 +389,19 @@ public class KeyHandler implements KeyListener{
                 }
             }
         }
+        
         else if (gp.gameState == gp.fishingSucceeded) {
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
             }
         }
+        
         else if (gp.gameState == gp.fishingFailed) {
             if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
             }
         }
+        
         else if(gp.gameState == gp.binInteractState) {
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
                 gp.ui.commandNum--;
@@ -415,12 +419,43 @@ public class KeyHandler implements KeyListener{
 
              if(code == KeyEvent.VK_ENTER) {
                 if(gp.ui.commandNum == 0) {
+                    gp.gameState = gp.binShopState;
                 }
                 if(gp.ui.commandNum == 1) {
                     gp.gameState = gp.playState;
                 }
             }
         }
+        
+        else if(gp.gameState == gp.binShopState) {
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                if(gp.ui.slotRow != 0) {
+                    gp.ui.slotRow--;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+                if(gp.ui.slotCol != 0) {
+                    gp.ui.slotCol--;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                if(gp.ui.slotRow < 6) {
+                    gp.ui.slotRow++;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+                if(gp.ui.slotCol < 8) {
+                    gp.ui.slotCol++;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_ENTER) {
+            }
+        }
+
         // DEBUG
         if(code == KeyEvent.VK_F12) {
             if(checkDrawTime == false) {
