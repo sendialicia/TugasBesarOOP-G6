@@ -7,6 +7,7 @@ import farmTile.PlantedTile;
 import farmTile.TileLocation;
 import farmTile.TileObject;
 import farmTile.TileObjectManager;
+import items.Inventory;
 import items.fish.Fish;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,16 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
-
-import entity.Entity;
-import entity.Player;
-import farmTile.HarvestableTile;
-import farmTile.PlantedTile;
-import farmTile.TileLocation;
-import farmTile.TileObject;
-import farmTile.TileObjectManager;
-import items.Inventory;
-import items.fish.Fish;
 import object.SuperObject;
 import tile.TileManager;
 import time.GameClock;
@@ -258,6 +249,42 @@ public class GamePanel extends JPanel implements Runnable{
                         obj[currentMap][i].draw(g2, this);
                     }
                 }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("GreenTree2")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House1")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House2")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House3")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House4")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House5")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("PineTree")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                
             }
             
 

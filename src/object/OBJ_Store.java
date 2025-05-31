@@ -3,7 +3,6 @@ package object;
 import java.awt.Rectangle;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
 import main.GamePanel; 
 
 public class OBJ_Store extends SuperObject {
@@ -46,7 +45,7 @@ public class OBJ_Store extends SuperObject {
         solidAreas[3].x = gp.tileSize * 7; 
         solidAreas[3].y = gp.tileSize * 9; 
         solidAreas[3].width = gp.tileSize * 3; 
-        solidAreas[3].height = gp.tileSize * 2; 
+        solidAreas[3].height = gp.tileSize; 
 
         solidAreaDefaultX = 0;
         solidAreaDefaultY = 0;

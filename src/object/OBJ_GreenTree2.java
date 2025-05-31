@@ -24,9 +24,9 @@ public class OBJ_GreenTree2 extends SuperObject {
 
         solidAreas[0] = new Rectangle();
         solidAreas[0].x = 1;
-        solidAreas[0].y = gp.tileSize * 4;
+        solidAreas[0].y = gp.tileSize * 5;
         solidAreas[0].width = gp.tileSize * 2;
-        solidAreas[0].height = gp.tileSize * 3;
+        solidAreas[0].height = gp.tileSize * 2;
 
         solidAreaDefaultX = 0;
         solidAreaDefaultY = 0;
