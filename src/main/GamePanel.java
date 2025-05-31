@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
 import object.SuperObject;
+import recipe.RecipeLoader;
 import tile.TileManager;
 import time.GameClock;
 
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Integer luckyNumber = null;
     public Inventory binShopInventory = new Inventory(false);
     public Integer interactedNPC = null;
+    RecipeLoader recipeLoader = new RecipeLoader();
 
     public boolean shippingBinOff = false;
     public int shippingBinDay = 0;

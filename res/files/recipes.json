@@ -1,0 +1,109 @@
+[
+  {
+    "name": "Fish n’ Chips",
+    "ingredients": {
+      "Carp": 2,
+      "Wheat": 1,
+      "Potato": 1
+    },
+    "result": "Fish n’ Chips",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Baguette",
+    "ingredients": {
+      "Wheat": 3
+    },
+    "result": "Baguette",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Sashimi",
+    "ingredients": {
+      "Salmon": 3
+    },
+    "result": "Sashimi",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Fugu",
+    "ingredients": {
+      "Pufferfish": 1
+    },
+    "result": "Fugu",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Wine",
+    "ingredients": {
+      "Grape": 2
+    },
+    "result": "Wine",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Pumpkin Pie",
+    "ingredients": {
+      "Egg": 1,
+      "Wheat": 1,
+      "Pumpkin": 1
+    },
+    "result": "Pumpkin Pie",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Veggie Soup",
+    "ingredients": {
+      "Cauliflower": 1,
+      "Parsnip": 1,
+      "Potato": 1,
+      "Tomato": 1
+    },
+    "result": "Veggie Soup",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Fish Stew",
+    "ingredients": {
+      "Carp": 2,
+      "Hot pepper": 1,
+      "Cauliflower": 2
+    },
+    "result": "Fish Stew",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Spakbor Salad",
+    "ingredients": {
+      "Melon": 1,
+      "Cranberry": 1,
+      "Blueberry": 1,
+      "Tomato": 1
+    },
+    "result": "Spakbor Salad",
+    "resultQuantity": 1
+  },
+  {
+    "name": "Fish Sandwich",
+    "ingredients": {
+      "Carp": 1,
+      "Wheat": 2,
+      "Tomato": 1,
+      "Hot Pepper": 1
+    },
+    "result": "Fish Sandwich",
+    "resultQuantity": 1
+  },
+  {
+    "name": "The Legends of Spakbor",
+    "ingredients": {
+      "Legend fish": 1,
+      "Potato": 2,
+      "Parsnip": 1,
+      "Tomato": 1,
+      "Eggplant": 1
+    },
+    "result": "The Legends of Spakbor",
+    "resultQuantity": 1
+  }
+]

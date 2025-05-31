@@ -497,11 +497,14 @@ public class Player extends Entity{
         else if (energy > MAX_ENERGY / 10) energy = MAX_ENERGY;
     }
 
-    public void cooking() {}
+    public void cooking() {
+        this.energy -= 5;
+        gameClock.advanceTime(60);
+    }
 
     public void fishing() {
         gameClock.stopClock();
-        this.energy -= 5;
+        this.energy -= 10;
         gameClock.advanceTime(15);
     }
 
@@ -691,13 +694,4 @@ public class Player extends Entity{
     public void showPosition() { 
         System.out.println("You are at " + worldX + ", " + worldY); 
     }
-
-    // public void selling(OBJ_Bin shippingBin, boolean isAround) {
-    //     if (isAround){
-    //         shippingBin.interact(this);    
-    //     }
-    //     System.out.println("You must be near Shipping Bin to perform this action!");
-
-    
-    // }
 }
