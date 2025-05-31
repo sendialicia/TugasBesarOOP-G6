@@ -92,6 +92,16 @@ public class TileManager {
         setup(949, "#949", false);
         setup(950, "#950", false);
         setup(951, "#951", false);
+        setup(988, "#988", false);
+        setup(989, "#989", false);
+        setup(990, "#990", false);
+        setup(991, "#991", false);
+        setup(992, "#992", false);
+        setup(993, "#993", false);
+        setup(994, "#994", false);
+        setup(995, "#995", false);
+        setup(996, "#996", false);
+        setup(997, "#997", false);
         setup(998, "#998", false);
         setup(999, "#999", false);
         setup(1, "#1", false);

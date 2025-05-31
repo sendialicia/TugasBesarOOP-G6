@@ -148,7 +148,9 @@ public class AssetSetter {
             }
         } while (!checkFitInMap(pond) || checkOverlap(pond, gp.obj[mapNum], 2));
         gp.obj[mapNum][2] = pond;
-        System.out.println("All objects placed successfully.");
+        mapNum++;
+        
+
     }
 
     private boolean checkOverlap(SuperObject object, SuperObject[] others, int index) {
