@@ -49,7 +49,7 @@ public class CollisionChecker {
                 int tileNum = gp.tileM.mapTileNum[gp.currentMap][col][row];
                 Tile tile = gp.tileM.tile[tileNum];
 
-                if (tile.collision) {
+                if (tile != null && tile.collision) {
                     Rectangle tileRect = new Rectangle(
                         col * gp.tileSize + tile.solidArea.x,
                         row * gp.tileSize + tile.solidArea.y,

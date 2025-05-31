@@ -152,8 +152,8 @@ public class KeyHandler implements KeyListener{
                     gp.tileM.loadMap("/maps/world.txt", 1);
                 } else if (gp.currentMap == 1) {
                     gp.currentMap = 0;
-                    gp.maxWorldCol = 50;
-                    gp.maxWorldRow = 50;
+                    gp.maxWorldCol = 51;
+                    gp.maxWorldRow = 51;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/farm.txt", 0);
                 }
