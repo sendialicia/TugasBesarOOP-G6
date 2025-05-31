@@ -22,15 +22,15 @@ public class TileObjectManager {
     public void getTileObjectImages(){
         UtilityTool uTool = new UtilityTool();
         try {
-            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/Tilled.png"));
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/tiles/Tilled.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
             images.put("Tilled", image);
 
-            image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/Planted.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/tiles/Planted.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
             images.put("Planted", image);
     
-            image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/Harvestable.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/tiles/Harvestable.png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
             images.put("Harvestable", image);
             
@@ -49,7 +49,7 @@ public class TileObjectManager {
             if (tileObject instanceof PlantedTile plantedTile){
                 if (plantedTile.isWateredToday(gp.gameClock.getDate().getOriginDay(), gp.gameClock.getWeather().getWeatherToday().equals("Rainy"))){
                     try {
-                        image = ImageIO.read(getClass().getResourceAsStream("/tiles/farm/Watered.png"));
+                        image = ImageIO.read(getClass().getResourceAsStream("/tiles/Watered.png"));
                         image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
                     } catch (Exception e) {
                         e.printStackTrace();
