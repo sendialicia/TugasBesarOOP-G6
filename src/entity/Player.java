@@ -1,15 +1,8 @@
 package entity;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import entity.npc.NPC;
+import farmTile.HarvestableTile;
+import farmTile.PlantedTile;
 import items.Edible;
 import items.Inventory;
 import items.ItemFactory;
@@ -20,6 +13,14 @@ import items.fish.Fish;
 import items.food.Food;
 import items.miscellaneous.Miscellaneous;
 import items.seeds.Seeds;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import main.GamePanel;
 import main.KeyHandler;
 import time.GameClock;
@@ -82,6 +83,13 @@ public class Player extends Entity{
         gold = 10000;
         inventory = new Inventory();
         gender = "Female";
+    }
+
+    public void teleport(){
+        worldX =  gp.obj[gp.currentMap][0].worldX + 96;
+        worldY = gp.obj[gp.currentMap][0].worldY + 8 * 48;
+
+        direction = "down";
     }
 
     public void setName(String name) { this.name = name; }
@@ -355,42 +363,15 @@ public class Player extends Entity{
         gameClock.advanceTime(5);
     }
 
-    // public void watering(Tile tile) {
-    //     if (tile.isPlanted()){
-    //         PlantedTile plantedTile = (PlantedTile) tile;
-    //         Equipments wateringCan = (Equipments) inventory.get("Watering Can");
-    //         wateringCan.onUse(this);
-    //         plantedTile.water(gameClock.getDate().getDay());
-    //         this.energy -= 5;
-    //         gameClock.advanceTime(5);
-    //         System.out.println("Time skips five minutes.");
-    //     } else System.out.println("You can't water this tile");
-    // }
+    public void watering(PlantedTile tile){
+        this.energy -= 5;
+        gameClock.advanceTime(5);
+    }
 
-    // public void harvesting(Tile tile) {
-    //     if (tile.isHarvestable()){
-    //         PlantedTile plantedTile = (PlantedTile) tile;
-    //         if (plantedTile.isReadyToHarvest()){
-    //             String seedName = plantedTile.getSeed().getName();
-    //             String cropName;
-
-    //             if (seedName != null && seedName.endsWith(" Seeds")) cropName = seedName.substring(0, seedName.length() - " Seeds".length());
-    //             else cropName = seedName;
-
-    //             ItemFactory cropsFactory = new ItemFactory();
-    //             cropsFactory.loadCrops();
-
-    //             Items cropItem = cropsFactory.get(cropName);
-    //             Crops crop = (Crops) cropItem;
-    //             inventory.addItem(crop, crop.getHarvestedAmount());
-
-    //             tile = new Tile();
-    //             this.energy -= 5;
-    //             gameClock.advanceTime(5);
-    //             System.out.println("Time skips five minutes.");
-    //         } else System.out.println("You can't harvest this tile yet");
-    //     } else System.out.println("You can't harvest this tile");
-    // }
+    public void harvesting(HarvestableTile tile){
+        this.energy -= 5;
+        gameClock.advanceTime(5);
+    }
 
     public void eating(Items item) {
         if (item != null && getItemQuantity(item) > 0) {
@@ -419,7 +400,6 @@ public class Player extends Entity{
         if (energy == 0) energy = 10;
         else if (energy < MAX_ENERGY / 10) energy = MAX_ENERGY / 2;
         else if (energy > MAX_ENERGY / 10) energy = MAX_ENERGY;
-        System.out.println("You slept. Time skipped to 6:00 next day.");
     }
 
     public void cooking() {}
@@ -642,5 +622,7 @@ public class Player extends Entity{
     //         shippingBin.interact(this);    
     //     }
     //     System.out.println("You must be near Shipping Bin to perform this action!");
+
+    
     // }
 }

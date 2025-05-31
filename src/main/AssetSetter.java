@@ -1,8 +1,7 @@
 package main;
 
-import java.util.Random;
-
 import entity.NPC_OldMan;
+import java.util.Random;
 import object.OBJ_Bin;
 import object.OBJ_House;
 import object.OBJ_Pond;
@@ -22,6 +21,7 @@ public class AssetSetter {
         OBJ_Bin bin = new OBJ_Bin(gp, 0, 0);
         OBJ_Pond pond = new OBJ_Pond(gp, 0, 0);
 
+        
         final int MAX_ATTEMPTS = 1000000;
         int attempt;
 
@@ -67,6 +67,9 @@ public class AssetSetter {
         gp.obj[mapNum][2] = pond;
 
         System.out.println("All objects placed successfully.");
+        
+
+        mapNum = 1;
     }
 
     private boolean checkOverlap(SuperObject object, SuperObject other) {
