@@ -59,6 +59,7 @@ public class TileManager {
         setup(616, "#616", false);
         setup(617, "#617", false);
         setup(671, "#671", false);
+        setup(700, "#700", true);
         setup(738, "#738", false);
         setup(739, "#739", false);
         setup(740, "#740", false);
@@ -91,6 +92,8 @@ public class TileManager {
         setup(949, "#949", false);
         setup(950, "#950", false);
         setup(951, "#951", false);
+        setup(998, "#998", false);
+        setup(999, "#999", false);
         setup(1, "#1", false);
         setup(2, "#2", false);
         setup(3, "#3", false);
@@ -125,6 +128,7 @@ public class TileManager {
         setup(291, "#291", false);
         setup(328, "#328", false);
         setup(329, "#329", false);
+        setup(330, "#330", false);
         setup(331, "#331", false);
         setup(369, "#369", false);
         setup(372, "#372", false);
@@ -136,6 +140,7 @@ public class TileManager {
         setup(410, "#410", false);
         setup(411, "#411", false);
         setup(412, "#412", false);
+        setup(413, "#413", false);
         setup(497, "#497", false);
         setup(504, "#504", false);
         setup(505, "#505", false);
