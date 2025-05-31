@@ -379,7 +379,8 @@ public class Player extends Entity{
                     Math.abs(playerFeetX - (targetForestRiverX3 + tileSize / 2)) <= toleranceX ||
                     Math.abs(playerFeetX - (targetForestRiverX4 + tileSize / 2)) <= toleranceX) &&
                     Math.abs(playerFeetY - (targetForestRiverY + tileSize / 2)) <= toleranceY &&
-                    keyH.enterPressed && direction.equals("up")) {
+                    keyH.enterPressed && direction.equals("down")) {
+                    fishingLocation = "Mountain Lake";
                     interactFishing();
                 }
 
@@ -387,14 +388,16 @@ public class Player extends Entity{
                     Math.abs(playerFeetX - (targetMountainLakeY2 + tileSize / 2)) <= toleranceY ||
                     Math.abs(playerFeetX - (targetMountainLakeY3 + tileSize / 2)) <= toleranceY) &&
                     Math.abs(playerFeetY - (targetMountainLakeX + tileSize / 2)) <= toleranceX &&
-                    keyH.enterPressed && direction.equals("up")) {
+                    keyH.enterPressed && direction.equals("down")) {
+                    fishingLocation = "Forest River";
                     interactFishing();
                 }
                 if ((Math.abs(playerFeetX - (targetOceanX1 + tileSize / 2)) <= toleranceX ||
                     Math.abs(playerFeetX - (targetOceanX2 + tileSize / 2)) <= toleranceX ||
                     Math.abs(playerFeetX - (targetOceanX3 + tileSize / 2)) <= toleranceX) &&
                     Math.abs(playerFeetY - (targetOceanY + tileSize / 2)) <= toleranceY &&
-                    keyH.enterPressed && direction.equals("up")) {
+                    keyH.enterPressed && direction.equals("down")) {
+                    fishingLocation = "Ocean";
                     interactFishing();
                 }
             }
