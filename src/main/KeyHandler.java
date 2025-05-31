@@ -257,6 +257,57 @@ public class KeyHandler implements KeyListener{
             }
         }
 
+         // WORLD MAP STATE
+        else if(gp.gameState == gp.worldMapState) {
+
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                upPressed = true;
+            }
+    
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                downPressed = true;
+            }
+    
+            if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+                leftPressed = true;
+            }
+    
+            if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+                rightPressed = true;
+            }
+    
+            if(code == KeyEvent.VK_R) {
+
+                if (gp.currentMap == 0) {
+                    gp.currentMap = 1;
+                    gp.maxWorldCol = 50;
+                    gp.maxWorldRow = 75;
+                    gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
+                    gp.tileM.loadMap("/maps/world.txt", 1);
+                } else if (gp.currentMap == 1) {
+                    gp.currentMap = 0;
+                    gp.maxWorldCol = 51;
+                    gp.maxWorldRow = 51;
+                    gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
+                    gp.tileM.loadMap("/maps/farm.txt", 0);
+                }
+                e.consume();
+            }
+
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.pauseState;
+            }
+
+            if(code == KeyEvent.VK_E) {
+                gp.gameState = gp.viewAttributeState;
+                e.consume();
+            }
+
+            if(code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+            }
+        }
+
         // PAUSE STATE
         else if(gp.gameState == gp.pauseState) {
             if(code == KeyEvent.VK_ESCAPE) {
@@ -461,6 +512,48 @@ public class KeyHandler implements KeyListener{
                 }
             }
             if(code == KeyEvent.VK_ENTER) {
+            }
+        }
+
+        else if (gp.gameState == gp.moveMapState) {
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 1;
+                }
+            }
+    
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 2) {
+                    gp.ui.commandNum = 0;
+                }
+            }
+
+             if(code == KeyEvent.VK_ENTER) {
+
+                if (gp.currentMap == 0) {
+                    if(gp.ui.commandNum == 0) {
+                        gp.currentMap = 1;
+                        gp.maxWorldCol = 50;
+                        gp.maxWorldRow = 75;
+                        gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
+                        gp.gameState = gp.worldMapState;
+                    } else if (gp.ui.commandNum == 1) {
+                        gp.gameState = gp.playState;
+                    }
+                } else if (gp.currentMap == 1) {
+                    if (gp.ui.commandNum == 0) {
+                        gp.currentMap = 0;
+                        gp.maxWorldCol = 51;
+                        gp.maxWorldRow = 51;
+                        gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
+                        gp.gameState = gp.playState;
+                    } else if (gp.ui.commandNum == 1) {
+                        gp.gameState = gp.worldMapState;
+                    }
+                }
+                e.consume();
             }
         }
 
