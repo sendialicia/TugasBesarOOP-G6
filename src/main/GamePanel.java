@@ -1,5 +1,13 @@
 package main;
 
+import entity.Player;
+import entity.npc.NPC;
+import farmTile.HarvestableTile;
+import farmTile.PlantedTile;
+import farmTile.TileLocation;
+import farmTile.TileObject;
+import farmTile.TileObjectManager;
+import items.fish.Fish;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JPanel;
 
 import entity.Entity;
@@ -59,13 +66,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
-    public SuperObject obj[][] = new SuperObject[maxMap][10];
-    public Entity npc[][] = new Entity[maxMap][10];
+    public SuperObject obj[][] = new SuperObject[maxMap][40];
+    public NPC npc[][] = new NPC[maxMap][10];
     public TileObjectManager tileOM = new TileObjectManager(this);
     public Map<TileLocation, TileObject> tiles = new HashMap<>();
     public Fish fished = null;
     public Integer luckyNumber = null;
     public Inventory binShopInventory = new Inventory(false);
+    public Integer interactedNPC = null;
 
     // GAME STATE
     public int gameState;
@@ -79,9 +87,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int viewAttributeState = 7;
     public final int viewInventoryState = 8;
     public final int binShopState = 9;
-    public final int moveMapState = 10;
-
-    public final int worldMapState = 11;
+    
     
     public final int binAmountState = 12;
 
@@ -92,6 +98,17 @@ public class GamePanel extends JPanel implements Runnable{
     public final int binInteractState = 24;
 
     public final int watchingState = 25;
+
+    public final int worldMapState = 26;
+    public final int sleepingState = 27;
+    public final int moveMapState = 28;
+
+    public final int interactNPCState = 29;
+    public final int rejectedState = 30;
+    public final int tooSoonState = 31;
+    public final int havePartnerState = 32;
+    public final int yourPartnerState = 33;
+    public final int acceptedState = 34;
 
 
     public GamePanel(){
@@ -142,7 +159,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        if(gameState == playState) {
+        if(gameState == playState || gameState == worldMapState) {
 
             // PLAYER
             player.update();
@@ -179,13 +196,13 @@ public class GamePanel extends JPanel implements Runnable{
             ui.draw(g2);
         } else if (gameState == genderInputState) {
             ui.draw(g2);
-        } else if (gameState == moveMapState) {
-            ui.draw(g2);
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
-            gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-            gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
-            gameState == binAmountState) { 
+                gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
+                gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
+            gameState == binAmountState || gameState == interactNPCState ||
+                gameState == rejectedState || gameState == tooSoonState || gameState == havePartnerState || gameState == yourPartnerState ||
+                gameState == acceptedState ) { 
                 
                 // TILE
                 tileM.draw(g2);
@@ -216,7 +233,33 @@ public class GamePanel extends JPanel implements Runnable{
                         obj[currentMap][i].draw(g2, this, 0, 0, 96, this.tileSize, this.tileSize * 6, this.tileSize * 3);
                     }
                 }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("PinkTree")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Well")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Bush")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("GreenTree1")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
+                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Clock")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                }
             }
+            
 
             ui.draw(g2); 
         }

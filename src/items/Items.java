@@ -2,9 +2,7 @@ package items;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import main.UtilityTool;
 
 public class Items {
@@ -55,16 +53,16 @@ public class Items {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Items item = (Items) o;
-        return this.getName().equals(item.getName());
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Items other = (Items) obj;
+        return name.equalsIgnoreCase(other.name); // or use equals() if case-sensitive
     }
 
     @Override
     public int hashCode() {
-        return getName().hashCode();
+        return name.toLowerCase().hashCode(); // match the case sensitivity of equals
     }
 
 }

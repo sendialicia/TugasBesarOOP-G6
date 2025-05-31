@@ -3,15 +3,17 @@ package items;
 import java.util.HashMap;
 import java.util.Map;
 
-import items.equipments.FishingRod;
-import items.equipments.Hoe;
-import items.equipments.Pickaxe;
-import items.equipments.WateringCan;
+    import items.equipments.FishingRod;
+    import items.equipments.Hoe;
+    import items.equipments.Pickaxe;
+    import items.equipments.WateringCan;
 import items.fish.Fish;
-import items.seeds.Seeds;
+    import items.seeds.Seeds;
+    import java.util.HashMap;
+    import java.util.Map;
 
-public class Inventory {
-    private Map<Items, Integer> items;
+    public class Inventory {
+        private Map<Items, Integer> items;
 
     public Inventory(Boolean b) {
         items = new HashMap<>();
@@ -62,40 +64,39 @@ public class Inventory {
         }
     }
 
-    public Inventory(Map<Items, Integer> items) {
-        this.items = items;
-    }
-
-    public Map<Items, Integer> getItems() {
-        return items;
-    }
-
-    public void addItem(Items item, int quantity) {
-        if (items.containsKey(item)) items.put(item, items.get(item) + quantity);
-        else items.put(item, quantity);
-    }
-
-    public void removeItem(Items item, int quantity) {
-        if (items.containsKey(item)) {
-            int currentQuantity = items.get(item);
-            if (currentQuantity > quantity) items.put(item, currentQuantity - quantity);
-            else items.remove(item);
+        public Inventory(Map<Items, Integer> items) {
+            this.items = items;
         }
-    }
 
-    public String getMostItem() {
-        // if (items.isEmpty()) return null;
-        // Items mostItem = null;
-        // int maxQuantity = 0;
-        // for (Map.Entry<Items, Integer> entry : items.entrySet()) {
-        //     if (entry.getValue() > maxQuantity) {
-        //         maxQuantity = entry.getValue();
-        //         mostItem = entry.getKey();
-        //     }
-        // }
-        // return mostItem != null ? mostItem.getName() : null;
-        return "The Legends of Spakbor";
-    }
+        public Map<Items, Integer> getItems() {
+            return items;
+        }
+
+        public void addItem(Items item, int quantity) {
+            if (items.containsKey(item)) items.put(item, items.get(item) + quantity);
+            else items.put(item, quantity);
+        }
+
+        public void removeItem(Items item, int quantity) {
+            if (items.containsKey(item)) {
+                int currentQuantity = items.get(item);
+                if (currentQuantity > quantity) items.put(item, currentQuantity - quantity);
+                else items.remove(item);
+            }
+        }
+
+        public String getMostItem() {
+            if (items.isEmpty()) return null;
+            Items mostItem = null;
+            int maxQuantity = 0;
+            for (Map.Entry<Items, Integer> entry : items.entrySet()) {
+                if (entry.getValue() > maxQuantity) {
+                    maxQuantity = entry.getValue();
+                    mostItem = entry.getKey();
+                }
+            }
+            return mostItem != null ? mostItem.getName() : null;
+        }
 
     public int totalItems() {
         int total = 0;

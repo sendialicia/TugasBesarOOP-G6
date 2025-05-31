@@ -1,4 +1,4 @@
-@echo off
+@echo off   
 echo Compiling Java files...
 
 REM Define classpath (Gson JAR and res folder)
@@ -19,7 +19,6 @@ src\tile\*.java ^
 src\object\*.java ^
 src\time\*.java ^
 src\farmTile\*.java
-
 
 if %ERRORLEVEL% neq 0 (
     echo Compilation failed.

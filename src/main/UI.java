@@ -1,5 +1,10 @@
 package main;
 
+import items.Items;
+import items.crops.Crops;
+import items.fish.Fish;
+import items.food.Food;
+import items.seeds.Seeds;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,14 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
-
-import items.Items;
-import items.crops.Crops;
-import items.fish.Fish;
-import items.food.Food;
-import items.seeds.Seeds;
 import time.GameClock;
 
 
@@ -101,7 +99,7 @@ public class UI {
         }
 
         // PLAY STATE
-        if(gp.gameState == gp.playState) {
+        if(gp.gameState == gp.playState || gp.gameState == gp.worldMapState) {
             drawGameTime();
             // Do playState stuff later
         } 
@@ -138,6 +136,16 @@ public class UI {
 
 
         if(gp.gameState == gp.moveMapState) drawMoveMapScreen();
+
+        if (gp.gameState == gp.sleepingState) drawSleepScreen();
+
+        if (gp.gameState == gp.interactNPCState) drawNPCScreen();
+        
+        if (gp.gameState == gp.rejectedState) drawRejectedScreen();
+        if (gp.gameState == gp.tooSoonState) drawTooSoonScreen();
+        if (gp.gameState == gp.havePartnerState) drawHavePartnerScreen();
+        if (gp.gameState == gp.yourPartnerState) drawYourPartnerScreen();
+        if (gp.gameState == gp.acceptedState) drawAcceptedScreen();
     }
 
     public void drawTitleScreen() {
@@ -676,6 +684,18 @@ public class UI {
         }
     }
 
+    public void drawSleepScreen() {
+        g2.setColor(new Color(0,0,0, 170));
+        g2.fillRect(0, 0 ,gp.screenWidth, gp.screenHeight);
+        
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
+        String text = "SLEPT";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+    }
+
     public void drawWatchScreen() {
         // WINDOW FRAME
         int x = gp.tileSize * 2;
@@ -1013,7 +1033,93 @@ public class UI {
                 g2.drawString(">", textX - gp.tileSize, y);
             }
         }
-    }   
+    }
+
+    public void drawNPCScreen() {
+        // WINDOW FRAME
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2; 
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 6;
+
+        drawSubWindow(x, y, width, height);
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.setColor(Color.white);
+        String title = "Interacting with" + gp.npc[gp.currentMap][gp.interactedNPC].getName();
+        int titleX = getXforCenteredText(title);
+        g2.drawString(title, titleX, y + gp.tileSize);
+
+        // MENU OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        y += gp.tileSize * 2;
+
+        String[] options = {
+            "GIFT",
+            "PROPOSE",
+            "MARRY",
+            "EXIT"
+        };
+
+        for (int i = 0; i < options.length; i++) {
+            String text = options[i];
+            int textX = getXforCenteredText(text);
+            y += gp.tileSize;
+
+            g2.drawString(text, textX, y);
+            if (commandNum == i) {
+                g2.drawString(">", textX - gp.tileSize, y);
+            }
+        }
+    }
+
+    public void drawAcceptedScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60F));
+        String text = "ACCEPTED";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+    }
+
+    public void drawYourPartnerScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60F));
+        String text = "IT\'S YOUR PARTNER!";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+    }
+
+    public void drawHavePartnerScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60F));
+        String text = "YOU ALREADY HAVE A PARTNER!";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+    }
+
+    public void drawTooSoonScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60F));
+        String text = "TOO SOON";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+    }
+
+    public void drawRejectedScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60F));
+        String text = "REJECTED";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40F));
+        text = "Increase their heartpoints and relationship with you!";
+        x = getXforCenteredText(text);
+        y = y + 10;
+        g2.drawString(text, x, y);
+    }
+
 
     public void drawSubWindow(int x, int y, int width, int height) {
         
@@ -1076,5 +1182,4 @@ public class UI {
         g2.setColor(textColor); 
         g2.drawString(fullText, x, y);
     }
-
 }

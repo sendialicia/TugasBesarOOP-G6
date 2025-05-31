@@ -13,7 +13,6 @@ import items.fish.Fish;
 import items.food.Food;
 import items.miscellaneous.Miscellaneous;
 import items.seeds.Seeds;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Random;
 import main.GamePanel;
 import main.KeyHandler;
+import tile.TileManager;
 import time.GameClock;
 import time.GameClockSnapshot;
 
@@ -77,6 +77,7 @@ public class Player extends Entity{
     public void setDefaultValues() {
         worldX = gp.tileSize * 26;
         worldY = gp.tileSize * 15;
+
         speed = 4;
         direction = "down";
         energy = 100;
@@ -85,10 +86,30 @@ public class Player extends Entity{
         gender = "Female";
     }
 
-    public void teleport(){
-        worldX =  gp.obj[gp.currentMap][0].worldX + 96;
-        worldY = gp.obj[gp.currentMap][0].worldY + 8 * 48;
+    public void teleportHome() {
+        gp.currentMap = 0;
+        gp.maxWorldCol = 51;
+        gp.maxWorldRow = 51;
 
+        gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
+        gp.tileM.loadMap("/maps/farm.txt", 0);
+        gp.gameState = gp.playState;
+
+        worldX = gp.obj[0][0].worldX + 38;
+        worldY = gp.obj[0][0].worldY + 7 * 48 - 8;
+        direction = "down";
+    }
+
+
+    public void teleport(){
+        if (gp.currentMap == gp.playState){
+            worldX = gp.tileSize * 31;
+            worldY = gp.tileSize * 21;
+        }
+        else{
+            worldX =  26 * gp.tileSize;
+            worldY =  15 * gp.tileSize;
+        }
         direction = "down";
     }
 
@@ -154,6 +175,10 @@ public class Player extends Entity{
     public BufferedImage def_avatar_female = setup("/player/Female/mc_down_left");
 
     public void update() {
+        if (energy <= -20){
+            sleeping();
+            teleportHome();
+        }
         collisionOn = false;
 
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
@@ -171,7 +196,7 @@ public class Player extends Entity{
 
             // CHECK NPC COLLISION
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-            interactNPC(npcIndex);
+            chatNPC(npcIndex);
 
             if (!collisionOn && !keyH.enterPressed) {
                 switch (direction) {
@@ -198,7 +223,7 @@ public class Player extends Entity{
 
         if (keyH.enterPressed) {
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-            interactNPC(npcIndex);
+            chatNPC(npcIndex);
 
             int tileSize = 48;
 
@@ -212,58 +237,69 @@ public class Player extends Entity{
                 case "right": interactX += tileSize; break;
             }
             
-            int moveMapToWorldX1 =  25 * gp.tileSize;
-            int moveMapToWorldX2 =  26 * gp.tileSize;
-            int moveMapToWorldX3 = 27 * gp.tileSize;
-            int moveMapToWorldY =  6 * gp.tileSize;
+            if (gp.currentMap == 0){
+                int moveMapToWorldX1 =  25 * gp.tileSize;
+                int moveMapToWorldX2 =  26 * gp.tileSize;
+                int moveMapToWorldX3 = 27 * gp.tileSize;
+                int moveMapToWorldY =  6 * gp.tileSize;
 
-            int targetHouseX =  gp.obj[gp.currentMap][0].worldX + tileSize;
-            int targetHouseY = gp.obj[gp.currentMap][0].worldY + 7 * tileSize;
+                int targetHouseX =  gp.obj[gp.currentMap][0].worldX + tileSize;
+                int targetHouseY = gp.obj[gp.currentMap][0].worldY + 7 * tileSize;
 
-            int targetPondX1 =  gp.obj[gp.currentMap][2].worldX + tileSize;
-            int targetPondX2 =  targetPondX1 + tileSize;
-            int targetPondY = gp.obj[gp.currentMap][2].worldY;
+                int targetPondX1 =  gp.obj[gp.currentMap][2].worldX + tileSize;
+                int targetPondX2 =  targetPondX1 + tileSize;
+                int targetPondY = gp.obj[gp.currentMap][2].worldY;
 
-            int targetBinX1 = gp.obj[gp.currentMap][1].worldX;
-            int targetBinX2 = targetBinX1 + tileSize;
-            int targetBinX3 = targetBinX2 + tileSize;
-            int targetBinY = gp.obj[gp.currentMap][1].worldY + tileSize + tileSize/2;
+                int targetBinX1 = gp.obj[gp.currentMap][1].worldX;
+                int targetBinX2 = targetBinX1 + tileSize;
+                int targetBinX3 = targetBinX2 + tileSize;
+                int targetBinY = gp.obj[gp.currentMap][1].worldY + tileSize + tileSize/2;
 
-            int playerFeetX = worldX + tileSize / 2;
-            int playerFeetY = worldY + tileSize;
+                int playerFeetX = worldX + tileSize / 2;
+                int playerFeetY = worldY + tileSize;
 
-            int toleranceX = 48;
-            int toleranceY = 48;
-            
-            if (Math.abs(playerFeetX - (targetHouseX + tileSize / 2)) <= toleranceX &&
-                Math.abs(playerFeetY - (targetHouseY + tileSize / 2)) <= toleranceY && 
-                keyH.enterPressed && direction.equals("up")) 
-                interactHouse();
+                int toleranceX = 48;
+                int toleranceY = 48;
+                
+                if (Math.abs(playerFeetX - (targetHouseX + tileSize / 2)) <= toleranceX &&
+                    Math.abs(playerFeetY - (targetHouseY + tileSize / 2)) <= toleranceY && 
+                    keyH.enterPressed && direction.equals("up")) 
+                    interactHouse();
 
-            if ((Math.abs(playerFeetX - (targetPondX1 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (targetPondX2 + tileSize / 2)) <= toleranceX) && 
-                Math.abs(playerFeetY - (targetPondY + tileSize / 2)) <= toleranceY && 
-                keyH.enterPressed && direction.equals("down")) {
-                fishingLocation = "Pond";
-                interactFishing();
-            }
+                if ((Math.abs(playerFeetX - (targetPondX1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetPondX2 + tileSize / 2)) <= toleranceX) && 
+                    Math.abs(playerFeetY - (targetPondY + tileSize / 2)) <= toleranceY && 
+                    keyH.enterPressed && direction.equals("down")) {
+                    fishingLocation = "Pond";
+                    interactFishing();
+                }
 
-            if ((Math.abs(playerFeetX - (targetBinX1 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (targetBinX2 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (targetBinX3 + tileSize / 2)) <= toleranceX) && 
-                Math.abs(playerFeetY - (targetBinY + tileSize / 2)) <= toleranceY && 
-                keyH.enterPressed && direction.equals("up")) {
-                interactBin();
-            }
+                if ((Math.abs(playerFeetX - (targetBinX1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetBinX2 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (targetBinX3 + tileSize / 2)) <= toleranceX) && 
+                    Math.abs(playerFeetY - (targetBinY + tileSize / 2)) <= toleranceY && 
+                    keyH.enterPressed && direction.equals("up")) {
+                    interactBin();
+                }
 
-            if ((Math.abs(playerFeetX - (moveMapToWorldX1 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (moveMapToWorldX2 + tileSize / 2)) <= toleranceX ||
-                Math.abs(playerFeetX - (moveMapToWorldX3 + tileSize / 2)) <= toleranceX) && 
-                Math.abs(playerFeetY - (moveMapToWorldY + tileSize / 2)) <= toleranceY) {
-                interactMoveMap();
-            }
+                if ((Math.abs(playerFeetX - (moveMapToWorldX1 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (moveMapToWorldX2 + tileSize / 2)) <= toleranceX ||
+                    Math.abs(playerFeetX - (moveMapToWorldX3 + tileSize / 2)) <= toleranceX) && 
+                    Math.abs(playerFeetY - (moveMapToWorldY + tileSize / 2)) <= toleranceY) {
+                    interactMoveMap();
+                }
+            } 
 
             keyH.enterPressed = false;
+        }
+
+        else if (keyH.iPressed){
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            if (npcIndex != 999){
+                gp.interactedNPC = npcIndex;
+                gp.gameState = gp.interactNPCState;
+            }
+            keyH.iPressed = false;
         }
     }
 
@@ -272,11 +308,13 @@ public class Player extends Entity{
         if(i != 999) {}
     }
 
-    public void interactNPC(int i) {
+    public void chatNPC(int i) {
         if(i != 999) {
             if(gp.keyH.enterPressed == true) {
                 gp.gameState = gp.dialogueState;
                 gp.npc[gp.currentMap][i].speak();
+                gp.npc[gp.currentMap][i].addHeartPoints(10);
+                chatting();
             }
         }
     }
@@ -342,10 +380,6 @@ public class Player extends Entity{
         } else {
             g2.drawImage(image, screenX, screenY, gp.tileSize + 20, gp.tileSize + 20, null);
         }
-
-        // FOR DEBUGGING
-        g2.setColor(Color.RED);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 
     public void tilling() {
@@ -385,6 +419,7 @@ public class Player extends Entity{
     }
 
     public void sleeping() {
+        gp.gameState = gp.sleepingState;
         synchronized (gameClock) {
             int currentHour = gameClock.getTime().getHour();
             int currentMinute = gameClock.getTime().getMinute();
@@ -410,31 +445,40 @@ public class Player extends Entity{
         gameClock.advanceTime(15);
     }
 
-    public void proposing(NPC npc) {
-        if (npc.getHeartPoints() < 150){
-            System.out.println("You are rejected. You need to increase your heart points.");
-            this.energy -= 20;
-        } else {
-            System.out.println("You are now engaged to " + npc.getName() + ".");
-            this.partner = npc;
-            this.partner.setRelationshipStatus("Fiance");
-            this.energy -= 10;
+    public void proposing() {
+        if (partner == null){
+            if (gp.npc[gp.currentMap][gp.interactedNPC].getHeartPoints() < 150){
+                gp.gameState = gp.rejectedState;
+                energy -= 20;
+            }
+            else {
+                partner = gp.npc[gp.currentMap][gp.interactedNPC];
+                partner.setRelationshipStatus("Fiance");
+                energy -= 10;
+                gp.gameState = gp.acceptedState;
+            }
+            gameClock.advanceTime(60);
         }
-        gameClock.advanceTime(60);
-        System.out.println("Time skips one hour.");
+        else if (partner.equals(gp.npc[gp.currentMap][gp.interactedNPC])) gp.gameState = gp.yourPartnerState;
+        else gp.gameState = gp.havePartnerState;
     }
 
-    public void marry(NPC partner) {
-        if (partner.getRelationshipStatus().equals("Married")) System.out.println("You are already married to " + partner.getName() + ".");
+    public void marry() {
+        if (partner == null) gp.gameState = gp.rejectedState;
+        else if (!partner.equals(gp.npc[gp.currentMap][gp.interactedNPC])) gp.gameState = gp.havePartnerState;
+        else if (partner.getRelationshipStatus().equals("Married")) gp.gameState = gp.yourPartnerState;
         else {
             GameClockSnapshot lastProposalTime = partner.getChangeLog().get("Fiance");
+            System.out.println("Minutes since proposal: " + gameClock.getMinutesSince(lastProposalTime));
+            System.out.println("Proposal snapshot: " + lastProposalTime);
+            System.out.println("Current time: " + gameClock.getTime());
+
             if (lastProposalTime != null) {
-                if (gameClock.getMinutesSince(lastProposalTime) < 1440) System.out.println("You cannot be married so soon.");
+                if (gameClock.getMinutesSince(lastProposalTime) < 1440) gp.gameState = gp.tooSoonState;
                 else {
                     partner.setRelationshipStatus("Spouse");
-                    System.out.println("You are now married to " + partner.getName() + ".");
-                    partner.setRelationshipStatus("Spouse");
                     this.energy -= 80;
+                    gp.gameState = gp.acceptedState;
 
                     synchronized (gameClock) {
                         int currentHour = gameClock.getTime().getHour();
@@ -451,53 +495,24 @@ public class Player extends Entity{
                         gameClock.advanceTime(minutesToAdvance);
                     }
 
-                    System.out.println("Time skips to 22:00.");
                 }
-            } else System.out.println("You must make this NPC a fiance first!");
+            }
         }
     }
 
     public void watching() {
-        System.out.println("You are now watching television.");
         this.energy -= 5;
         gameClock.advanceTime(15);
-        System.out.println("Time skips fifteen minutes.");
     }
 
-    // public void visiting() {
-    //     System.out.println("----" + "VISITING" + "----");
-    //     System.out.println("Where do you want to visit?");
-
-    //     worldMap.showLocations();
-
-    //     System.out.print("Enter your choice : ");
-
-    //     int choice;
-    //     try {
-    //         choice = Integer.parseInt(scanner.nextLine());
-    //     } catch (NumberFormatException e) {
-    //         System.out.println("Invalid number. Going back to farm...");
-            
-    //         return;
-    //     }
-
-    //     if (choice >= 1 && choice <= 9) worldMap.visitLocation(choice, this);
-    //     else {
-    //         System.out.println("Invalid number. Going back to farm...");
-    //         return;  
-    //     }
-
-    //     this.energy -= 10;
-    //     gameClock.advanceTime(15);
-    //     System.out.println("Time skips fifteen minutes.");
-    // }
-
-    public void chatting(NPC npc) {
-        npc.setHeartPoints(npc.getHeartPoints() + 10);
+    public void visiting() {
         this.energy -= 10;
-        System.out.println("You chatted with " + npc.getName() + ". (+10 heart points)");
+        gameClock.advanceTime(15);
+    }
+
+    public void chatting() {
+        this.energy -= 10;
         gameClock.advanceTime(10);
-        System.out.println("Time skips ten minutes.");
     }
 
     // public void gifting(NPC npc) {
