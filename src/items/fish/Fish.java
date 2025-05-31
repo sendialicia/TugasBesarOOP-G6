@@ -1,10 +1,9 @@
 package items.fish;
 
-import java.awt.image.BufferedImage;
-
 import entity.Player;
 import items.Edible;
 import items.Items;
+import java.awt.image.BufferedImage;
 import time.TimeOfDayRange;
 
 public class Fish extends Items implements Edible {
@@ -26,7 +25,6 @@ public class Fish extends Items implements Edible {
         calculatePrice();
     }
 
-    public int getEnergy(){ return ENERGY; }
     public String getRarity(){ return rarity; }
     public String[] getSeasons(){ return seasons; }
     public String[] getWeathers(){ return weathers; }
@@ -78,4 +76,7 @@ public class Fish extends Items implements Edible {
 
     @Override
     public void onEat(Player player){ player.addEnergy(ENERGY);}
+
+    @Override
+    public int getEnergy(){ return ENERGY; }
 }

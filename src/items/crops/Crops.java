@@ -15,11 +15,13 @@ public class Crops extends Items implements Edible {
         this.harvestedAmount = harvestedAmount;
     }
 
-    public int getEnergy(){ return ENERGY; }
     public int getHarvestedAmount(){ return harvestedAmount; }
 
     public void setHarvestedAmount(int harvestedAmount){ this.harvestedAmount = harvestedAmount; }
 
     @Override
     public void onEat(Player player){ player.addEnergy(ENERGY); }
+
+    @Override
+    public int getEnergy(){ return ENERGY; }
 }

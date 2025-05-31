@@ -8,6 +8,7 @@ import farmTile.TileLocation;
 import farmTile.TileObject;
 import farmTile.TileObjectManager;
 import items.Inventory;
+import items.Items;
 import items.fish.Fish;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,8 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
-
-import items.Inventory;
 import object.SuperObject;
 import tile.TileManager;
 import time.GameClock;
@@ -68,6 +67,10 @@ public class GamePanel extends JPanel implements Runnable{
     public Inventory binShopInventory = new Inventory(false);
     public Integer interactedNPC = null;
 
+    public boolean shippingBinOff = false;
+    public int shippingBinDay = 0;
+    public int goldAdded = 0;
+
     // GAME STATE
     public int gameState;
     public final int titleState = 0;
@@ -105,6 +108,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int houseNPCInteractState = 40;
     public final int storeInteractState = 41;
+
+    public final int binFailed = 44;
+    public final int eatingState = 45;
 
 
     public GamePanel(){
@@ -198,12 +204,14 @@ public class GamePanel extends JPanel implements Runnable{
                 gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
                 gameState == binAmountState || gameState == interactNPCState || gameState == rejectedState || gameState == tooSoonState || 
                 gameState == havePartnerState || gameState == yourPartnerState || gameState == acceptedState || 
-                gameState == houseNPCInteractState || gameState == storeInteractState || gameState == plantSeedState) { 
-                
+                gameState == houseNPCInteractState || gameState == storeInteractState || gameState == plantSeedState || 
+                gameState == binFailed || gameState == eatingState) {
+
                 // TILE
                 tileM.draw(g2);
 
                 refreshLand();
+                refreshMoney();
                 tileOM.draw(g2);
 
                 // OBJECT
@@ -336,6 +344,20 @@ public class GamePanel extends JPanel implements Runnable{
         for (Map.Entry<TileLocation, TileObject> entry : updatedTiles.entrySet()) tiles.put(entry.getKey(), entry.getValue());
     }
 
+    public void refreshMoney(){
+        if (shippingBinDay != gameClock.getDate().getOriginDay()){
+            int total = 0;
+            for (Map.Entry<Items, Integer> entry : binShopInventory.getItems().entrySet()) {
+                Items item = entry.getKey();
+                int quantity = entry.getValue();
+
+                total += item.getSellPrice() * quantity;
+            }
+
+            binShopInventory = new Inventory(false);
+            player.addGold(total);
+        }
+    }
 
     public void playMusic(int i) {
         

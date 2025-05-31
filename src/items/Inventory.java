@@ -1,13 +1,12 @@
 package items;
 
-import java.util.HashMap;
-import java.util.Map;
-
-    import items.equipments.FishingRod;
-    import items.equipments.Hoe;
+import items.equipments.FishingRod;
+import items.equipments.Hoe;
     import items.equipments.Pickaxe;
     import items.equipments.WateringCan;
     import items.seeds.Seeds;
+    import java.util.HashMap;
+    import java.util.Map;
 
     public class Inventory {
         private Map<Items, Integer> items;
