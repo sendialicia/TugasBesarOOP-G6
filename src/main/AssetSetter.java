@@ -170,11 +170,11 @@ public class AssetSetter {
         gp.obj[mapNum][3] = gd1;
         OBJ_House1 h1 = new OBJ_House1(gp, 13 * gp.tileSize, 28 * gp.tileSize);
         gp.obj[mapNum][4] = h1;
-        OBJ_House2 h2 = new OBJ_House2(gp, 34 * gp.tileSize, 36 * gp.tileSize);
+        OBJ_House2 h2 = new OBJ_House2(gp, 33 * gp.tileSize, 36 * gp.tileSize);
         gp.obj[mapNum][5] = h2;
         OBJ_House3 h3 = new OBJ_House3(gp, 35 * gp.tileSize, 47 * gp.tileSize);
         gp.obj[mapNum][6] = h3;
-        OBJ_House4 h4 = new OBJ_House4(gp, 19 * gp.tileSize, 55 * gp.tileSize);
+        OBJ_House4 h4 = new OBJ_House4(gp, 20 * gp.tileSize, 54 * gp.tileSize);
         gp.obj[mapNum][7] = h4;
         OBJ_House5 h5 = new OBJ_House5(gp, 54 * gp.tileSize, 47 * gp.tileSize);
         gp.obj[mapNum][8] = h5;
@@ -192,6 +192,30 @@ public class AssetSetter {
         gp.obj[mapNum][14] = pt11;
         OBJ_Waterfall waterfall = new OBJ_Waterfall(gp, 44 * gp.tileSize, 35 * gp.tileSize);
         gp.obj[mapNum][15] = waterfall;
+        OBJ_PinkTree pt12 = new OBJ_PinkTree(gp, 19 * gp.tileSize, 14 * gp.tileSize);
+        gp.obj[mapNum][16] = pt12;
+        OBJ_Bush bush19 = new OBJ_Bush(gp, 13 * gp.tileSize, 11 * gp.tileSize);
+        gp.obj[mapNum][17] = bush19;
+        OBJ_PinkTree pt13 = new OBJ_PinkTree(gp, 20 * gp.tileSize, 8 * gp.tileSize);
+        gp.obj[mapNum][18] = pt13;
+        OBJ_Barrel barrel3 = new OBJ_Barrel(gp, 21 * gp.tileSize, 26 * gp.tileSize);
+        gp.obj[mapNum][19] = barrel3;
+        OBJ_Bush bush20 = new OBJ_Bush(gp, 17 * gp.tileSize, 18 * gp.tileSize);
+        gp.obj[mapNum][20] = bush20;
+        OBJ_Bush bush21 = new OBJ_Bush(gp, 17 * gp.tileSize, 13 * gp.tileSize);
+        gp.obj[mapNum][21] = bush21;
+        OBJ_Bush bush22 = new OBJ_Bush(gp, 17 * gp.tileSize, 9 * gp.tileSize);
+        gp.obj[mapNum][22] = bush22;
+        OBJ_GreenTree2 gd2 = new OBJ_GreenTree2(gp, 13 * gp.tileSize, 14 * gp.tileSize);
+        gp.obj[mapNum][23] = gd2;
+        OBJ_PinkTree pt14 = new OBJ_PinkTree(gp, 36 * gp.tileSize, 23 * gp.tileSize);
+        gp.obj[mapNum][24] = pt14;
+        OBJ_Bush bush23 = new OBJ_Bush(gp, 44 * gp.tileSize, 17 * gp.tileSize);
+        gp.obj[mapNum][25] = bush23;
+        OBJ_PinkTree pt15 = new OBJ_PinkTree(gp, 56 * gp.tileSize, 23 * gp.tileSize);
+        gp.obj[mapNum][26] = pt15;
+        OBJ_Barrel barrel4 = new OBJ_Barrel(gp, 54 * gp.tileSize, 33 * gp.tileSize);
+        gp.obj[mapNum][27] = barrel4;
     }
 
     private boolean checkOverlap(SuperObject object, SuperObject[] others, int index) {
