@@ -214,6 +214,7 @@ public class KeyHandler implements KeyListener{
                     Crops crop = harvestableTile.getCrops();
 
                     gp.player.addItemToInventory(crop, crop.getHarvestedAmount());
+                    gp.player.openInventory();
                     gp.tiles.remove(tileLocation);
                 }
             }

@@ -489,17 +489,27 @@ public class UI {
                 if (found) break;
             }
 
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
-
             if (!found) {
-                slotFilled[col][row] = gp.player.getInventory().get(item.getName()).getName();
+                slotFilled[col][row] = item.getName();
                 g2.drawImage(item.getItemImage(), slotX, slotY, null);
-                slotX += slotSize;
-            } else {
-                Items target = gp.player.getInventory().get(item.getName());
-                g2.drawString(String.valueOf(gp.player.getInventory().getItemQuantity(target)), slotX * col * 2 - 10, slotY * row * 2 - 10);
-            }
 
+                // Draw quantity at bottom-right
+                int quantity = gp.player.getInventory().getItemQuantity(item);
+                if (quantity > 1) { // Only draw if more than 1
+                    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
+                    g2.setColor(Color.WHITE); // Or any color with contrast
+                    String quantityText = String.valueOf(quantity);
+                    
+                    FontMetrics fm = g2.getFontMetrics();
+                    int textWidth = fm.stringWidth(quantityText);
+                    
+                    g2.drawString(quantityText,
+                        slotX + slotSize - textWidth - 4,
+                        slotY + slotSize - 4);
+                }
+
+                slotX += slotSize;
+            }
 
             if(slotX >= frameX + frameWidth - gp.tileSize) {
                 slotX = slotXstart;
@@ -787,7 +797,7 @@ public class UI {
     public void drawBinShopScreen() {
         drawPlayerInventory();
 
-        // WINDOW FRAME
+        // WINDOW SELL AMOUNT FRAME
         int frameX = 0;
         int frameY = gp.screenHeight/2 + (gp.tileSize+3)*2;
         int frameWidth = gp.screenWidth;
