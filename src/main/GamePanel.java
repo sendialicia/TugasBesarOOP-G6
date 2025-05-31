@@ -18,15 +18,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
 
-import entity.Entity;
-import entity.Player;
-import farmTile.HarvestableTile;
-import farmTile.PlantedTile;
-import farmTile.TileLocation;
-import farmTile.TileObject;
-import farmTile.TileObjectManager;
 import items.Inventory;
-import items.fish.Fish;
 import object.SuperObject;
 import tile.TileManager;
 import time.GameClock;
@@ -85,8 +77,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int pauseState = 5;
     public final int dialogueState = 6;
     public final int viewAttributeState = 7;
-    public final int viewInventoryState = 8;
     public final int binShopState = 9;
+    public final int plantSeedState = 10;
     
     
     public final int binAmountState = 12;
@@ -197,12 +189,10 @@ public class GamePanel extends JPanel implements Runnable{
         } else if (gameState == genderInputState) {
             ui.draw(g2);
         } else { 
-            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
-                gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-                gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
-            gameState == binAmountState || gameState == interactNPCState ||
-                gameState == rejectedState || gameState == tooSoonState || gameState == havePartnerState || gameState == yourPartnerState ||
-                gameState == acceptedState ) { 
+            if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || gameState == houseInteractState || 
+                gameState == fishingInteractState || gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == binShopState ||
+                gameState == binAmountState || gameState == interactNPCState || gameState == rejectedState || gameState == tooSoonState || gameState == havePartnerState || 
+                gameState == yourPartnerState || gameState == acceptedState | gameState == plantSeedState) { 
                 
                 // TILE
                 tileM.draw(g2);

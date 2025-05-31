@@ -11,8 +11,6 @@ import items.ItemFactory;
 import items.Items;
 import items.crops.Crops;
 import items.seeds.Seeds;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import tile.TileManager;
 
 
@@ -194,22 +192,17 @@ public class KeyHandler implements KeyListener{
                 TileLocation tileLocation = new TileLocation(worldX, worldY);
                 TileObject existing = gp.tiles.get(tileLocation);
 
+                gp.ui.tempWorldX = worldX;
+                gp.ui.tempWorldY = worldY;
+                gp.ui.tempTileLocation = tileLocation;
+
                 if (existing == null) {
                     TileObject tileObject = new TileObject("Tilled", worldX, worldY);
                     gp.tiles.put(tileLocation, tileObject);
                     gp.player.tilling();
                 }
                 else if (existing.type.equals("Tilled")) {
-                    ItemFactory.loadSeeds();
-
-                    Items seedItems = ItemFactory.get("Parsnip Seeds");
-                    Seeds seed = (Seeds) seedItems;
-
-                    PlantedTile plantedTile = new PlantedTile(seed, gp.gameClock.getDate().getOriginDay());
-                    plantedTile.location.worldX = worldX;
-                    plantedTile.location.worldY = worldY;
-                    gp.tiles.put(tileLocation, plantedTile);
-                    gp.player.planting();
+                    gp.gameState = gp.plantSeedState;
                 }
                 else if (existing.type.equals("Planted")){
                     PlantedTile plantedTile = (PlantedTile) existing;
@@ -402,6 +395,41 @@ public class KeyHandler implements KeyListener{
                 if(gp.ui.commandNum == 3) {
                     gp.gameState = gp.playState;
                 }
+            }
+        }
+
+        else if(gp.gameState == gp.plantSeedState) {
+
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                if(gp.ui.slotInventoryRow != 0) {
+                    gp.ui.slotInventoryRow--;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+                if(gp.ui.slotInventoryCol != 0) {
+                    gp.ui.slotInventoryCol--;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                if(gp.ui.slotInventoryRow < 3) {
+                    gp.ui.slotInventoryRow++;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+                if(gp.ui.slotInventoryCol < 3) {
+                    gp.ui.slotInventoryCol++;
+                    gp.playSE(5);
+                }
+            }
+            if(code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+            }
+
+            if(code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.playState;
             }
         }
 

@@ -235,7 +235,7 @@ public class AssetSetter {
                 if (gp.tileM.mapTileNum[gp.currentMap][i][j] != 293 && gp.tileM.mapTileNum[gp.currentMap][i][j] != 294 &&
                     gp.tileM.mapTileNum[gp.currentMap][i][j] != 370 && gp.tileM.mapTileNum[gp.currentMap][i][j] != 375 ) return false;
 
-                if (i >= 5 && i <=8) return false;
+                if (j >= 5 && j <=8) return false;
             }
         }
         return true;

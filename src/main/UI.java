@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import javax.imageio.ImageIO;
+
+import farmTile.PlantedTile;
+import farmTile.TileLocation;
 import time.GameClock;
 
 
@@ -43,7 +46,11 @@ public class UI {
     public String fishingWarning = null;
     public StringBuilder guessString = new StringBuilder();
     Items selectedItem = null;
+    Seeds selectedSeed = null;
     int sellAmount = 0;
+    int tempWorldX, tempWorldY;
+    TileLocation tempTileLocation = null;
+
 
     // double playTime;
     // DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -133,6 +140,8 @@ public class UI {
         if (gp.gameState == gp.watchingState) drawWatchScreen();
         if (gp.gameState == gp.binShopState) drawBinShopScreen();
         if (gp.gameState == gp.binAmountState) drawBinAmountScreen();
+
+        if (gp.gameState == gp.plantSeedState) drawPlantSeedScreen();
 
 
         if(gp.gameState == gp.moveMapState) drawMoveMapScreen();
@@ -645,6 +654,146 @@ public class UI {
         }
     }
 
+    public void drawPlantSeedScreen() {
+
+        // WINDOW PLAYER INVENTORY
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2; 
+        int width = gp.tileSize * 5;
+        int height = gp.tileSize * 5;
+        drawSubWindow(x, y, width, height);
+
+        // SLOT
+        final int slotXstart = x + 20;
+        final int slotYstart = y + 20;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+        int slotSize = gp.tileSize + 3;
+        String[][] slotFilled = new String[4][4];
+
+        // DRAW PLAYER'S ITEMS
+        for (Map.Entry<Items, Integer> entry : gp.player.getInventory().getItems().entrySet()) {
+            Items item = entry.getKey();
+
+            int col = (slotX - slotXstart) / slotSize;
+            int row = (slotY - slotYstart) / slotSize;
+
+            boolean found = false;
+            for (int colIndex = 0; colIndex < slotFilled.length; colIndex++) {
+                for (int rowIndex = 0; rowIndex < slotFilled[0].length; rowIndex++) {
+                    if (slotFilled[colIndex][rowIndex] != null && item != null &&
+                        slotFilled[colIndex][rowIndex].equals(item.getName())) {
+                        col = colIndex;
+                        row = rowIndex;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+
+            if (!found && item != null && item instanceof Seeds) {
+                slotFilled[col][row] = item.getName();
+                g2.drawImage(item.getItemImage(), slotX, slotY, null);
+
+                int quantity = gp.player.getInventory().getItemQuantity(item);
+                if (quantity > 1) {
+                    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
+                    g2.setColor(Color.WHITE);
+                    String quantityText = String.valueOf(quantity);
+
+                    FontMetrics fm = g2.getFontMetrics();
+                    int textWidth = fm.stringWidth(quantityText);
+
+                    g2.drawString(quantityText,
+                        slotX + slotSize - textWidth - 4,
+                        slotY + slotSize - 4);
+                }
+
+                slotX += slotSize;
+            }
+
+            if(slotX >= x + width - gp.tileSize) {
+                slotX = slotXstart;
+                slotY += slotSize;
+            }
+
+        }
+        if (gp.keyH.enterPressed) {
+            if (selectedSeed == null) {
+                if (slotInventoryCol >= 0 && slotInventoryCol < slotFilled.length &&
+                    slotInventoryRow >= 0 && slotInventoryRow < slotFilled[0].length) {
+                    String selectedName = slotFilled[slotInventoryCol][slotInventoryRow];
+                    if (selectedName != null) {
+                        Items selected = gp.player.getInventory().get(selectedName);
+                        if (selected instanceof Seeds) {
+                            selectedSeed = (Seeds) selected;
+                            PlantedTile plantedTile = new PlantedTile(selectedSeed, gp.gameClock.getDate().getOriginDay());
+                            plantedTile.location.worldX = tempWorldX;
+                            plantedTile.location.worldY = tempWorldY;
+                            gp.tiles.put(tempTileLocation, plantedTile);
+                            gp.player.planting();
+                            gp.player.getInventory().removeItem(selectedSeed, 1);
+                            selectedSeed = null;
+                            gp.gameState = gp.playState;
+                            System.out.println("Planted!");
+                        }
+                    }
+                }
+            }
+            gp.keyH.enterPressed = false;
+        }
+        
+        // CURSOR
+        int cursorX = slotXstart + (slotSize * slotInventoryCol);
+        int cursorY = slotYstart + (slotSize * slotInventoryRow);
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+
+        // DRAW CURSOR
+        g2.setColor(Color.yellow);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+        
+
+        // WINDOW DESCRIPTION
+        int dFrameX = gp.screenWidth - (gp.tileSize)*6;
+        int dFrameY = gp.tileSize/2;
+        int dFrameWidth = (gp.tileSize-3)*6;
+        int dFrameHeight = gp.screenHeight/2 + (gp.tileSize+3)*2;
+
+        drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
+        // ITEM DESCRIPTION
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        String itemName = slotFilled[slotInventoryCol][slotInventoryRow];
+        if(itemName != null) {
+            Items item = gp.player.getInventory().get(itemName);
+            String description = item.getDescription() != null ? item.getDescription() : "No description";
+            int dX = dFrameX + 20;
+            int dY = dFrameY + 40;
+            g2.drawString(item.getName(), dX, dY);
+            dY += 40;
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+            g2.setColor(Color.white);
+            for(String line : description.split("\n")) {
+                g2.drawString(line, dX, dY);
+                dY += 40;
+            }
+            if(item.getSellPrice() != null) {
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+                g2.setColor(Color.red);
+                g2.drawString("Sell Price: " + item.getSellPrice() + "g", dX, dY);
+                dY += 40;
+            }
+            if(item.getBuyPrice() != null) {
+                g2.setColor(Color.green);
+                g2.drawString("Buy Price: " + item.getBuyPrice() + "g", dX, dY);
+                dY += 40;
+            }
+        }
+    }
+
     public void drawHouseScreen() {
         // WINDOW FRAME
         int x = gp.tileSize * 2;
@@ -949,7 +1098,6 @@ public class UI {
 
         int frameY = gp.screenHeight/2 + (gp.tileSize+3)*2;
         int frameHeight = gp.screenHeight - frameY;
-        int frameX = gp.screenWidth - (gp.tileSize+3) * 9;
         int minusX = 20;
         int plusX = (gp.screenWidth - (gp.tileSize+3) * 9) - 40 - g2.getFontMetrics().stringWidth("+");
         int buttonY = frameY + frameHeight / 2;
@@ -961,10 +1109,6 @@ public class UI {
         if (selectedItem != null) {
             g2.drawImage(selectedItem.getItemImage(), 127, buttonY-20, null);
         }
-
-
-        frameX = gp.screenWidth - (gp.tileSize+3) * 9;
-        int frameWidth = gp.screenWidth - frameX;
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
 
@@ -996,7 +1140,6 @@ public class UI {
             gp.gameState = gp.binShopState;
         }
     }
-
 
     public void drawMoveMapScreen() {
         // WINDOW FRAME
