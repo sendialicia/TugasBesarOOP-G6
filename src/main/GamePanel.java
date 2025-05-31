@@ -62,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Map<TileLocation, TileObject> tiles = new HashMap<>();
     public Fish fished = null;
     public Integer luckyNumber = null;
+    public Integer interactedNPC = null;
 
     // GAME STATE
     public int gameState;
@@ -87,6 +88,13 @@ public class GamePanel extends JPanel implements Runnable{
     public final int worldMapState = 26;
     public final int sleepingState = 27;
     public final int moveMapState = 28;
+
+    public final int interactNPCState = 29;
+    public final int rejectedState = 30;
+    public final int tooSoonState = 31;
+    public final int havePartnerState = 32;
+    public final int yourPartnerState = 33;
+    public final int acceptedState = 34;
 
 
     public GamePanel(){
@@ -176,8 +184,10 @@ public class GamePanel extends JPanel implements Runnable{
             ui.draw(g2);
         } else { 
             if (gameState == playState || gameState == pauseState || gameState == dialogueState || gameState == viewAttributeState || 
-            gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
-            gameState == binInteractState || gameState == watchingState || gameState == worldMapState) { 
+                gameState == viewInventoryState || gameState == houseInteractState || gameState == fishingInteractState || 
+                gameState == binInteractState || gameState == watchingState || gameState == worldMapState || gameState == interactNPCState ||
+                gameState == rejectedState || gameState == tooSoonState || gameState == havePartnerState || gameState == yourPartnerState ||
+                gameState == acceptedState ) { 
                 
                 // TILE
                 tileM.draw(g2);

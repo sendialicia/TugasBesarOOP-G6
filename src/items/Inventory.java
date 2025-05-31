@@ -46,17 +46,16 @@
         }
 
         public String getMostItem() {
-            // if (items.isEmpty()) return null;
-            // Items mostItem = null;
-            // int maxQuantity = 0;
-            // for (Map.Entry<Items, Integer> entry : items.entrySet()) {
-            //     if (entry.getValue() > maxQuantity) {
-            //         maxQuantity = entry.getValue();
-            //         mostItem = entry.getKey();
-            //     }
-            // }
-            // return mostItem != null ? mostItem.getName() : null;
-            return "The Legends of Spakbor";
+            if (items.isEmpty()) return null;
+            Items mostItem = null;
+            int maxQuantity = 0;
+            for (Map.Entry<Items, Integer> entry : items.entrySet()) {
+                if (entry.getValue() > maxQuantity) {
+                    maxQuantity = entry.getValue();
+                    mostItem = entry.getKey();
+                }
+            }
+            return mostItem != null ? mostItem.getName() : null;
         }
 
         public int totalItems() {

@@ -16,7 +16,7 @@ import tile.TileManager;
 public class KeyHandler implements KeyListener{
 
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, iPressed;
     
     // DEBUG
     boolean checkDrawTime = false;
@@ -30,10 +30,7 @@ public class KeyHandler implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         int code = e.getKeyCode();
-        System.out.println(code);
-
         // TITLE STATE
         if(gp.gameState == gp.titleState) {
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -144,19 +141,20 @@ public class KeyHandler implements KeyListener{
     
             if(code == KeyEvent.VK_R) {
                 if (gp.currentMap == 0) {
+                    gp.player.teleport();
                     gp.currentMap = 1;
-                    gp.maxWorldCol = 50;
+                    gp.maxWorldCol = 70;
                     gp.maxWorldRow = 75;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/world.txt", 1);
                     gp.gameState = gp.worldMapState;
                 } else if (gp.currentMap == 1) {
+                    gp.player.teleport();
                     gp.currentMap = 0;
                     gp.maxWorldCol = 51;
                     gp.maxWorldRow = 51;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/farm.txt", 0);
-                    gp.player.teleport();
                 }
                 e.consume();
             }
@@ -172,6 +170,10 @@ public class KeyHandler implements KeyListener{
 
             if(code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
+            }
+            
+            if (code == KeyEvent.VK_I){
+                iPressed = true;
             }
 
             if(code == KeyEvent.VK_Z){
@@ -278,13 +280,15 @@ public class KeyHandler implements KeyListener{
     
             if(code == KeyEvent.VK_R) {
                 if (gp.currentMap == 0) {
+                    gp.player.teleport();
                     gp.currentMap = 1;
-                    gp.maxWorldCol = 50;
+                    gp.maxWorldCol = 70;
                     gp.maxWorldRow = 75;
                     gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                     gp.tileM.loadMap("/maps/world.txt", 1);
                     gp.gameState = gp.worldMapState;  
                 } else if (gp.currentMap == 1) {
+                    gp.player.teleport();
                     gp.currentMap = 0;
                     gp.maxWorldCol = 51;
                     gp.maxWorldRow = 51;
@@ -292,7 +296,6 @@ public class KeyHandler implements KeyListener{
                     gp.tileM.loadMap("/maps/farm.txt", 0);
                     gp.gameState = gp.playState;
                 }
-                gp.player.teleport();
                 e.consume();
             }
 
@@ -307,6 +310,10 @@ public class KeyHandler implements KeyListener{
 
             if(code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
+            }
+
+            if (code == KeyEvent.VK_I){
+                iPressed = true;
             }
         }
 
@@ -389,10 +396,43 @@ public class KeyHandler implements KeyListener{
                 }
             }
         }
+
+        else if(gp.gameState == gp.interactNPCState) {
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) gp.ui.commandNum = 3;
+            }
+    
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 3) gp.ui.commandNum = 0;
+            }
+
+            if(code == KeyEvent.VK_ENTER) {
+                if(gp.ui.commandNum == 0) {
+                }
+                if(gp.ui.commandNum == 1) {
+                    gp.player.proposing();
+                }
+                if(gp.ui.commandNum == 2) {
+                    gp.player.marry();
+                }
+                if(gp.ui.commandNum == 3) {
+                    gp.gameState = gp.worldMapState;
+                }
+            }
+        }
        
         else if (gp.gameState == gp.watchingState){
             if (code == KeyEvent.VK_ESCAPE){
                 gp.gameState = gp.playState;
+            }
+        }
+
+        else if (gp.gameState == gp.watchingState || gp.gameState == gp.rejectedState || gp.gameState == gp.tooSoonState || 
+                gp.gameState == gp.havePartnerState || gp.gameState == gp.yourPartnerState || gp.gameState == gp.acceptedState) {
+            if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
+                gp.gameState = gp.worldMapState;
             }
         }
 
@@ -538,8 +578,9 @@ public class KeyHandler implements KeyListener{
 
                 if (gp.currentMap == 0) {
                     if(gp.ui.commandNum == 0) {
+                        gp.player.teleport();
                         gp.currentMap = 1;
-                        gp.maxWorldCol = 50;
+                        gp.maxWorldCol = 70;
                         gp.maxWorldRow = 75;
                         gp.tileM = new TileManager(gp, gp.maxWorldCol, gp.maxWorldRow);
                         gp.gameState = gp.worldMapState;
@@ -548,6 +589,7 @@ public class KeyHandler implements KeyListener{
                     }
                 } else if (gp.currentMap == 1) {
                     if (gp.ui.commandNum == 0) {
+                        gp.player.teleport();
                         gp.currentMap = 0;
                         gp.maxWorldCol = 51;
                         gp.maxWorldRow = 51;
@@ -557,7 +599,6 @@ public class KeyHandler implements KeyListener{
                         gp.gameState = gp.worldMapState;
                     }
                 }
-                gp.player.teleport();
                 e.consume();
             }
         }
