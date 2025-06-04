@@ -52,6 +52,8 @@ public class UI {
     Edible edible = null;
     int sellAmount = 0;
     int buyAmount = 0;
+    int totalSellPrice = 0;
+    int totalBuyPrice = 0;
     int tempWorldX, tempWorldY;
     TileLocation tempTileLocation = null;
 
@@ -997,7 +999,8 @@ public class UI {
         frameHeight = gp.screenHeight - frameY;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
         
-        g2.drawString("Shipping Bin", frameX + 160, frameY + 50);
+        g2.drawString("Shipping Bin", frameX + 20, frameY + 50);
+        g2.drawString("Total Price: " + totalSellPrice, frameX + 260, frameY + 50);
 
         // SLOT
         final int slotXstart = frameX + 20;
@@ -1084,6 +1087,60 @@ public class UI {
             }
         }
         
+    }
+
+    public void drawBinAmountScreen() {
+        
+        drawBinShopScreen();
+
+        int frameY = gp.screenHeight/2 + (gp.tileSize+3)*2;
+        int frameHeight = gp.screenHeight - frameY;
+        int frameX = gp.screenWidth - (gp.tileSize+3) * 9;
+        int minusX = 20;
+        int plusX = (gp.screenWidth - (gp.tileSize+3) * 9) - 40 - g2.getFontMetrics().stringWidth("+");
+        int buttonY = frameY + frameHeight / 2;
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 120F));
+        g2.setColor(Color.white);
+        g2.drawString("-", minusX, buttonY + 30);
+        g2.drawString("+", plusX, buttonY + 30);
+        if (selectedItem != null) {
+            g2.drawImage(selectedItem.getItemImage(), 127, buttonY-20, null);
+        }
+
+
+        frameX = gp.screenWidth - (gp.tileSize+3) * 9;
+        int frameWidth = gp.screenWidth - frameX;
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30F));
+        g2.drawString("Sell: " + sellAmount, 40, buttonY + 70);
+        Integer sellPrice = selectedItem.getSellPrice();
+        if (sellPrice != null) {
+            g2.drawString("Price: " + (sellPrice * sellAmount) + " g", 160, buttonY + 70);
+        } else {
+            g2.drawString("Price: N/A", 160, buttonY + 70);
+        }
+
+        if (gp.keyH.minusPressed) {
+            if (sellAmount > 1) {
+                sellAmount--;
+                gp.keyH.minusPressed = false;
+            }
+        }
+        if (gp.keyH.plusPressed) {
+            if (sellAmount < gp.player.getInventory().getItemQuantity(selectedItem)) {
+                sellAmount++;
+                gp.keyH.plusPressed = false;
+            }
+        }
+        
+        if (sellAmount > gp.player.getInventory().getItemQuantity(selectedItem)) {
+            sellAmount = gp.player.getInventory().getItemQuantity(selectedItem);
+        } else if (sellAmount < 1) {
+            gp.gameState = gp.binShopState;
+        }
     }
 
     public void drawStoreInventory() {
@@ -1293,7 +1350,8 @@ public class UI {
         frameHeight = gp.screenHeight - frameY;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
         
-        g2.drawString("Inventory", frameX + 175, frameY + 50);
+        g2.drawString("Inventory", frameX + 20, frameY + 50);
+        g2.drawString("Total Price: " + totalBuyPrice, frameX + 260, frameY + 50);
 
         // SLOT
         final int slotXstart = frameX + 20;
@@ -1426,55 +1484,6 @@ public class UI {
             buyAmount = gp.storeShopInventory.getItemQuantity(selectedItem);
         } else if (buyAmount < 1) {
             gp.gameState = gp.storeShopState;
-        }
-    }
-
-    public void drawBinAmountScreen() {
-
-        drawBinShopScreen();
-
-        int frameY = gp.screenHeight/2 + (gp.tileSize+3)*2;
-        int frameHeight = gp.screenHeight - frameY;
-        int minusX = 20;
-        int plusX = (gp.screenWidth - (gp.tileSize+3) * 9) - 40 - g2.getFontMetrics().stringWidth("+");
-        int buttonY = frameY + frameHeight / 2;
-
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 120F));
-        g2.setColor(Color.white);
-        g2.drawString("-", minusX, buttonY + 30);
-        g2.drawString("+", plusX, buttonY + 30);
-        if (selectedItem != null) {
-            g2.drawImage(selectedItem.getItemImage(), 127, buttonY-20, null);
-        }
-
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
-
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30F));
-        g2.drawString("Sell: " + sellAmount, 40, buttonY + 70);
-        Integer sellPrice = selectedItem.getSellPrice();
-        if (sellPrice != null) {
-            g2.drawString("Price: " + (sellPrice * sellAmount) + " g", 160, buttonY + 70);
-        } else {
-            g2.drawString("Price: N/A", 160, buttonY + 70);
-        }
-
-        if (gp.keyH.minusPressed) {
-            if (sellAmount > 1) {
-                sellAmount--;
-                gp.keyH.minusPressed = false;
-            }
-        }
-        if (gp.keyH.plusPressed) {
-            if (sellAmount < gp.storeShopInventory.getItemQuantity(selectedItem)) {
-                sellAmount++;
-                gp.keyH.plusPressed = false;
-            }
-        }
-        
-        if (sellAmount > gp.storeShopInventory.getItemQuantity(selectedItem)) {
-            sellAmount = gp.storeShopInventory.getItemQuantity(selectedItem);
-        } else if (sellAmount < 1) {
-            gp.gameState = gp.binShopState;
         }
     }
 
