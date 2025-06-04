@@ -38,10 +38,10 @@ public class SuperObject {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
         
-        if (worldX + width > gp.player.worldX - gp.player.screenX - gp.tileSize &&
-            worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
-            worldY + height > gp.player.worldY - gp.player.screenY - gp.tileSize &&
-            worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
+        if (worldX + width > gp.player.worldX - gp.player.screenX - gp.tileSize * 2 &&
+            worldX < gp.player.worldX + gp.player.screenX + gp.tileSize * 2 &&
+            worldY + height > gp.player.worldY - gp.player.screenY - gp.tileSize * 2 &&
+            worldY < gp.player.worldY + gp.player.screenY + gp.tileSize * 2) {
 
             int sx2 = sx1 + cropWidth;  
             int sy2 = sy1 + cropHeight; 

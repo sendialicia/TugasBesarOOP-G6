@@ -295,10 +295,10 @@ public class TileManager {
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-                if (worldX + tileSize > gp.player.worldX - gp.player.screenX &&
-                    worldX - tileSize < gp.player.worldX + gp.player.screenX &&
-                    worldY + tileSize > gp.player.worldY - gp.player.screenY &&
-                    worldY - tileSize < gp.player.worldY + gp.player.screenY &&
+                if (worldX + tileSize > gp.player.worldX - gp.player.screenX * 2 &&
+                    worldX - tileSize < gp.player.worldX + gp.player.screenX * 2 &&
+                    worldY + tileSize > gp.player.worldY - gp.player.screenY * 2 &&
+                    worldY - tileSize < gp.player.worldY + gp.player.screenY * 2 &&
                     tile[tileNum] != null) {
 
                     g2.drawImage(tile[tileNum].image, screenX, screenY, null);
