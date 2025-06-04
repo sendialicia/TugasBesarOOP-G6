@@ -599,6 +599,8 @@ public class KeyHandler implements KeyListener{
             }
 
             if(code == KeyEvent.VK_ESCAPE) {
+    
+                gp.ui.totalSellPrice = 0;
                 gp.gameState = gp.playState;
                 gp.ui.sellAmount = 0;
             }
@@ -630,6 +632,7 @@ public class KeyHandler implements KeyListener{
                         gp.player.getInventory().removeItem(gp.ui.selectedItem, gp.ui.sellAmount);
                         gp.binShopInventory.addItem(gp.ui.selectedItem, gp.ui.sellAmount);
                     } 
+                    gp.ui.totalSellPrice += gp.ui.sellAmount * gp.ui.selectedItem.getSellPrice();
                     gp.ui.showMessage("Sold " + gp.ui.sellAmount + " " + gp.ui.selectedItem.getName() + "!");
                     gp.ui.sellAmount = 1;
                     gp.keyH.enterPressed = false;
@@ -779,6 +782,7 @@ public class KeyHandler implements KeyListener{
             }
 
             if(code == KeyEvent.VK_ESCAPE) {
+                gp.ui.totalBuyPrice = 0;
                 gp.gameState = gp.worldMapState;
                 gp.ui.buyAmount = 0;
             }
@@ -789,7 +793,7 @@ public class KeyHandler implements KeyListener{
             boolean canBuy = gp.ui.selectedItem != null && gp.ui.selectedItem.getBuyPrice() != null;
 
             if (canBuy && (code == KeyEvent.VK_PLUS || code == KeyEvent.VK_EQUALS)) {
-                if(gp.ui.buyAmount < gp.storeShopInventory.getItemQuantity(gp.ui.selectedItem)) {
+                if(gp.ui.buyAmount < gp.storeShopInventory.getItemQuantity(gp.ui.selectedItem) && gp.player.getGold() > gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice() ) {
                     gp.ui.buyAmount++;
                     gp.playSE(5);
                 }
@@ -808,11 +812,13 @@ public class KeyHandler implements KeyListener{
                 if (gp.ui.buyAmount > 0 && gp.ui.buyAmount <= currentQty && gp.player.getGold() >= gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice()) {
                     gp.storeShopInventory.removeItem(gp.ui.selectedItem, gp.ui.buyAmount);
                     gp.player.getInventory().addItem(gp.ui.selectedItem, gp.ui.buyAmount);
+                    gp.ui.totalBuyPrice += gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice();
                     gp.ui.showMessage("Buy " + gp.ui.buyAmount + " " + gp.ui.selectedItem.getName() + "!");
                     gp.keyH.enterPressed = false;
                     gp.player.removeGold(gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice());
                     gp.ui.buyAmount = 1;
                     gp.gameState = gp.storeShopState;
+                    gp.ui.selectedItem = null;
                     gp.playSE(3);
                 } else if (gp.ui.buyAmount > 0 && gp.ui.buyAmount <= currentQty) {
                     gp.ui.showMessage("Not enough gold!");
