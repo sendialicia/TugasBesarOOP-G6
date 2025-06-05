@@ -778,7 +778,7 @@ public class KeyHandler implements KeyListener{
             if(code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
                 gp.ui.buyAmount = 1;
-                if (gp.ui.selectedItem != null) gp.gameState = gp.storeAmountState;
+                if (gp.ui.selectedItem != null && gp.player.getGold() >= gp.ui.selectedItem.getBuyPrice()) gp.gameState = gp.storeAmountState;
             }
 
             if(code == KeyEvent.VK_ESCAPE) {
@@ -793,7 +793,7 @@ public class KeyHandler implements KeyListener{
             boolean canBuy = gp.ui.selectedItem != null && gp.ui.selectedItem.getBuyPrice() != null;
 
             if (canBuy && (code == KeyEvent.VK_PLUS || code == KeyEvent.VK_EQUALS)) {
-                if(gp.ui.buyAmount < gp.storeShopInventory.getItemQuantity(gp.ui.selectedItem) && gp.player.getGold() > gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice() ) {
+                if(gp.ui.buyAmount < gp.storeShopInventory.getItemQuantity(gp.ui.selectedItem) && gp.player.getGold() > gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice() + gp.ui.selectedItem.getBuyPrice()) {
                     gp.ui.buyAmount++;
                     gp.playSE(5);
                 }
@@ -810,7 +810,6 @@ public class KeyHandler implements KeyListener{
                 enterPressed = true;
                 int currentQty = gp.storeShopInventory.getItemQuantity(gp.ui.selectedItem);
                 if (gp.ui.buyAmount > 0 && gp.ui.buyAmount <= currentQty && gp.player.getGold() >= gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice()) {
-                    gp.storeShopInventory.removeItem(gp.ui.selectedItem, gp.ui.buyAmount);
                     gp.player.getInventory().addItem(gp.ui.selectedItem, gp.ui.buyAmount);
                     gp.ui.totalBuyPrice += gp.ui.buyAmount * gp.ui.selectedItem.getBuyPrice();
                     gp.ui.showMessage("Buy " + gp.ui.buyAmount + " " + gp.ui.selectedItem.getName() + "!");

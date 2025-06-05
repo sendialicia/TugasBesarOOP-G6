@@ -102,15 +102,16 @@ public class Player extends Entity{
 
 
     public void teleport(){
-        if (gp.currentMap == gp.playState){
-            worldX = gp.tileSize * 31;
-            worldY = gp.tileSize * 21;
+        if (gp.currentMap == 1){
+            worldX = gp.tileSize * 26;
+            worldY = gp.tileSize * 15;        
+            direction = "down";
         }
-        else{
-            worldX =  26 * gp.tileSize;
-            worldY =  15 * gp.tileSize;
+        else if(gp.currentMap == 0){
+            worldX =  15 * gp.tileSize;
+            worldY =  41 * gp.tileSize;
+            direction = "right";
         }
-        direction = "down";
     }
 
     public void setName(String name) { this.name = name; }

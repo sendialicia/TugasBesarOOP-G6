@@ -26,7 +26,7 @@ public class OBJ_Store extends SuperObject {
         solidAreas[0] = new Rectangle();
         solidAreas[0].x = 1; 
         solidAreas[0].y = gp.tileSize * 5; 
-        solidAreas[0].width = gp.tileSize * 10; 
+        solidAreas[0].width = gp.tileSize * 12; 
         solidAreas[0].height = gp.tileSize * 4; 
 
         solidAreas[1] = new Rectangle();

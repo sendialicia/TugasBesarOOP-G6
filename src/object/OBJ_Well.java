@@ -25,7 +25,7 @@ public class OBJ_Well extends SuperObject {
         solidAreas[0] = new Rectangle();
         solidAreas[0].x = 0;
         solidAreas[0].y = gp.tileSize * 2;
-        solidAreas[0].width = width;
+        solidAreas[0].width = width - gp.tileSize / 3;
         solidAreas[0].height = gp.tileSize * 3;
 
         solidAreaDefaultX = 0;

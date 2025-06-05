@@ -24,9 +24,9 @@ public class OBJ_Clock extends SuperObject {
         solidAreas = new Rectangle[1];
 
         solidAreas[0] = new Rectangle();
-        solidAreas[0].x = gp.tileSize;
+        solidAreas[0].x = gp.tileSize / 2;
         solidAreas[0].y = gp.tileSize * 3;
-        solidAreas[0].width = gp.tileSize * 2;
+        solidAreas[0].width = gp.tileSize * 3 + gp.tileSize / 4;
         solidAreas[0].height = gp.tileSize * 2;
 
         solidAreaDefaultX = 0;

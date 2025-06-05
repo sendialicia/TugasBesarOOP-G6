@@ -18,7 +18,6 @@ import items.seeds.Seeds;
 
     public Inventory() {
         items = new HashMap<>();
-        ItemFactory.loadAll();
         for (Items item : ItemFactory.getAllItems().values()) {
             if (item.getBuyPrice() != null && item.getBuyPrice() > 0 &&
                 (item instanceof Seeds || item instanceof Food || 
@@ -29,16 +28,15 @@ import items.seeds.Seeds;
     }
     public Inventory(Boolean b) {
         items = new HashMap<>();
-        ItemFactory.loadSeeds();
-        ItemFactory.loadFish();
         if (!b){}
         else{
+            items.put(ItemFactory.get("Hoe"), 1);
+            items.put(ItemFactory.get("Fishing Rod"), 1);
+            items.put(ItemFactory.get("Pickaxe"), 1);
+            items.put(ItemFactory.get("Watering Can"), 1);
             Seeds seed = (Seeds) ItemFactory.get("Parsnip Seeds");
-            items.put(new Hoe(), 1);
-            items.put(new FishingRod(), 1);
-            items.put(new Pickaxe(), 1);
-            items.put(new WateringCan(), 1);
             items.put(seed, 15);
+
         }
     }
 

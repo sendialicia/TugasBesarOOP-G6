@@ -26,7 +26,7 @@ public class OBJ_Waterfall extends SuperObject {
 
         solidAreas[0] = new Rectangle();
         solidAreas[0].x = 0; 
-        solidAreas[0].y = 0; 
+        solidAreas[0].y = gp.tileSize; 
         solidAreas[0].width = width; 
         solidAreas[0].height = height; 
 

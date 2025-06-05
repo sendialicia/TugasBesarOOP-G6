@@ -131,7 +131,6 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
-        // playMusic(0);
         gameState = titleState;
     }
 
@@ -244,68 +243,53 @@ public class GamePanel extends JPanel implements Runnable{
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House")) {
                         obj[currentMap][i].draw(g2, this, 0, 0, 96, this.tileSize, this.tileSize * 6, this.tileSize * 3);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("PinkTree")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Playground")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("PinkTree")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Well")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Bush")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("GreenTree1")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Clock")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("GreenTree2")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House1")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House2")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
-                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House3")) {
-                        obj[currentMap][i].draw(g2, this);
-                    }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House4")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House3")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("House5")) {
                         obj[currentMap][i].draw(g2, this);
                     }
-                }
-                for(int i = 0; i < obj[1].length; i++) {
                     if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("PineTree")) {
                         obj[currentMap][i].draw(g2, this);
                     }
+                    if(obj[currentMap][i] != null && obj[currentMap][i].name.equals("Store")) {
+                        obj[currentMap][i].draw(g2, this);
+                    }
+                    
                 }
-                
             }
             
 
